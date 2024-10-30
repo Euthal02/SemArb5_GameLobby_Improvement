@@ -1,17 +1,18 @@
 ---
 layout: default
-title: 4.3 Sprint 3
+title: 4.4 Sprint 4
 parent: 4. Sprints
 nav_order: 403
 ---
 
-# 4.3 Sprint 3
+# 4.4 Sprint 4
 
-Hier sind die Erkenntnisse des dritten Sprints.
+Hier sind die Erkenntnisse des viertem Sprints.
 
 ![Star 1](../ressources/icons/star.png){: width="220px" }
 ![Star 2](../ressources/icons/star.png){: width="220px" }
 ![Star 3](../ressources/icons/star.png){: width="220px" }
+![Star 4](../ressources/icons/star.png){: width="220px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
