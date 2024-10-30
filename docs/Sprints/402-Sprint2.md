@@ -26,6 +26,6 @@ Hier sind die Erkenntnisse des zweiten Sprints.
 
 ## Warum ist der kommende Sprint wichtig?
 
-## Was müssen wir tun, um das Sprintziel zu erreichen?
+## Was muss ich tun, um das Sprintziel zu erreichen?
 
 ## Blick auf den 3. Sprint

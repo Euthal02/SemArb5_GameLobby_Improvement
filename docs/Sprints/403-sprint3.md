@@ -25,4 +25,8 @@ Hier sind die Erkenntnisse des dritten Sprints.
 
 ## Momentaufnahme Backlog / Projektstatus
 
-## Abschluss
+## Warum ist der kommende Sprint wichtig?
+
+## Was muss ich tun, um das Sprintziel zu erreichen?
+
+## Blick auf den 4. Sprint
