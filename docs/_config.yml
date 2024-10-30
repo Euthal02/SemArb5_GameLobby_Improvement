@@ -19,25 +19,25 @@
 # in the templates via {{ site.myvariable }}.
 
 # site overview stuff
-title: Semesterarbeit 3
-subtitle: Marco Kälin & Dennis Buathong
-email: marco.kaelin1@edu.tbz.ch / dennis.buathong@edu.tbz.ch
+title: Semesterarbeit 4
+subtitle: Marco Kälin
+email: marco.kaelin1@edu.tbz.ch
 description: >- # this means to ignore newlines until another declaration
-  This site is used by Euthal02 and Bazzako as their documentation place for their third Semester Thesis.
+  This site is used by Euthal02 as his documentation place for his fourth Semester Thesis.
 
 # personal stuff
-author: "Marco Kälin & Dennis Buathon"
-github_username:  "Euthal02 & Bazzako"
+author: "Marco Kälin"
+github_username:  "Euthal02"
 
 # external stuff
 aux_links:
-  Projektplanung: https://github.com/users/Euthal02/projects/4
-  Git Repo: https://github.com/Euthal02/SemArb3_WeatherAPI
+  Projektplanung: https://github.com/users/Euthal02/projects/5
+  Git Repo: https://github.com/Euthal02/SemArb4_GameLobby
 aux_links_new_tab: true
 
 
 # technical site stuff
-url: "https://euthal02.github.io/SemArb3_WeatherAPI/"
+url: "https://euthal02.github.io/SemArb4_GameLobby/"
 logo: "/ressources/images/general/logo.jpg"
 favicon_ico: "/ressources/images/general/favicon.ico"
 remote_theme: just-the-docs/just-the-docs
@@ -46,7 +46,7 @@ plugins:
   - jekyll-feed
 back_to_top: true
 back_to_top_text: "Back to top"
-#color_scheme: dark
+color_scheme: dark
 callouts:
   information:
     title: Information

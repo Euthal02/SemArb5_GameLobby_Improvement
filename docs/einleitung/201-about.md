@@ -5,5 +5,5 @@ parent: 2. Einleitung
 nav_order: 201
 ---
 
-# 2.1 Um was geht es in unserer Semesterarbeit
+# 2.1 Um was geht es in meiner Semesterarbeit
 
