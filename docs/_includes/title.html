@@ -1,0 +1,20 @@
+{% if site.logo %}
+  <div class="site-logo" role="img" aria-label="{{ site.title }}">
+    <style>
+      .site-logo {margin-left: -35px;}
+    </style>
+  </div>
+  <div><p> </p></div>
+  <div class="title-div-custom">
+    <style>
+      .site-title {font-size: 1.2rem !important; white-space: nowrap;}
+      .title-div-custom {margin-left: 1em;}
+      .custom-title {margin-top: auto !important; margin-bottom: auto !important;}
+      .site-subtitle {font-size: 0.8rem !important; margin-top: auto !important; margin-bottom: auto !important;}
+    </style>
+    <p class="custom-title">{{ site.title }}</p>
+    <p class="site-subtitle">{{ site.subtitle }}</p>
+  </div>
+{% else %}
+  {{ site.title }}
+{% endif %}
