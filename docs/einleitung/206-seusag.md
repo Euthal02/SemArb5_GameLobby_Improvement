@@ -7,3 +7,4 @@ nav_order: 206
 
 # 2.6 Seusag
 
+![SEUSAG](../ressources/diagrams/seusag.drawio.png)
