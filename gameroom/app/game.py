@@ -29,6 +29,7 @@ class PongGame:
         self.ball = pygame_rect(((self.window_width//2)-(self.ball_size//2)), ((self.window_height//2)-(self.ball_size//2)), self.ball_size, self.ball_size)
 
     def update(self):
+        self.delay(30)
         if self.ball_speed_x != 3.5 and self.ball_speed_x != -3.5:
             print(self.ball_speed_x)
         # ball movement

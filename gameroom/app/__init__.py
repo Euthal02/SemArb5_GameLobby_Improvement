@@ -77,7 +77,6 @@ def on_disconnect():
 def game_loop():
     while True:
         # 30 milisecond buffer
-        current_game.delay(30)
         current_game.update()
 
 # start the game
