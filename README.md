@@ -6,6 +6,6 @@ Im Lehrgang "Informatiker HF - Cloud Native Engineer" von der Technischen Berufs
 
 ![TBZ Logo](docs/ressources/images/general/tbz.png)
 
-[Quelle Bild - Icons](docs/anhang/600-quellen.html#611-tbz-logo)
+[Quelle Bild - TBZ Logo](docs/anhang/600-quellen.html#611-tbz-logo)
 
 Für konstruktive Kritik bin ich jederzeit offen.
