@@ -12,6 +12,8 @@ on:
     # this means that the workflow will only trigger if there are changes in this directory
     paths:
       - 'docs/**'
+    branches:
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
