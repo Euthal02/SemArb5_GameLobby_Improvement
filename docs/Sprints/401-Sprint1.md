@@ -13,6 +13,8 @@ Hier sind die Erkenntnisse des ersten Sprints.
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
+[Geplant wurde der erste Sprint in diesem Task in GitHub Projects.](https://github.com/Euthal02/SemArb4_GameLobby/issues/17)
+
 ## Was ist gut gelaufen? Was konnte bereits erreicht werden?
 
 ## Was hat nicht funktioniert? Was war nicht gut? Welche Aspekte sollen entfallen?
