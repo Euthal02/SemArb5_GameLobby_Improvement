@@ -1,3 +1,3 @@
 # Game Lobby
 
-In diesem Unterordner werde ich die Game Lobby entwickeln.
+In diesem Unterordner wird die Game Lobby entwickelt.

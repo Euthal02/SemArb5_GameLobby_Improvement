@@ -7,7 +7,7 @@ nav_order: 207
 
 # 2.7 Git Branches Strategie
 
-Für meine Branching Strategie verfolge ich einen Feature-based Ansatz.
+Für die Branching Strategie wird ein Feature-based Ansatz verfolgt.
 
 Jedes Teilsystem, welches unabhängig von einem anderen ist, wird in einem separaten Branch verfolgt.
 

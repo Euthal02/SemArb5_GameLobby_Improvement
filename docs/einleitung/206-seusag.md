@@ -7,16 +7,24 @@ nav_order: 206
 
 # 2.6 SEUSAG
 
-Hier ist ein Diagram für die Systemabgrenzungen. Inklusive einer kleinen Legende.
+Um die Systemabgrenzungen zu visualisieren, wurden zwei SEUSAGs erstellt.
 
-![SEUSAG](../ressources/diagrams/seusag.drawio.png)
+Einmal mit dem technischen Ablauf des gewünschten SOLL Zustands und einmal mehr das ganze Organisatorische.
 
-Ich habe versucht darzustellen, dass es nicht darauf ankommt, wo genau ein User sitzt. Dieses Spiel sollte es jedem eraluben mit seinem Kollegen von überall zugreifen zu können.
+## Technisch
 
-Innerhalb meines "Pong Game Lobby"-Systems, gibt es den Kubernetes Cluster. Dieser empfängt jegliche Abfragen über den Kubernetes Ingress. Der Ingress sollte dann die Anfragen auf einen Matchmaking Cluster vertelen können. Die Matchmaker können dann wiederum an einzelne GameRooms verteilen.
+![Technisches SEUSAG](../ressources/diagrams/seusag_technisch.drawio.png)
 
-Beide diese Images haben die gleiche CodeBase. Namentlich nutze ich Python, Javascript und HTML. Dies reicht bereits für mein einfaches Spiel.
+Im technischen SEUSAG wird Wert darauf gelegt, wie eine Connection von einem Benutzer genau durch das System hindurch geht. Ob die Technik dies auch wirklich so erlaubt, sei momentan aussen vor gelassen.
 
-Die CodeBase hoste ich auf GitHub in meinem Repository [(SemArb4_GameLobby)](https://github.com/Euthal02/SemArb4_GameLobby). Mit jedem Push auf den Main Branch wird eine GitHub Actions Pipeline gestartet, welche die beiden Images als Container Image auf die GHCR (GitHub Container Registry) pusht.
+Der wichtige Punkt ist, dass die GameLobby einen weiteren Verteil-Layer darstellt, jedoch gleichzeitig auch nur ein Pod / Service ist.
 
-Von dort wird das Image wieder auf den Kubernetes Cluster deployt.
+Jegliche Images von Containern werden von der GitHub Container Registry bereitgestellt. Mehr dazu im Organisatorischen SEUSAG.
+
+## Organisatorisch
+
+Im Organisatorischen Teil wird beschrieben, wie die Entwickler genau an diesem Projekt arbeiten.
+
+![Organisatorisches SEUSAG](../ressources/diagrams/seusag_organisatorisch.drawio.png)
+
+Darin wird dargestellt mit welcher CodeBase die Entwickler arbeiten, und wie das Repository auf GitHub aufgebaut ist.

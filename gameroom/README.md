@@ -1,3 +1,3 @@
 # Game Room
 
-In diesem Unterordner möchte ich den GameRoom entwickeln.
+In diesem Unterordner wird der Game Room entwickelt.

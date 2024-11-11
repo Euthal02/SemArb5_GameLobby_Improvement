@@ -7,8 +7,8 @@ nav_order: 205
 
 # 2.5 Projektmethode
 
-Wie bereits in den früheren Semesterarbeiten, nutze ich KanBan, zusammen mit einem Scrum Ansatz.
-Das ganze wird möglichst agil, also wenig einschneiden und dynamisch angewedenet.
+Wie bereits in den früheren Semesterarbeiten, wird für diese Arbeit KanBan genutzt, zusammen mit einem Scrum Ansatz.
+Das ganze wird möglichst agil, also wenig einschneidend und dynamisch angewendet.
 
 ## Kanban
 
@@ -32,10 +32,17 @@ Der Kern von Scrum ist ein schrittweiser Ansatz, bei dem das Produkt in kleinen 
 
 ## Kanban und Scrum in meiner Semesterarbeit
 
-Während meiner Semesterarbeit werde ich mit den Projektmanagement-Methoden Kanban und Scrum arbeiten. Kanban ist bereits in GitHub integriert, wo man Boards und Tasks selbst erstellen kann. So habe ich in Form von "Issues" meine Aufgaben aufgelistet, die erledigt werden müssen. Mit Kanban jann ich sehr effizient arbeiten und meine Fortschritte kontinuierlich verfolgen. Durch die verschiedenen Status sehe ich, an welchen Themen ich noch arbeiten muss oder welche bereits abgeschlossen sind.
+Während der Semesterarbeit wird mit den Projektmanagement-Methoden Kanban und Scrum gearbeitet. Kanban ist bereits in GitHub integriert, wo man Boards und Tasks selbst erstellen kann. So sind in Form von "Issues", noch anstehende Aufgaben aufgelistet, die erledigt werden müssen. Jeder Developer kann sich diese "Issues" zuweisen und daran arbeiten.
 
-In GitHub-Projekten können verschiedene Ansichten für Kanban erstellt werden. So habe ich verschiedene Gantt-Diagramme erstellt, um den gesamten Projektfortschritt zu verfolgen und zu überprüfen. Um die Arbeit voranzutreiben, werde ich mit Scrum-Sprints arbeiten. Mit diesen Sprints werte ich meine Zwischenziele aus und reflektiere über den Sprint, um den nächsten produktiver zu gestalten. Während der Semesterarbeit sind insgesamt 4 Sprints geplant.
+Mit Kanban kann sehr effizient der Fortschritt kontinuierlich verfolgt werden, und es ist klar ersichtlich welcher Developer an welchen "Issues" arbeitet. Dazu werden vier Status bereitgestellt:
 
-Hier findet man den Link zu meinem Projektmanagement:
+* Backlog, noch offene Arbeiten ohne zugewiesenen Entwickler.
+* In Progress, offene Arbeiten, welche aber bereits von einem Entwickler zugewiesen worden sind. Der Verlauf der Arbeiten wird mit "Comments" dokumentiert.
+* In Testing, diese Tasks müssen noch manuell von einem zweiten Developer getestet / abgenommen werden.
+* Done, erledigte Arbeiten.
+
+In GitHub-Projekten können verschiedene Ansichten für Kanban erstellt werden. So wurden verschiedene Gantt-Diagramme erstellt, um den gesamten Projektfortschritt zu verfolgen und zu überprüfen. Um die Arbeit voranzutreiben, wird man mit Scrum-Sprints arbeiten. Mit diesen Sprints werden die Zwischenziele ausgewertet und in den Sprintabschlüssen können die Entwickler ihre Erkentnisse des letzten Sprints erwähnen. Während der Semesterarbeit sind insgesamt 4 Sprints geplant.
+
+Hier findet man den Link zum Projektmanagement:
 
 [Projektplanung](https://github.com/users/Euthal02/projects/5)
