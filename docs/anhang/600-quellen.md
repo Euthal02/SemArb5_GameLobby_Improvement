@@ -27,6 +27,14 @@ Die meisten Bilder sind selbst erstellt. Diehenigen, welche aus dem Internet kop
 
 <https://www.talentfoerderungplus.ch/talent-promoter/technische-berufsschule-zuerich>
 
+### 6.1.2 Git Branches
+
+<https://www.bunnyshell.com/blog/what-is-a-feature-branch/>
+
+### 6.1.3 SMART Prinzip
+
+<https://anja-deilmann.coach/leben-veraendern-smart-formel/>
+
 ## 6.2 Hilfsmittel
 
 Welche Hilfsmittel haben wir genutzt?
