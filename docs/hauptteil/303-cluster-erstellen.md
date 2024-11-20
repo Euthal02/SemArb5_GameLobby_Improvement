@@ -11,7 +11,8 @@ Um den Cluster zu erstellen wird ein Account innerhalb der vorhin erwähnten "ad
 
 Mit diesem Access Key kann anschliessend die lokale AWS CLI konfiguriert werden.
 
-Als Standard Region wurde Zürich ausgewählt, dies aus keinem spezifischen Grund.
+Als Standard Region wurde Zürich ausgewählt, dies aus Latenz Gründen.
+Bei einem Spiel ist die Latenz von enormer Wichtigkeit.
 
 ```bash
 mka@Tuxedo-Laptop:~$ aws configure
@@ -21,385 +22,14 @@ Default region name [None]: eu-central-2
 Default output format [None]: json
 ```
 
-## VPC erstellen
+[Wie im Kapitel 3.1 erwähnt,](./301-kubernetes-cluster.md) nutzen wir das Tool `EKSCTL` um einen Cluster mittels wenigen Commands zu erstellen.
 
-Nun kann man mit dem erstellen der effektiven Ressourcen beginnen. Angefangen mit einem VPC.
+## Create Cluster
 
-```bash
-mka@Tuxedo-Laptop:~$ aws ec2 create-vpc --cidr-block 10.0.0.0/16
-{
-    "Vpc": {
-        "CidrBlock": "10.0.0.0/16",
-        "DhcpOptionsId": "dopt-********",
-        "State": "pending",
-        "VpcId": "vpc-*******",
-        "OwnerId": "********",
-        "InstanceTenancy": "default",
-        "Ipv6CidrBlockAssociationSet": [],
-        "CidrBlockAssociationSet": [
-            {
-                "AssociationId": "vpc-cidr-assoc-**********",
-                "CidrBlock": "10.0.0.0/16",
-                "CidrBlockState": {
-                    "State": "associated"
-                }
-            }
-        ],
-        "IsDefault": false
-    }
-}
-mka@Tuxedo-Laptop:~$
-```
-
-### Subnetze im VPC
-
-Ein VPC in AWS erstreckt sich bekanntlich über mehrere Availability-Zones.
-
-Für unsere Zwecke ist aber ein Subentz pro Availability Zone gefordert. Zumindest anhand der Anleitung, dies entspricht aber auch dem Grundgedanken von mehreren Hosts in unterschiedlichen Zonen.
-
-Dies wird folgendermassen erreicht.
+Zuerst wird der Cluster erstellt. Die einzelnen Parameter basieren sich alle auf die Eigenschaften der "Nodegroup". Das bedeutet zusammengefasst, dass für den Cluster 3 Nodes (skalierbar auf 2 - 4 Nodes) erstellt werden, mit einen AmazonLinux auf einem t3.micro Server. Jeder Node kann Pods hosten und ist per SSH erreichbar. Dies wird NICHT empfohlen, haben wir jedoch für Entwickungszwecke so gemacht.
 
 ```bash
-mka@Tuxedo-Laptop:~$ aws ec2 create-subnet --vpc-id vpc-********** --cidr-block 10.0.1.0/24 --availability-zone eu-central-2a
-{
-    "Subnet": {
-        "AvailabilityZone": "eu-central-2a",
-        "AvailabilityZoneId": "euc2-az1",
-        "AvailableIpAddressCount": 251,
-        "CidrBlock": "10.0.1.0/24",
-        "DefaultForAz": false,
-        "MapPublicIpOnLaunch": false,
-        "State": "available",
-        "SubnetId": "subnet-**********",
-        "VpcId": "vpc-**********",
-        "OwnerId": "**********",
-        "AssignIpv6AddressOnCreation": false,
-        "Ipv6CidrBlockAssociationSet": [],
-        "SubnetArn": "arn:aws:ec2:eu-central-2:**********:subnet/subnet-**********",
-        "EnableDns64": false,
-        "Ipv6Native": false,
-        "PrivateDnsNameOptionsOnLaunch": {
-            "HostnameType": "ip-name",
-            "EnableResourceNameDnsARecord": false,
-            "EnableResourceNameDnsAAAARecord": false
-        }
-    }
-}
-mka@Tuxedo-Laptop:~$ aws ec2 create-subnet --vpc-id vpc-********** --cidr-block 10.0.2.0/24 --availability-zone eu-central-2b
-{
-    "Subnet": {
-        "AvailabilityZone": "eu-central-2b",
-        "AvailabilityZoneId": "euc2-az2",
-        "AvailableIpAddressCount": 251,
-        "CidrBlock": "10.0.2.0/24",
-        "DefaultForAz": false,
-        "MapPublicIpOnLaunch": false,
-        "State": "available",
-        "SubnetId": "subnet-**********",
-        "VpcId": "vpc-**********",
-        "OwnerId": "**********",
-        "AssignIpv6AddressOnCreation": false,
-        "Ipv6CidrBlockAssociationSet": [],
-        "SubnetArn": "arn:aws:ec2:eu-central-2:**********:subnet/subnet-**********",
-        "EnableDns64": false,
-        "Ipv6Native": false,
-        "PrivateDnsNameOptionsOnLaunch": {
-            "HostnameType": "ip-name",
-            "EnableResourceNameDnsARecord": false,
-            "EnableResourceNameDnsAAAARecord": false
-        }
-    }
-}
-mka@Tuxedo-Laptop:~$
-```
-
-## Security Group
-
-```bash
-mka@Tuxedo-Laptop:~$ aws ec2 create-security-group --group-name eks-node-group --description "EKS Node Group" --vpc-id vpc-08e20d377549d4455
-{
-    "GroupId": "sg-**********"
-}
-mka@Tuxedo-Laptop:~$
-```
-
-### Inbound Rules
-
-```bash
-mka@Tuxedo-Laptop:~$ aws ec2 authorize-security-group-ingress --group-id sg-************ --protocol tcp --port 22 --cidr 0.0.0.0/0
-{
-    "Return": true,
-    "SecurityGroupRules": [
-        {
-            "SecurityGroupRuleId": "sgr-**********",
-            "GroupId": "sg-**********",
-            "GroupOwnerId": "**********",
-            "IsEgress": false,
-            "IpProtocol": "tcp",
-            "FromPort": 22,
-            "ToPort": 22,
-            "CidrIpv4": "0.0.0.0/0"
-        }
-    ]
-}
-mka@Tuxedo-Laptop:~$ aws ec2 authorize-security-group-ingress --group-id sg-************ --protocol tcp --port 80 --cidr 0.0.0.0/0
-{
-    "Return": true,
-    "SecurityGroupRules": [
-        {
-            "SecurityGroupRuleId": "sgr-**********",
-            "GroupId": "sg-**********",
-            "GroupOwnerId": "**********",
-            "IsEgress": false,
-            "IpProtocol": "tcp",
-            "FromPort": 80,
-            "ToPort": 80,
-            "CidrIpv4": "0.0.0.0/0"
-        }
-    ]
-}
-mka@Tuxedo-Laptop:~$ aws ec2 authorize-security-group-ingress --group-id sg-************ --protocol tcp --port 443 --cidr 0.0.0.0/0
-{
-    "Return": true,
-    "SecurityGroupRules": [
-        {
-            "SecurityGroupRuleId": "sgr-**********",
-            "GroupId": "sg-**********",
-            "GroupOwnerId": "**********",
-            "IsEgress": false,
-            "IpProtocol": "tcp",
-            "FromPort": 443,
-            "ToPort": 443,
-            "CidrIpv4": "0.0.0.0/0"
-        }
-    ]
-}
-mka@Tuxedo-Laptop:~$
-```
-
-## EKS Cluster
-
-```bash
-mka@Tuxedo-Laptop:~$ aws eks create-cluster --name eks-cluster --role-arn arn:aws:iam::**********:role/eksClusterRole --resources-vpc-config subnetIds=subnet-**********,subnet-**********,security
-GroupIds=sg-**********
-{
-    "cluster": {
-        "name": "eks-cluster",
-        "arn": "arn:aws:eks:eu-central-2:**********:cluster/eks-cluster",
-        "createdAt": 1731511678.911,
-        "version": "1.31",
-        "roleArn": "arn:aws:iam::**********:role/eksClusterRole",
-        "resourcesVpcConfig": {
-            "subnetIds": [
-                "subnet-**********",
-                "subnet-**********"
-            ],
-            "securityGroupIds": [
-                "sg-**********"
-            ],
-            "vpcId": "vpc-**********",
-            "endpointPublicAccess": true,
-            "endpointPrivateAccess": false,
-            "publicAccessCidrs": [
-                "0.0.0.0/0"
-            ]
-        },
-        "kubernetesNetworkConfig": {
-            "serviceIpv4Cidr": "172.20.0.0/16",
-            "ipFamily": "ipv4"
-        },
-        "logging": {
-            "clusterLogging": [
-                {
-                    "types": [
-                        "api",
-                        "audit",
-                        "authenticator",
-                        "controllerManager",
-                        "scheduler"
-                    ],
-                    "enabled": false
-                }
-            ]
-        },
-        "status": "CREATING",
-        "certificateAuthority": {},
-        "platformVersion": "eks.10",
-        "tags": {}
-    }
-}
-mka@Tuxedo-Laptop:~$
-```
-
-Damit ist der Cluster bereits erstellt, besitzt aber noch keine Nodes.
-
-![EKS Cluster Up](../ressources/images/aws/eks_cluster_up.PNG)
-
-```bash
-mka@Tuxedo-Laptop:~$ aws eks describe-cluster --name eks-cluster
-{
-    "cluster": {
-        "name": "eks-cluster",
-        "arn": "arn:aws:eks:eu-central-2:**********:cluster/eks-cluster",
-        "createdAt": 1731511678.911,
-        "version": "1.31",
-        "endpoint": "https://EE18D1A425212EE10C34D84A556C9846.yl4.eu-central-2.eks.amazonaws.com",
-        "roleArn": "arn:aws:iam::**********:role/eksClusterRole",
-        "resourcesVpcConfig": {
-            "subnetIds": [
-                "subnet-0b8ab87d15caaee61",
-                "subnet-09297e96ff32f9e7f"
-            ],
-            "securityGroupIds": [
-                "sg-05620a5b6f319f81c"
-            ],
-            "clusterSecurityGroupId": "sg-**********",
-            "vpcId": "vpc-**********",
-            "endpointPublicAccess": true,
-            "endpointPrivateAccess": false,
-            "publicAccessCidrs": [
-                "0.0.0.0/0"
-            ]
-        },
-        "kubernetesNetworkConfig": {
-            "serviceIpv4Cidr": "172.20.0.0/16",
-            "ipFamily": "ipv4"
-        },
-        "logging": {
-            "clusterLogging": [
-                {
-                    "types": [
-                        "api",
-                        "audit",
-                        "authenticator",
-                        "controllerManager",
-                        "scheduler"
-                    ],
-                    "enabled": false
-                }
-            ]
-        },
-        "identity": {
-            "oidc": {
-                "issuer": "https://oidc.eks.eu-central-2.amazonaws.com/id/EE18D1A425212EE10C34D84A556C9846"
-            }
-        },
-        "status": "ACTIVE",
-        "certificateAuthority": {
-            "data": "**********"
-        },
-        "platformVersion": "eks.10",
-        "tags": {}
-    }
-}
-mka@Tuxedo-Laptop:~$
-```
-
-## Nodes
-
-```bash
-mka@Tuxedo-Laptop:~$ aws eks create-nodegroup --cluster-name eks-cluster --nodegroup-name eks-cluster-node-group-subnet1 --node-role arn:aws:iam::**********:role/AmazonEKSNodeRole --subnets subnet-********** --scaling-config minSize=2,maxSize=2,desiredSize=2 --instance-types t3.micro --ami-type AL2_x86_64 --remote-access ec2SshKey=semesterarbeit_admin_access
-{
-    "nodegroup": {
-        "nodegroupName": "eks-cluster-node-group-subnet1",
-        "nodegroupArn": "arn:aws:eks:eu-central-2:**********:nodegroup/eks-cluster/eks-cluster-node-group-subnet1/0cc99316-fa16-8c0e-346d-bf395ae181aa",
-        "clusterName": "eks-cluster",
-        "version": "1.31",
-        "releaseVersion": "1.31.0-20241109",
-        "createdAt": 1731512367.896,
-        "modifiedAt": 1731512367.896,
-        "status": "CREATING",
-        "capacityType": "ON_DEMAND",
-        "scalingConfig": {
-            "minSize": 2,
-            "maxSize": 2,
-            "desiredSize": 2
-        },
-        "instanceTypes": [
-            "t3.micro"
-        ],
-        "subnets": [
-            "subnet-0b8ab87d15caaee61"
-        ],
-        "remoteAccess": {
-            "ec2SshKey": "semesterarbeit_admin_access"
-        },
-        "amiType": "AL2_x86_64",
-        "nodeRole": "arn:aws:iam::**********:role/AmazonEKSNodeRole",
-        "diskSize": 20,
-        "health": {
-            "issues": []
-        },
-        "updateConfig": {
-            "maxUnavailable": 1
-        },
-        "tags": {}
-    }
-}
-mka@Tuxedo-Laptop:~$ aws eks create-nodegroup --cluster-name eks-cluster --nodegroup-name eks-cluster-node-group-subnet2 --node-role arn:aws:iam::**********:role/AmazonEKSNodeRole --subnets subnet-**********
-f9e7f --scaling-config minSize=2,maxSize=2,desiredSize=2 --instance-types t3.micro --ami-type AL2_x86_64 --remote-access ec2SshKey=semesterarbeit_admin_access
-{
-    "nodegroup": {
-        "nodegroupName": "eks-cluster-node-group-subnet2",
-        "nodegroupArn": "arn:aws:eks:eu-central-2:**********:nodegroup/eks-cluster/eks-cluster-node-group-subnet2/86c99317-5294-7bce-f5b3-82f9bed93012",
-        "clusterName": "eks-cluster",
-        "version": "1.31",
-        "releaseVersion": "1.31.0-20241109",
-        "createdAt": 1731512412.929,
-        "modifiedAt": 1731512412.929,
-        "status": "CREATING",
-        "capacityType": "ON_DEMAND",
-        "scalingConfig": {
-            "minSize": 2,
-            "maxSize": 2,
-            "desiredSize": 2
-        },
-        "instanceTypes": [
-            "t3.micro"
-        ],
-        "subnets": [
-            "subnet-09297e96ff32f9e7f"
-        ],
-        "remoteAccess": {
-            "ec2SshKey": "semesterarbeit_admin_access"
-        },
-        "amiType": "AL2_x86_64",
-        "nodeRole": "arn:aws:iam::**********:role/AmazonEKSNodeRole",
-        "diskSize": 20,
-        "health": {
-            "issues": []
-        },
-        "updateConfig": {
-            "maxUnavailable": 1
-        },
-        "tags": {}
-    }
-}
-mka@Tuxedo-Laptop:~$
-```
-
-## Kubectl
-
-```bash
-mka@Tuxedo-Laptop:~$ aws eks update-kubeconfig --region eu-central-2 --name eks-cluster
-Added new context arn:aws:eks:eu-central-2:**********:cluster/eks-cluster to /home/mka/.kube/config
-mka@Tuxedo-Laptop:~$ kubectl version
-Client Version: v1.31.0
-Kustomize Version: v5.4.2
-Server Version: v1.31.2-eks-7f9249a
-mka@Tuxedo-Laptop:~$ kubectl cluster-info
-Kubernetes control plane is running at https://EE18D1A425212EE10C34D84A556C9846.yl4.eu-central-2.eks.amazonaws.com
-CoreDNS is running at https://EE18D1A425212EE10C34D84A556C9846.yl4.eu-central-2.eks.amazonaws.com/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
-
-To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
-mka@Tuxedo-Laptop:~$
-```
-
-
-## EKSCTL Command
-
-```bash
-mka@Tuxedo-Laptop:~$ eksctl create cluster --name=eks-cluster --nodes=5 --instance-types=t3.micro --region=eu-central-2 --ssh-public-key=semesterarbeit_admin_access
+mka@Tuxedo-Laptop:~$ eksctl create cluster --name=eks-cluster --region=eu-central-2 --node-ami-family=AmazonLinux2 --node-types=t3.micro --nodes=3 --nodes-min=2 --nodes-max=4 --ssh-access --ssh-public-key=semesterarbeit_admin_access --max-pods-per-node=20 --enable-ssm
 2024-11-13 20:47:26 [ℹ]  eksctl version 0.194.0
 2024-11-13 20:47:26 [ℹ]  using region eu-central-2
 2024-11-13 20:47:27 [ℹ]  setting availability zones to [eu-central-2b eu-central-2c eu-central-2a]
@@ -453,19 +83,15 @@ mka@Tuxedo-Laptop:~$ eksctl create cluster --name=eks-cluster --nodes=5 --instan
 2024-11-13 20:59:14 [ℹ]  no tasks
 2024-11-13 20:59:14 [✔]  all EKS cluster resources for "eks-cluster" have been created
 2024-11-13 20:59:14 [✔]  created 0 nodegroup(s) in cluster "eks-cluster"
-2024-11-13 20:59:14 [ℹ]  nodegroup "ng-7e8fea54" has 5 node(s)
+2024-11-13 20:59:14 [ℹ]  nodegroup "ng-7e8fea54" has 3 node(s)
 2024-11-13 20:59:14 [ℹ]  node "ip-192-168-53-251.eu-central-2.compute.internal" is ready
 2024-11-13 20:59:14 [ℹ]  node "ip-192-168-63-145.eu-central-2.compute.internal" is ready
 2024-11-13 20:59:14 [ℹ]  node "ip-192-168-67-108.eu-central-2.compute.internal" is ready
-2024-11-13 20:59:14 [ℹ]  node "ip-192-168-7-48.eu-central-2.compute.internal" is ready
-2024-11-13 20:59:14 [ℹ]  node "ip-192-168-78-66.eu-central-2.compute.internal" is ready
-2024-11-13 20:59:14 [ℹ]  waiting for at least 5 node(s) to become ready in "ng-7e8fea54"
-2024-11-13 20:59:14 [ℹ]  nodegroup "ng-7e8fea54" has 5 node(s)
+2024-11-13 20:59:14 [ℹ]  waiting for at least 3 node(s) to become ready in "ng-7e8fea54"
+2024-11-13 20:59:14 [ℹ]  nodegroup "ng-7e8fea54" has 3 node(s)
 2024-11-13 20:59:14 [ℹ]  node "ip-192-168-53-251.eu-central-2.compute.internal" is ready
 2024-11-13 20:59:14 [ℹ]  node "ip-192-168-63-145.eu-central-2.compute.internal" is ready
 2024-11-13 20:59:14 [ℹ]  node "ip-192-168-67-108.eu-central-2.compute.internal" is ready
-2024-11-13 20:59:14 [ℹ]  node "ip-192-168-7-48.eu-central-2.compute.internal" is ready
-2024-11-13 20:59:14 [ℹ]  node "ip-192-168-78-66.eu-central-2.compute.internal" is ready
 2024-11-13 20:59:14 [✔]  created 1 managed nodegroup(s) in cluster "eks-cluster"
 2024-11-13 20:59:16 [ℹ]  kubectl command should work with "/home/mka/.kube/config", try 'kubectl get nodes'
 2024-11-13 20:59:16 [✔]  EKS cluster "eks-cluster" in "eu-central-2" region is ready
@@ -474,8 +100,6 @@ NAME                                              STATUS   ROLES    AGE   VERSIO
 ip-192-168-53-251.eu-central-2.compute.internal   Ready    <none>   94s   v1.30.4-eks-a737599
 ip-192-168-63-145.eu-central-2.compute.internal   Ready    <none>   98s   v1.30.4-eks-a737599
 ip-192-168-67-108.eu-central-2.compute.internal   Ready    <none>   84s   v1.30.4-eks-a737599
-ip-192-168-7-48.eu-central-2.compute.internal     Ready    <none>   92s   v1.30.4-eks-a737599
-ip-192-168-78-66.eu-central-2.compute.internal    Ready    <none>   94s   v1.30.4-eks-a737599
 mka@Tuxedo-Laptop:~$ kubectl version
 Client Version: v1.31.0
 Kustomize Version: v5.4.2
@@ -483,6 +107,148 @@ Server Version: v1.30.6-eks-7f9249a
 mka@Tuxedo-Laptop:~$ kubectl cluster-info
 Kubernetes control plane is running at https://7D84FF8A8DE6F56A20A9B69EA38F3709.yl4.eu-central-2.eks.amazonaws.com
 CoreDNS is running at https://7D84FF8A8DE6F56A20A9B69EA38F3709.yl4.eu-central-2.eks.amazonaws.com/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+mka@Tuxedo-Laptop:~$
+```
+
+Wie man sehen kann, wird die lokale Kubeconfig des Nutzers direkt mit einer neuen Config ergänzt. Dies reicht bereits aus, um erste Pods auf diesem Cluster zu deployen.
+
+## Kubectl Access
+
+Momentan kann noch jeder die Kubernetes API erreichen. Aus Sicherheitsgründen, wollen wir aber dass nur Marco Kälin von seiner festen Heimadresse dies kann. Zusätzlich muss man den API Access auf die privaten Interfaces erlauben, damit die Hosts untereinander kommunizieren können.
+
+```bash
+mka@Tuxedo-Laptop:~$ eksctl utils update-cluster-vpc-config --cluster=eks-cluster --public-access-cidrs=45.94.88.37/32 --private-access=true --approve
+2024-11-15 18:59:54 [ℹ]  using region eu-central-2
+2024-11-15 18:59:54 [ℹ]  current public access CIDRs: [0.0.0.0/0]
+2024-11-15 18:59:54 [ℹ]  will update public access CIDRs for cluster "eks-cluster" in "eu-central-2" to: [45.94.88.37/32]
+2024-11-15 18:59:54 [ℹ]  will update Kubernetes API endpoint access for cluster "eks-cluster" in "eu-central-2" to: privateAccess=true, publicAccess=true
+2024-11-15 19:01:15 [✔]  Kubernetes API endpoint access for cluster "eks-cluster" in "eu-central-2" has been updated to: privateAccess=true, publicAccess=true
+2024-11-15 19:01:15 [✔]  public access CIDRs for cluster "eks-cluster" in "eu-central-2" have been updated to: [45.94.88.37/32]
+mka@Tuxedo-Laptop:~$
+```
+
+## Upgrade Kubectl
+
+Die Kubernetes Version des Cluster ist bereits OutOfDate und kann mittels diesem Command geupgraded werden.
+
+```bash
+mka@Tuxedo-Laptop:~$ eksctl upgrade cluster --name=eks-cluster --approve
+2024-11-15 19:19:18 [ℹ]  will upgrade cluster "eks-cluster" control plane from current version "1.30" to "1.31"
+2024-11-15 19:27:47 [✔]  cluster "eks-cluster" control plane has been upgraded to version "1.31"
+2024-11-15 19:27:47 [ℹ]  you will need to follow the upgrade procedure for all of nodegroups and add-ons
+2024-11-15 19:27:48 [ℹ]  re-building cluster stack "eksctl-eks-cluster-cluster"
+2024-11-15 19:27:48 [✔]  all resources in cluster stack "eksctl-eks-cluster-cluster" are up-to-date
+2024-11-15 19:27:48 [ℹ]  checking security group configuration for all nodegroups
+2024-11-15 19:27:48 [ℹ]  all nodegroups have up-to-date cloudformation templates
+mka@Tuxedo-Laptop:~$
+```
+
+## EKSCTL und die AWS CLI
+
+In der AWS Konsole ist der Cluster nun sichtbar.
+
+![EKS Cluster Up](../ressources/images/aws/eks_cluster_up.PNG)
+
+EKSCTL arbeitet mit den selben AWS CLI Tools, welche dem User zur Verfügung steht, daher kann der User auch alles selbst betrachten.
+Es bietet lediglich die Konsolidierung mehrerer Schritte in einem an.
+
+```bash
+mka@Tuxedo-Laptop:~$ aws eks describe-cluster --name eks-cluster
+{
+    "cluster": {
+        "name": "eks-cluster",
+        "arn": "arn:aws:eks:eu-central-2:**********:cluster/eks-cluster",
+        "createdAt": "2024-11-13T20:47:52.683000+01:00",
+        "version": "1.31",
+        "endpoint": "https://7D84FF8A8DE6F56A20A9B69EA38F3709.yl4.eu-central-2.eks.amazonaws.com",
+        "roleArn": "arn:aws:iam:::**********::role/eksctl-eks-cluster-cluster-ServiceRole-fzpqVGg3BJdN",
+        "resourcesVpcConfig": {
+            "subnetIds": [
+                "subnet-03594ab6641a77f40",
+                "subnet-00e047bb1f80ac221",
+                "subnet-0501a4a696820f9c3",
+                "subnet-021ebe2d294c1e28a",
+                "subnet-0330400845cdb4243",
+                "subnet-09e86b5f25b3056cd"
+            ],
+            "securityGroupIds": [
+                "sg-016f2ba91d6bc076f"
+            ],
+            "clusterSecurityGroupId": "sg-04ee0f894109048e4",
+            "vpcId": "vpc-0bd3db5f85b7362b9",
+            "endpointPublicAccess": true,
+            "endpointPrivateAccess": true,
+            "publicAccessCidrs": [
+                "45.94.88.37/32"
+            ]
+        },
+        "kubernetesNetworkConfig": {
+            "serviceIpv4Cidr": "10.100.0.0/16",
+            "ipFamily": "ipv4"
+        },
+        "logging": {
+            "clusterLogging": [
+                {
+                    "types": [
+                        "api",
+                        "audit",
+                        "authenticator",
+                        "controllerManager",
+                        "scheduler"
+                    ],
+                    "enabled": false
+                }
+            ]
+        },
+        "identity": {
+            "oidc": {
+                "issuer": "https://oidc.eks.eu-central-2.amazonaws.com/id/7D84FF8A8DE6F56A20A9B69EA38F3709"
+            }
+        },
+        "status": "ACTIVE",
+        "certificateAuthority": {
+            "data": ":**********:"
+        },
+        "platformVersion": "eks.12",
+        "tags": {
+            "aws:cloudformation:stack-name": "eksctl-eks-cluster-cluster",
+            "alpha.eksctl.io/cluster-name": "eks-cluster",
+            "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-central-2::**********::stack/eksctl-eks-cluster-cluster/1c616140-a1f8-11ef-9e73-0a491f060139",
+            "eksctl.cluster.k8s.io/v1alpha1/cluster-name": "eks-cluster",
+            "alpha.eksctl.io/cluster-oidc-enabled": "true",
+            "aws:cloudformation:logical-id": "ControlPlane",
+            "alpha.eksctl.io/eksctl-version": "0.194.0",
+            "Name": "eksctl-eks-cluster-cluster/ControlPlane"
+        },
+        "health": {
+            "issues": []
+        },
+        "accessConfig": {
+            "authenticationMode": "API_AND_CONFIG_MAP"
+        },
+        "upgradePolicy": {
+            "supportType": "EXTENDED"
+        }
+    }
+}
+```
+
+## Kubectl
+
+Sollte die Kubeconfig jemals verloren gehen, kann diese ganz einfach neu gezogen werden.
+
+```bash
+mka@Tuxedo-Laptop:~$ aws eks update-kubeconfig --region eu-central-2 --name eks-cluster
+Added new context arn:aws:eks:eu-central-2:**********:cluster/eks-cluster to /home/mka/.kube/config
+mka@Tuxedo-Laptop:~$ kubectl version
+Client Version: v1.31.0
+Kustomize Version: v5.4.2
+Server Version: v1.31.2-eks-7f9249a
+mka@Tuxedo-Laptop:~$ kubectl cluster-info
+Kubernetes control plane is running at https://EE18D1A425212EE10C34D84A556C9846.yl4.eu-central-2.eks.amazonaws.com
+CoreDNS is running at https://EE18D1A425212EE10C34D84A556C9846.yl4.eu-central-2.eks.amazonaws.com/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 mka@Tuxedo-Laptop:~$
