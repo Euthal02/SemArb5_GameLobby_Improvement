@@ -15,8 +15,11 @@ Deshalb wird die technische Umsetzung damit starten, sobald dies erledigt ist, k
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
 Auf Hinweis von [Fabio Beti (Mitstudent von Marco Kälin)](https://github.com/fo-b) wird der Kubernetes Cluster auf AWS aufgesetzt.
-Dazu wird die folgende Anleitung verwendet:
+Zuerst war der Plan, dies nach dem folgendem Tutorial zu erstellen.
 
 <https://medium.com/@lubomir-tobek/eks-cluster-with-aws-cli-d72e4d77a11b>
+
+Ziemlich rasch wurde jedoch klar, dass das Tool `EKSCTL` das Ganze nochmals vereinfachen kann.
+[Mehr dazu im Kapitel 3.3](./303-cluster-erstellen.md)
 
 Bevor jedoch diese Anleitung umgesetzt werden kann, muss überhaupt [ein AWS Account erstellt werden.](./302-aws-informationen.html)
