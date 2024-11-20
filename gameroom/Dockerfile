@@ -1,18 +1,17 @@
-# Basis-Image
-FROM python:3.10-slim
+# Base python package
+FROM python:3.12-slim
 
-# Arbeitsverzeichnis setzen
+# Working directory
 WORKDIR /app
 
-# Abhängigkeiten kopieren und installieren
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# set flask to debug mode
+ENV FLASK_DEBUG=1
 
-# App-Code kopieren
-COPY . .
+# Copy the dependencies
+COPY requirements.txt requirements.txt
 
-# Port für WebSocket-Verbindungen
-EXPOSE 5000
+# Install the dependencies
+RUN pip install -r requirements.txt
 
-# Startbefehl
-CMD ["python", "app.py"]
+# Executable commands
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=5000", "--reload"]
