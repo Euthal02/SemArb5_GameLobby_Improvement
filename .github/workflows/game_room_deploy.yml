@@ -63,28 +63,15 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ${{ vars.REGISTRY }}
 
-    # - name: Set Image Tags
-    #   id: vars
-    #   run: |
-    #     UPPERCASE_USERNAME="${{github.repository_owner}}"
-    #     TAG_COMMIT=${{ github.sha }}
-    #     IMAGE_NAME=ghcr.io/${UPPERCASE_USERNAME,,}/pong-gameroom
-    #     echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
-    #     echo "TAG_COMMIT=$TAG_COMMIT" >> $GITHUB_ENV
-
     - name: Extract metadata (tags, labels) for Docker
       id: meta
       uses: docker/metadata-action@master
       with:
         images: ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}
+        flavor: |
+            latest=auto
         tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
+            type=sha,format=long
 
     - name: Build and push Docker image
       id: push
@@ -92,19 +79,9 @@ jobs:
       with:
         file: ${{vars.SUBFOLDER}}/Dockerfile.prod
         context: ${{vars.SUBFOLDER}}/.
-        push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-
-    # - name: Build Docker image
-    #   run: |
-    #     cd gameroom/
-    #     docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:${TAG_COMMIT} -f Dockerfile.prod .
-
-    # - name: Push Docker Image
-    #   run: |
-    #     docker push $IMAGE_NAME:latest
-    #     docker push $IMAGE_NAME:${TAG_COMMIT}
+        push: true
 
 
 #   deploy-job:
