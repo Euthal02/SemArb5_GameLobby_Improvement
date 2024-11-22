@@ -54,31 +54,34 @@ jobs:
       packages: write
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@main
 
     - name: Log in to GHCR
-      uses: docker/login-action@v2
+      uses: docker/login-action@master
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ${{ vars.REGISTRY }}
 
-    - name: Set Image Tags
-      id: vars
-      run: |
-        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/pong-gameroom
-        TAG_COMMIT=${{ github.sha }}
-        echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
-        echo "TAG_COMMIT=$TAG_COMMIT" >> $GITHUB_ENV
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@master
+      with:
+        images: ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}
+        flavor: |
+            latest=true
+        tags: |
+            type=sha,format=long
 
-    - name: Build Docker image
-      run: |
-        cd gameroom/
-        docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:${TAG_COMMIT} -f Dockerfile.prod .
-
-    - name: Push Docker Image
-      run: |
-        docker push $IMAGE_NAME:latest
-        docker push $IMAGE_NAME:${TAG_COMMIT}
+    - name: Build and push Docker image
+      id: push
+      uses: docker/build-push-action@master
+      with:
+        file: ${{vars.SUBFOLDER}}/Dockerfile.prod
+        context: ${{vars.SUBFOLDER}}/.
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        push: true
 
 
 #   deploy-job:
