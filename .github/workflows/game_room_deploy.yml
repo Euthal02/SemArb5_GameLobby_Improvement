@@ -61,6 +61,7 @@ jobs:
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
 
     - name: Set Image Tags
       id: vars
