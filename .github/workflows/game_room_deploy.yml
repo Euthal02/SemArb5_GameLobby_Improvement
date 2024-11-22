@@ -54,33 +54,56 @@ jobs:
       packages: write
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@main
 
     - name: Log in to GHCR
-      uses: docker/login-action@v2
+      uses: docker/login-action@master
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        registry: ghcr.io
+        registry: ${{ env.REGISTRY }}
 
-    - name: Set Image Tags
-      id: vars
-      run: |
-        UPPERCASE_USERNAME="${{github.repository_owner}}"
-        TAG_COMMIT=${{ github.sha }}
-        IMAGE_NAME=ghcr.io/${UPPERCASE_USERNAME,,}/pong-gameroom
-        echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
-        echo "TAG_COMMIT=$TAG_COMMIT" >> $GITHUB_ENV
+    # - name: Set Image Tags
+    #   id: vars
+    #   run: |
+    #     UPPERCASE_USERNAME="${{github.repository_owner}}"
+    #     TAG_COMMIT=${{ github.sha }}
+    #     IMAGE_NAME=ghcr.io/${UPPERCASE_USERNAME,,}/pong-gameroom
+    #     echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+    #     echo "TAG_COMMIT=$TAG_COMMIT" >> $GITHUB_ENV
 
-    - name: Build Docker image
-      run: |
-        cd gameroom/
-        docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:${TAG_COMMIT} -f Dockerfile.prod .
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@master
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
 
-    - name: Push Docker Image
-      run: |
-        docker push $IMAGE_NAME:latest
-        docker push $IMAGE_NAME:${TAG_COMMIT}
+    - name: Build and push Docker image
+      id: push
+      uses: docker/build-push-action@master
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+
+    # - name: Build Docker image
+    #   run: |
+    #     cd gameroom/
+    #     docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:${TAG_COMMIT} -f Dockerfile.prod .
+
+    # - name: Push Docker Image
+    #   run: |
+    #     docker push $IMAGE_NAME:latest
+    #     docker push $IMAGE_NAME:${TAG_COMMIT}
 
 
 #   deploy-job:
