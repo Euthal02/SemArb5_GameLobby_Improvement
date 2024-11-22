@@ -90,8 +90,8 @@ jobs:
       id: push
       uses: docker/build-push-action@master
       with:
-        file: Dockerfile.prod
-        context: .
+        file: ${{vars.SUBFOLDER}}/Dockerfile.prod
+        context: ${{vars.SUBFOLDER}}/.
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
