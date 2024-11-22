@@ -69,7 +69,7 @@ jobs:
       with:
         images: ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}
         flavor: |
-            latest=auto
+            latest=true
         tags: |
             type=sha,format=long
 
