@@ -61,7 +61,7 @@ jobs:
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        registry: ${{ env.REGISTRY }}
+        registry: ${{ vars.REGISTRY }}
 
     # - name: Set Image Tags
     #   id: vars
@@ -76,7 +76,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@master
       with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        images: ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}
         tags: |
             type=schedule
             type=ref,event=branch
