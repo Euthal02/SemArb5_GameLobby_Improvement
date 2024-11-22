@@ -90,6 +90,7 @@ jobs:
       id: push
       uses: docker/build-push-action@master
       with:
+        file: Dockerfile.prod
         context: .
         push: true
         tags: ${{ steps.meta.outputs.tags }}
