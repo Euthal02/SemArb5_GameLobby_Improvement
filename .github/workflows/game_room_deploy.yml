@@ -66,9 +66,9 @@ jobs:
     - name: Set Image Tags
       id: vars
       run: |
-        echo "LOWERCASE_USERNAME=${${{github.repository_owner}},,}" >>${GITHUB_ENV}
-        IMAGE_NAME=ghcr.io/$LOWERCASE_USERNAME/pong-gameroom
+        UPPERCASE_USERNAME="${{github.repository_owner}}"
         TAG_COMMIT=${{ github.sha }}
+        IMAGE_NAME=ghcr.io/${UPPERCASE_USERNAME,,}/pong-gameroom
         echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
         echo "TAG_COMMIT=$TAG_COMMIT" >> $GITHUB_ENV
 
