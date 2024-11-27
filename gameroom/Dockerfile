@@ -4,14 +4,17 @@ FROM python:3.12-slim
 # Working directory
 WORKDIR /app
 
-# set flask to debug mode
-ENV FLASK_DEBUG=1
+# add files
+ADD . /app
 
-# Copy the dependencies
-COPY requirements.txt requirements.txt
-
-# Install the dependencies
+# Install requirements 
 RUN pip install -r requirements.txt
 
-# Executable commands
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=5000", "--reload"]
+# Install Gunicorn 
+RUN pip install gunicorn==21.2
+
+# for flask web server
+EXPOSE 5000
+
+# This is the runtime command for the container
+CMD gunicorn --worker-class eventlet --bind 0.0.0.0:5000 wsgi:app
