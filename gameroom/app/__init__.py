@@ -19,7 +19,6 @@ players = {}
 def setup_game():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret!'
-    socketio = SocketIO(app, cors_allowed_origins="*")
 
     # this just returns the basic index.html
     @app.route("/")
@@ -29,6 +28,8 @@ def setup_game():
     @app.route('/health')
     def health():
         return "OK", 200
+
+    socketio = SocketIO(app, async_mode="eventlet", cors_allowed_origins="*")
 
     @socketio.on("connect")
     def on_connect():
