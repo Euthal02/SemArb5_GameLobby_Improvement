@@ -29,8 +29,7 @@ Default output format [None]: json
 Zuerst wird der Cluster erstellt. Die einzelnen Parameter basieren sich alle auf die Eigenschaften der "Nodegroup". Das bedeutet zusammengefasst, dass für den Cluster 3 Nodes (skalierbar auf 2 - 4 Nodes) erstellt werden, mit einen AmazonLinux auf einem t3.micro Server. Jeder Node kann Pods hosten und ist per SSH erreichbar. Dies wird NICHT empfohlen, haben wir jedoch für Entwickungszwecke so gemacht.
 
 ```bash
-mka@Tuxedo-Laptop:~$ eksctl create cluster --name=eks-cluster --region=eu-central-2 --node-ami-family=AmazonLinux2 --nodes=2 --nodes-min=1 --nodes-max=3 --ssh-access --ssh-public-key=semesterarbeit_admin_access
---max-pods-per-node=20 --enable-ssm --spot --with-oidc
+mka@Tuxedo-Laptop:~$ eksctl create cluster --name=eks-cluster --region=eu-central-2 --node-ami-family=AmazonLinux2 --nodes=2 --nodes-min=1 --nodes-max=3 --ssh-access --ssh-public-key=semesterarbeit_admin_access --max-pods-per-node=20 --enable-ssm --spot --with-oidc
 2024-11-25 20:17:31 [!]  SSM is now enabled by default; `ssh.enableSSM` is deprecated and will be removed in a future release
 2024-11-25 20:17:31 [ℹ]  eksctl version 0.194.0
 2024-11-25 20:17:31 [ℹ]  using region eu-central-2

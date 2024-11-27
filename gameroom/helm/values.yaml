@@ -1,4 +1,4 @@
-namespace: pong-gameroom-namespace
+namespace: pong-gameroom
 
 replicaCount: 1
 
