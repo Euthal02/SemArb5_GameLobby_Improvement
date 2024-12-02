@@ -47,7 +47,7 @@ jobs:
   
   build-job:
     runs-on: ubuntu-latest
-    environment: gameroom
+    environment: gamelobby
     # needs: test-job
     permissions:
       contents: read
