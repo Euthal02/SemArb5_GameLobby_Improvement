@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Lobby</title>
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+        #lobby-container {
+            margin: 20px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #scoreboard {
+            margin-top: 30px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 50%;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #scoreboard h3 {
+            margin: 0 0 10px 0;
+        }
+        #scoreboard ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #scoreboard li {
+            padding: 5px 0;
+            font-size: 16px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        iframe {
+            margin-top: 20px;
+            width: 800px;
+            height: 650px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="lobby-container">
+        <h1>Welcome to Pong Lobby</h1>
+        <div>
+            <input type="text" id="player-name" placeholder="Enter your name" />
+            <button onclick="joinLobby()">Join Lobby</button>
+        </div>
+        <div id="scoreboard">
+            <h3>Scoreboard</h3>
+            <ul id="player-list">
+                <!-- Player scores will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+    <iframe src="http://localhost:5000"></iframe>
+
+    <script>
+        // Connect to the server via Socket.IO
+        const socket = io("http://localhost:80");
+        const playerList = document.getElementById("player-list");
+
+        // Function to join the lobby
+        function joinLobby() {
+            const playerName = document.getElementById("player-name").value.trim();
+            if (playerName) {
+                socket.emit("join_lobby", { name: playerName });
+            } else {
+                alert("Please enter your name!");
+            }
+        }
+
+        // Update the scoreboard when player data changes
+        socket.on("update_players", (players) => {
+            playerList.innerHTML = ""; // Clear the list
+            players.forEach(player => {
+                const li = document.createElement("li");
+                li.textContent = `${player.name}: ${player.score} points`;
+                playerList.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>

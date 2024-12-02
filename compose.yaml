@@ -1,0 +1,20 @@
+services:
+  semarb4_game_room_dev:
+    container_name: semarb4_game_room_dev
+    restart: no
+    build:
+      context: gameroom/.
+    ports:
+      - 5000:5000
+    volumes:
+      - ./gameroom/:/app
+
+  semarb4_game_lobby_dev:
+    container_name: semarb4_game_lobby_dev
+    restart: no
+    build:
+      context: gamelobby/.
+    ports:
+      - 80:80
+    volumes:
+      - ./gamelobby/:/app

@@ -17,4 +17,4 @@ RUN pip install gunicorn==21.2
 EXPOSE 5000
 
 # This is the runtime command for the container
-CMD gunicorn --worker-class eventlet --bind 0.0.0.0:5000 wsgi:app
+CMD [ "gunicorn", "--worker-class", "eventlet", "--bind", "0.0.0.0:5000", "wsgi:app" ]
