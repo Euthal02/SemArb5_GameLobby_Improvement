@@ -26,7 +26,16 @@
         <script>
             const canvas = document.getElementById("gameCanvas");
             const ctx = canvas.getContext("2d");
+            const waitingBanner = document.getElementById("waitingBanner");
             const socket = io();
+
+            // display as long as there aren't enough players
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = "40px Arial";
+            ctx.fillStyle = "white";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("Waiting for another player to join...", canvas.width / 2, canvas.height / 2);
 
             let playerID = null;
             let gameState= null;
@@ -45,8 +54,14 @@
                 document.getElementById("status").textContent = `You are Player ${playerID}`;
             });
 
-            socket.on("full", () => {
-                document.getElementById("status").textContent = "The game is full. Try again later.";
+            socket.on("disconnect", () => {
+                // create this before the connection gets capped
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.font = "50px Arial";
+                ctx.fillStyle = "white";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText("Game Room full...", canvas.width / 2, canvas.height / 2);
             });
 
             socket.on("game_state", (state) => {
@@ -57,9 +72,9 @@
                 // Draw paddles
                 ctx.fillStyle = "white";
                 //player 1 paddle at the edge
-                ctx.fillRect(0, state.paddles.player1, state.paddle_width, state.paddle_height); // Player 1 paddle
+                ctx.fillRect(0, state.paddles.player1, state.paddle_width, state.paddle_height);
                 // player 2 paddle the widht of the paddle distanced from the other edge
-                ctx.fillRect(canvas.width - state.paddle_width, state.paddles.player2, state.paddle_width, state.paddle_height); // Player 2 paddle
+                ctx.fillRect(canvas.width - state.paddle_width, state.paddles.player2, state.paddle_width, state.paddle_height);
 
                 // Draw ball
                 ctx.beginPath();

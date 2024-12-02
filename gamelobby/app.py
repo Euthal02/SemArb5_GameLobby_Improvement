@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
+from flask_cors import CORS
 
 app = Flask(__name__)
-socketio = SocketIO(app)
+CORS(app, send_wildcard=True)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 players = {}  # Speichert Spielerinformationen
 
@@ -15,6 +17,10 @@ def join_lobby(data):
     name = data["name"]
     players[request.sid] = {"name": name, "score": 0}
     emit("update_players", list(players.values()), broadcast=True)
+
+@socketio.on("join_game")
+def join_game(data):
+    name = data["name"]
 
 @socketio.on("disconnect")
 def disconnect():
