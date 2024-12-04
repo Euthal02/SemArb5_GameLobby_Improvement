@@ -15,6 +15,7 @@ services:
     restart: no
     build:
       context: gamelobby/.
+      dockerfile: Dockerfile.local
     ports:
       - 80:80
     volumes:

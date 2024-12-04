@@ -109,11 +109,30 @@
 
         <script>
             const socket = io("http://localhost");
+            const playerName = ""
             const playerList = document.getElementById("player-list");
             const gameFrame = document.getElementById("game-frame");
             const errorMessage = document.getElementById("error-message");
             const scoreboard = document.getElementById("scoreboard");
             const gameroom_button = document.getElementById("gameroom_button")
+        
+            var input = document.getElementById("player-name");
+            input.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    joinLobby()
+                }
+            }); 
+
+            function joinLobby() {
+                const playerName = document.getElementById("player-name").value.trim();
+                if (playerName) {
+                    gameroom_button.style.display = "";
+                    scoreboard.classList.add("visible");
+                    socket.emit("join_lobby", { name: playerName })
+                } else {
+                    alert("Please enter your name!");
+                }
+            }
 
             function joinGame() {
                 // Prüfe die Spieleranzahl im Room
@@ -125,28 +144,20 @@
                             gameFrame.src = "http://localhost:5000";
                             gameFrame.style.display = "";
                             errorMessage.style.display = "none";
+                            gameroom_button.style.display = "none";
 
                             socket.emit("join_game", { name: playerName });
                         } else {
                             // Room ist voll: Zeige eine Fehlermeldung an
-                            gameFrame.style.display = "none";
                             errorMessage.style.display = "";
+                            gameFrame.style.display = "none";
+                            gameroom_button.style.display = "none";
                         }
                     });
             }
 
-            function joinLobby() {
-                const playerName = document.getElementById("player-name").value.trim();
-                if (playerName) {
-                    gameroom_button.style.display = "";
-                    scoreboard.classList.add("visible");
-                } else {
-                    alert("Please enter your name!");
-                }
-            }
-
             // Spielerinformationen aktualisieren
-            socket.on("update_players", (players) => {
+            socket.on("update_scoreboard", (players) => {
                 playerList.innerHTML = ""; // Liste leeren
                 players.forEach(player => {
                     const li = document.createElement("li");

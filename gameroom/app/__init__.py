@@ -25,6 +25,7 @@ def setup_game():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret!'
     CORS(app, send_wildcard=True)
+    socketio = SocketIO(app, async_mode="eventlet", cors_allowed_origins="*")
 
     # this just returns the basic index.html
     @app.route("/")
@@ -39,11 +40,10 @@ def setup_game():
     def player_count():
         return jsonify({"player_count": len(players.keys())})
 
-    socketio = SocketIO(app, async_mode="eventlet", cors_allowed_origins="*")
-
     @socketio.on("connect")
     def on_connect():
         global players
+        socketio.start_background_task(game_loop)
         if len(players.keys()) < 2:
             if 1 not in players.values():
                 player_id = 1
@@ -87,7 +87,5 @@ def setup_game():
                 pass
 
             socketio.sleep(0.03)  # 30 FPS
-
-    socketio.start_background_task(game_loop)
 
     return app, socketio
