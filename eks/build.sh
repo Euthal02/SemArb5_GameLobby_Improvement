@@ -15,3 +15,6 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n ku
 wget https://raw.githubusercontent.com/aws/eks-charts/master/stable/aws-load-balancer-controller/crds/crds.yaml
 kubectl apply -f crds.yaml
 
+# remove downloaded files
+rm -f crds.yaml
+rm -f iam_policy.json

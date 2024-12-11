@@ -40,11 +40,21 @@
             let playerID = null;
             let gameState= null;
 
-            document.addEventListener("mousemove", (e) => {
+            window.addEventListener('message', (event) => {
+                if (event.data.action === 'fetch_scores' && gameState) {
+                    scores = gameState.scores
+                    parent.postMessage({ action: "updateScore", scores }, '*');
+                } else if (event.data.action === 'update_username') {
+                    console.log(event.data)
+                    socket.emit("update_username", { username: event.data.data });
+                }
+            });
+
+            document.addEventListener("mousemove", (event) => {
                 if (playerID && gameState) {
                     const rect = canvas.getBoundingClientRect();
                     // the position of the paddle is determined by the center of the paddle, i.e. the half of the height
-                    const paddlePos = e.clientY - rect.top - (gameState.paddle_height/2);
+                    const paddlePos = event.clientY - rect.top - (gameState.paddle_height/2);
                     socket.emit("move_paddle", { player: "player"+playerID, position: paddlePos });
                 }
             });
@@ -52,6 +62,7 @@
             socket.on("player_id", (id) => {
                 playerID = id;
                 document.getElementById("status").textContent = `You are Player ${playerID}`;
+                window.parent.postMessage({ action: "playerId", playerID }, '*');
             });
 
             socket.on("disconnect", () => {
@@ -84,8 +95,10 @@
                 // Draw scores
                 ctx.font = "20px Arial";
                 ctx.fillStyle = "white";
-                ctx.fillText(state.scores.player1, canvas.width / 4, 30); // Player 1 score
-                ctx.fillText(state.scores.player2, (canvas.width * 3) / 4, 30); // Player 2 score
+                ctx.fillText(state.scores.player1.username, canvas.width / 4, 20); // Player 1 username
+                ctx.fillText(state.scores.player1.score, canvas.width / 4, 50); // Player 1 score
+                ctx.fillText(state.scores.player2.username, (canvas.width * 3) / 4, 20); // Player 2 username
+                ctx.fillText(state.scores.player2.score, (canvas.width * 3) / 4, 50); // Player 2 score
 
                 // Draw Central Line
                 ctx.setLineDash([5, 3]); /*dashes are 5px and spaces are 3px*/

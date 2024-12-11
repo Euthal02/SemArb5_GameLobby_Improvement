@@ -22,25 +22,25 @@ def create_lobby():
         name = data["name"]
         players[request.sid] = {"name": name, "score": 0}
 
-    @socketio.on("join_game")
-    def join_game(data):
-        print(data)
-        print(players)
-        # ToDo: implement logic for passing the username
-
     @socketio.on("disconnect")
     def disconnect():
         players.pop(request.sid, None)
 
-    # @socketio.on("update_score")
-    # def update_score(data):
-    #     if request.sid in players:
-    #         players[request.sid]["score"] = data["score"]
-    #     emit("update_players", list(players.values()), broadcast=True)
+    @socketio.on("update_score")
+    def update_score(data):
+        if request.sid in players and data:
+            players[request.sid]["score"] = data[f"player{players[request.sid]['playerId']}"]["score"]
+
+    @socketio.on("update_player_id")
+    def update_player_id(data):
+        if request.sid in players:
+            players[request.sid]["playerId"] = data
+            socketio.emit("update_username")
 
     # Background scoreboard loop
     def update_scoreboard():
         while True:
+            socketio.emit("fetch_scores")
             players_list = []
             if len(players.keys()) >= 1:
                 for player in players.keys():

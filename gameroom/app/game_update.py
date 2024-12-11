@@ -19,20 +19,21 @@ def update_game(game_state_dict, socketio_object):
         if paddles["player1"] <= ball["y"] <= paddles["player1"] + game_state_dict["paddle_height"]:
             ball["dx"] *= -1
         else:
-            game_state_dict["scores"]["player2"] += 1
+            game_state_dict["scores"]["player2"]["score"] += 1
             game_state_dict = reset_ball(game_state_dict)
     elif ball["x"] >= game_state_dict["width"] - game_state_dict["paddle_width"]:
         if paddles["player2"] <= ball["y"] <= paddles["player2"] + game_state_dict["paddle_height"]:
             ball["dx"] *= -1
         else:
-            game_state_dict["scores"]["player1"] += 1
+            game_state_dict["scores"]["player1"]["score"] += 1
             game_state_dict = reset_ball(game_state_dict)
 
     # Broadcast game state to all clients
     socketio_object.emit("game_state", game_state_dict)
 
 def get_random_ball_speed():
-    return rand_choice([-7, -6, -5, -4, 4, 5, 6, 7])
+    # return rand_choice([-7, -6, -5, -4, 4, 5, 6, 7])
+    return rand_choice([-5, -4, -3, 3, 4, 5])
 
 def reset_ball(game_state_dict):
     game_state_dict["ball"] = {

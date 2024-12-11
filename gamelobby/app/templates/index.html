@@ -29,6 +29,7 @@
                 padding: 10px 20px;
                 font-size: 16px;
                 cursor: pointer;
+                transition: right 0.5s ease;
             }
 
             #scoreboard {
@@ -99,7 +100,7 @@
                 <!-- Spieler-Score wird hier dynamisch eingefügt -->
             </ul>
         </div>
-        <hr class="rounded">
+        <hr id="divider" class="rounded">
         <div style="text-align: center;">
             <button id="gameroom_button" style="display: none;" onclick="joinGame()">Join Game</button>
             <iframe id="game-frame" style="display: none;"></iframe>
@@ -109,12 +110,14 @@
 
         <script>
             const socket = io("http://localhost");
-            const playerName = ""
+            var playerName = ""
             const playerList = document.getElementById("player-list");
             const gameFrame = document.getElementById("game-frame");
             const errorMessage = document.getElementById("error-message");
             const scoreboard = document.getElementById("scoreboard");
             const gameroom_button = document.getElementById("gameroom_button")
+            const lobby_container = document.getElementById("lobby-container")
+            const divider = document.getElementById("divider")
         
             var input = document.getElementById("player-name");
             input.addEventListener("keypress", function(event) {
@@ -124,9 +127,13 @@
             }); 
 
             function joinLobby() {
-                const playerName = document.getElementById("player-name").value.trim();
+                playerName = document.getElementById("player-name").value.trim();
                 if (playerName) {
                     gameroom_button.style.display = "";
+                    gameroom_button.style.marginTop = "10px";
+                    lobby_container.style.display = "none";
+                    divider.style.display = "none";
+
                     scoreboard.classList.add("visible");
                     socket.emit("join_lobby", { name: playerName })
                 } else {
@@ -145,8 +152,6 @@
                             gameFrame.style.display = "";
                             errorMessage.style.display = "none";
                             gameroom_button.style.display = "none";
-
-                            socket.emit("join_game", { name: playerName });
                         } else {
                             // Room ist voll: Zeige eine Fehlermeldung an
                             errorMessage.style.display = "";
@@ -164,6 +169,25 @@
                     li.textContent = `${player.name}: ${player.score} points`;
                     playerList.appendChild(li);
                 });
+            });
+
+            socket.on("fetch_scores", () => {
+                gameFrame.contentWindow.postMessage({ action: 'fetch_scores'}, "*");
+            });
+
+            socket.on("update_username", () => {
+                console.log(playerName)
+                gameFrame.contentWindow.postMessage({ action: 'update_username', data: playerName }, "*");
+            });
+            
+            window.addEventListener('message', (event) => {
+                if (event.data.action === 'updateScore') {
+                    playerScores = event.data.scores
+                    socket.emit("update_score", playerScores)
+                } else if (event.data.action === 'playerId') {
+                    playerId = event.data.playerID
+                    socket.emit("update_player_id", playerId)
+                }
             });
         </script>
     </body>
