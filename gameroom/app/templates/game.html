@@ -45,7 +45,6 @@
                     scores = gameState.scores
                     parent.postMessage({ action: "updateScore", scores }, '*');
                 } else if (event.data.action === 'update_username') {
-                    console.log(event.data)
                     socket.emit("update_username", { username: event.data.data });
                 }
             });

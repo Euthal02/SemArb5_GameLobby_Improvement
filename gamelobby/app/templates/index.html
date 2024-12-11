@@ -176,7 +176,6 @@
             });
 
             socket.on("update_username", () => {
-                console.log(playerName)
                 gameFrame.contentWindow.postMessage({ action: 'update_username', data: playerName }, "*");
             });
             

@@ -56,8 +56,6 @@ def setup_game():
                 player_id = 1
 
             players[request.sid]= {"playerId": player_id}
-
-            print(players)
             # the room parameter just defines the scope of this reply.
             emit("player_id", player_id, room=request.sid)
         else:
