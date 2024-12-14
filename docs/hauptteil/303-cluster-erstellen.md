@@ -26,72 +26,36 @@ Default output format [None]: json
 
 ## Create Cluster
 
-Zuerst wird der Cluster erstellt. Die einzelnen Parameter basieren sich alle auf die Eigenschaften der "Nodegroup". Das bedeutet zusammengefasst, dass für den Cluster 3 Nodes (skalierbar auf 2 - 4 Nodes) erstellt werden, mit einen AmazonLinux auf einem t3.micro Server. Jeder Node kann Pods hosten und ist per SSH erreichbar. Dies wird NICHT empfohlen, haben wir jedoch für Entwickungszwecke so gemacht.
+Im Script [eks/build.sh](https://github.com/Euthal02/SemArb4_GameLobby/blob/main/eks/build.sh) wurden Commands um einen Cluster mittels EKSCTL aufzubauen integriert. Man muss nur noch das Script ausführen und ein neuer Cluster wird erstellt.
+
+Zuerst wird der Cluster erstellt. Die einzelnen Parameter basieren sich alle auf die Eigenschaften der "Nodegroup". Das bedeutet zusammengefasst, dass für den Cluster 2 Nodes (skalierbar auf 1 - 3 Nodes) erstellt werden, mit einen AmazonLinux auf einem m5.large Server. Jeder Node kann Pods hosten und ist per SSH erreichbar.
 
 ```bash
-mka@Tuxedo-Laptop:~$ eksctl create cluster --name=eks-cluster --region=eu-central-2 --node-ami-family=AmazonLinux2 --nodes=2 --nodes-min=1 --nodes-max=3 --ssh-access --ssh-public-key=semesterarbeit_admin_access --max-pods-per-node=20 --enable-ssm --spot --with-oidc
-2024-11-25 20:17:31 [!]  SSM is now enabled by default; `ssh.enableSSM` is deprecated and will be removed in a future release
-2024-11-25 20:17:31 [ℹ]  eksctl version 0.194.0
-2024-11-25 20:17:31 [ℹ]  using region eu-central-2
-2024-11-25 20:17:31 [ℹ]  setting availability zones to [eu-central-2c eu-central-2b eu-central-2a]
-2024-11-25 20:17:31 [ℹ]  subnets for eu-central-2c - public:192.168.0.0/19 private:192.168.96.0/19
-2024-11-25 20:17:31 [ℹ]  subnets for eu-central-2b - public:192.168.32.0/19 private:192.168.128.0/19
-2024-11-25 20:17:31 [ℹ]  subnets for eu-central-2a - public:192.168.64.0/19 private:192.168.160.0/19
-2024-11-25 20:17:31 [ℹ]  nodegroup "ng-0f0c912b" will use "" [AmazonLinux2/1.30]
-2024-11-25 20:17:31 [ℹ]  using EC2 key pair "semesterarbeit_admin_access"
-2024-11-25 20:17:31 [ℹ]  using Kubernetes version 1.30
-2024-11-25 20:17:31 [ℹ]  creating EKS cluster "eks-cluster" in "eu-central-2" region with managed nodes
-2024-11-25 20:17:31 [ℹ]  will create 2 separate CloudFormation stacks for cluster itself and the initial managed nodegroup
-2024-11-25 20:17:31 [ℹ]  if you encounter any issues, check CloudFormation console or try 'eksctl utils describe-stacks --region=eu-central-2 --cluster=eks-cluster'
-2024-11-25 20:17:31 [ℹ]  Kubernetes API endpoint access will use default of {publicAccess=true, privateAccess=false} for cluster "eks-cluster" in "eu-central-2"
-2024-11-25 20:17:31 [ℹ]  CloudWatch logging will not be enabled for cluster "eks-cluster" in "eu-central-2"
-2024-11-25 20:17:31 [ℹ]  you can enable it with 'eksctl utils update-cluster-logging --enable-types={SPECIFY-YOUR-LOG-TYPES-HERE (e.g. all)} --region=eu-central-2 --cluster=eks-cluster'
-2024-11-25 20:17:31 [ℹ]  default addons vpc-cni, kube-proxy, coredns were not specified, will install them as EKS addons
-2024-11-25 20:17:31 [ℹ]
-2 sequential tasks: { create cluster control plane "eks-cluster",
-    2 sequential sub-tasks: {
-        5 sequential sub-tasks: {
-            1 task: { create addons },
-            wait for control plane to become ready,
-            associate IAM OIDC provider,
-            no tasks,
-            update VPC CNI to use IRSA if required,
-        },
-        create managed nodegroup "ng-0f0c912b",
-    }
-}
-2024-11-25 20:17:31 [ℹ]  building cluster stack "eksctl-eks-cluster-cluster"
-2024-11-25 20:17:32 [ℹ]  deploying stack "eksctl-eks-cluster-cluster"
-2024-11-25 20:18:02 [ℹ]  waiting for CloudFormation stack "eksctl-eks-cluster-cluster"
-2024-11-25 20:24:35 [!]  recommended policies were found for "vpc-cni" addon, but since OIDC is disabled on the cluster, eksctl cannot configure the requested permissions; the recommended way to provide IAM permissions for "vpc-cni" addon is via pod identity associations; after addon creation is completed, add all recommended policies to the config file, under `addon.PodIdentityAssociations`, and run `eksctl update addon`
-2024-11-25 20:24:35 [ℹ]  creating addon
-2024-11-25 20:24:35 [ℹ]  successfully created addon
-2024-11-25 20:24:35 [ℹ]  creating addon
-2024-11-25 20:24:36 [ℹ]  successfully created addon
-2024-11-25 20:24:36 [ℹ]  creating addon
-2024-11-25 20:24:36 [ℹ]  successfully created addon
-2024-11-25 20:26:38 [ℹ]  deploying stack "eksctl-eks-cluster-addon-vpc-cni"
-2024-11-25 20:26:38 [ℹ]  waiting for CloudFormation stack "eksctl-eks-cluster-addon-vpc-cni"
-2024-11-25 20:27:09 [ℹ]  updating addon
-2024-11-25 20:27:19 [ℹ]  addon "vpc-cni" active
-2024-11-25 20:27:19 [ℹ]  building managed nodegroup stack "eksctl-eks-cluster-nodegroup-ng-0f0c912b"
-2024-11-25 20:27:20 [ℹ]  deploying stack "eksctl-eks-cluster-nodegroup-ng-0f0c912b"
-2024-11-25 20:30:27 [ℹ]  waiting for CloudFormation stack "eksctl-eks-cluster-nodegroup-ng-0f0c912b"
-2024-11-25 20:30:27 [ℹ]  waiting for the control plane to become ready
-2024-11-25 20:30:28 [✔]  saved kubeconfig as "/home/mka/.kube/config"
-2024-11-25 20:30:28 [ℹ]  no tasks
-2024-11-25 20:30:28 [✔]  all EKS cluster resources for "eks-cluster" have been created
-2024-11-25 20:30:28 [✔]  created 0 nodegroup(s) in cluster "eks-cluster"
-2024-11-25 20:30:28 [ℹ]  nodegroup "ng-0f0c912b" has 2 node(s)
-2024-11-25 20:30:28 [ℹ]  node "ip-192-168-29-201.eu-central-2.compute.internal" is ready
-2024-11-25 20:30:28 [ℹ]  node "ip-192-168-75-106.eu-central-2.compute.internal" is ready
-2024-11-25 20:30:28 [ℹ]  waiting for at least 1 node(s) to become ready in "ng-0f0c912b"
-2024-11-25 20:30:28 [ℹ]  nodegroup "ng-0f0c912b" has 2 node(s)
-2024-11-25 20:30:28 [ℹ]  node "ip-192-168-29-201.eu-central-2.compute.internal" is ready
-2024-11-25 20:30:28 [ℹ]  node "ip-192-168-75-106.eu-central-2.compute.internal" is ready
-2024-11-25 20:30:28 [✔]  created 1 managed nodegroup(s) in cluster "eks-cluster"
-2024-11-25 20:30:30 [ℹ]  kubectl command should work with "/home/mka/.kube/config", try 'kubectl get nodes'
-2024-11-25 20:30:30 [✔]  EKS cluster "eks-cluster" in "eu-central-2" region is ready
+mka@Tuxedo-Laptop:~/repos/SemArb4_GameLobby$ eks/build.sh
+
+# eksctl create cluster --name=eks-cluster --region=eu-central-2 --node-ami-family=AmazonLinux2 --nodes=2 --nodes-min=1 --nodes-max=3 --ssh-access --ssh-public-key=semesterarbeit_admin_access --max-pods-per-node=20 --enable-ssm --with-oidc
+
+2024-12-14 15:04:45 [!]  SSM is now enabled by default; `ssh.enableSSM` is deprecated and will be removed in a future release
+2024-12-14 15:04:46 [ℹ]  eksctl version 0.194.0
+2024-12-14 15:04:46 [ℹ]  using region eu-central-2
+2024-12-14 15:04:46 [ℹ]  setting availability zones to [eu-central-2b eu-central-2c eu-central-2a]
+2024-12-14 15:04:46 [ℹ]  subnets for eu-central-2b - public:192.168.0.0/19 private:192.168.96.0/19
+2024-12-14 15:04:46 [ℹ]  subnets for eu-central-2c - public:192.168.32.0/19 private:192.168.128.0/19
+2024-12-14 15:04:46 [ℹ]  subnets for eu-central-2a - public:192.168.64.0/19 private:192.168.160.0/19
+2024-12-14 15:04:46 [ℹ]  nodegroup "ng-e1e84519" will use "" [AmazonLinux2/1.30]
+2024-12-14 15:04:46 [ℹ]  using EC2 key pair "semesterarbeit_admin_access"
+2024-12-14 15:04:46 [ℹ]  using Kubernetes version 1.30
+2024-12-14 15:04:46 [ℹ]  creating EKS cluster "eks-cluster" in "eu-central-2" region with managed nodes
+2024-12-14 15:04:46 [ℹ]  will create 2 separate CloudFormation stacks for cluster itself and the initial managed nodegroup
+.............
+.............
+2024-12-14 15:17:35 [✔]  EKS cluster "eks-cluster" in "eu-central-2" region is ready
+
+```
+
+Dieser Schritt reicht bereits aus um eine funktionierende EKS Instanz zu hosten. Wie man sehen kann, wird die lokale Kubeconfig des Nutzers direkt mit einer neuen Config ergänzt. Dies reicht bereits aus, um erste Pods auf diesem Cluster zu deployen.
+
+``` bash
 mka@Tuxedo-Laptop:~$ kubectl get nodes
 NAME                                              STATUS   ROLES    AGE     VERSION
 ip-192-168-29-201.eu-central-2.compute.internal   Ready    <none>   2m50s   v1.30.6-eks-94953ac
@@ -108,25 +72,25 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 mka@Tuxedo-Laptop:~$
 ```
 
-Wie man sehen kann, wird die lokale Kubeconfig des Nutzers direkt mit einer neuen Config ergänzt. Dies reicht bereits aus, um erste Pods auf diesem Cluster zu deployen.
-
 ## Kubectl Access
 
-Momentan kann noch jeder die Kubernetes API erreichen. Aus Sicherheitsgründen, wollen wir aber dass nur Marco Kälin von seiner festen Heimadresse dies kann. Zusätzlich muss man den API Access auf die privaten Interfaces erlauben, damit die Hosts untereinander kommunizieren können.
+Standardmässig kann noch jeder die Kubernetes API erreichen. Aus Sicherheitsgründen, wollen wir aber dass nur Marco Kälin von seiner festen Heimadresse dies kann. Zusätzlich muss man den API Access auf die privaten Interfaces erlauben, damit die Hosts untereinander kommunizieren können. Dieser SChritt wurde auch bereits in das build.sh Script integriert.
 
 ```bash
-mka@Tuxedo-Laptop:~$ eksctl utils update-cluster-vpc-config --cluster=eks-cluster --public-access-cidrs=45.94.88.37/32 --private-access=true --approve
-2024-11-25 20:32:19 [ℹ]  using region eu-central-2
-2024-11-25 20:32:19 [ℹ]  will update Kubernetes API endpoint access for cluster "eks-cluster" in "eu-central-2" to: privateAccess=true, publicAccess=true
-2024-11-25 20:37:11 [✔]  Kubernetes API endpoint access for cluster "eks-cluster" in "eu-central-2" has been updated to: privateAccess=true, publicAccess=true
-2024-11-25 20:37:11 [ℹ]  current public access CIDRs: [0.0.0.0/0]
-2024-11-25 20:37:11 [ℹ]  will update public access CIDRs for cluster "eks-cluster" in "eu-central-2" to: [45.94.88.37/32]
-2024-11-25 20:38:35 [✔]  public access CIDRs for cluster "eks-cluster" in "eu-central-2" have been updated to: [45.94.88.37/32]
+
+# eksctl utils update-cluster-vpc-config --cluster=eks-cluster --public-access-cidrs=45.94.88.37/32 --private-access=true --approve
+
+2024-12-14 20:32:19 [ℹ]  using region eu-central-2
+2024-12-14 20:32:19 [ℹ]  will update Kubernetes API endpoint access for cluster "eks-cluster" in "eu-central-2" to: privateAccess=true, publicAccess=true
+2024-12-14 20:37:11 [✔]  Kubernetes API endpoint access for cluster "eks-cluster" in "eu-central-2" has been updated to: privateAccess=true, publicAccess=true
+2024-12-14 20:37:11 [ℹ]  current public access CIDRs: [0.0.0.0/0]
+2024-12-14 20:37:11 [ℹ]  will update public access CIDRs for cluster "eks-cluster" in "eu-central-2" to: [45.94.88.37/32]
+2024-12-14 20:38:35 [✔]  public access CIDRs for cluster "eks-cluster" in "eu-central-2" have been updated to: [45.94.88.37/32]
 ```
 
 ## Upgrade Kubectl
 
-Die Kubernetes Version des Cluster ist bereits OutOfDate und kann mittels diesem Command geupgraded werden.
+Die Standard Kubernetes Version des Cluster ist bereits OutOfDate und kann mittels diesem Command geupgraded werden. EKSCTL nutzt als Standardversion eine ältere Version von Kubernetes, kann jedoch einfach upgraden. Dieser Upgradeschritt ist bereits im Build Script integriert.
 
 ```bash
 mka@Tuxedo-Laptop:~$ eksctl upgrade cluster --name=eks-cluster --approve

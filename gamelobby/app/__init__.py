@@ -13,6 +13,10 @@ def create_lobby():
     def index():
         return render_template("index.html")
     
+    @app.route('/health')
+    def health():
+        return "OK", 200
+    
     @socketio.on("connect")
     def connect():
         socketio.start_background_task(update_scoreboard)

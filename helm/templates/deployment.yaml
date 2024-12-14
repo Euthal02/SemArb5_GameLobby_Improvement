@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: "{{ .Chart.Name }}room"
+  labels:
+    app: "{{ .Chart.Name }}room"
+spec:
+  replicas: {{ .Values.room.replicaCount }}
+  selector:
+    matchLabels:
+      app: "{{ .Chart.Name }}room"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Chart.Name }}room"
+    spec:
+      containers:
+      - name: "{{ .Chart.Name }}room"
+        image: "{{ .Values.room.image.repository }}:{{ .Values.room.image.tag }}"
+        imagePullPolicy: {{ .Values.room.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.room.service.port }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: "{{ .Chart.Name }}lobby"
+  labels:
+    app: "{{ .Chart.Name }}lobby"
+spec:
+  replicas: {{ .Values.lobby.replicaCount }}
+  selector:
+    matchLabels:
+      app: "{{ .Chart.Name }}lobby"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Chart.Name }}lobby"
+    spec:
+      containers:
+      - name: "{{ .Chart.Name }}lobby"
+        image: "{{ .Values.lobby.image.repository }}:{{ .Values.lobby.image.tag }}"
+        imagePullPolicy: {{ .Values.lobby.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.lobby.service.port }}

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: pong-game
+description: A Helm chart for deploying a Pong Game Room and a Lobby
+type: application
+version: 0.1.0
+appVersion: "latest"

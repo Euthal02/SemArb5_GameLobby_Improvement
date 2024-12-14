@@ -1,11 +1,11 @@
 ---
 layout: default
-title: 3.4 AWS Loadbalancer mit Kubernetes Ingress
+title: 3.5 AWS Loadbalancer mit Kubernetes Ingress
 parent: 3. Hauptteil
 nav_order: 304
 ---
 
-# 3.4 AWS Loadbalancer mit Kubernetes Ingress
+# 3.5 AWS Loadbalancer mit Kubernetes Ingress
 
 Von Seite AWS wird vorgeschlagen, ihren Loadbalancer als Ingress für Kubernetes zu verwenden.
 Wir greifen gerne auf diese Möglichkeit zurück. Dazu gibt es eine sehr detailierte Anleitung.
@@ -13,31 +13,18 @@ Wir greifen gerne auf diese Möglichkeit zurück. Dazu gibt es eine sehr detaili
 Diese ist unter diesem Link zu finden:
 <https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html>
 
-Dazu muss zuerst einmal eine neue IAM Rolle erstellt werde.
-Dies aus dem Grund, dass der Kubernetes Cluster bei einem Ingress Deployment, selbstständig neue Ressourcen generieren muss.
-Damit man eine IAM Rolle für Service Accounts erstellen kann, muss man, laut AWS, eine OIDC hinzufügen.
+Das ganze ist auch bereits in dem Build Script integriert, so dass dieser Schritt nicht mehr manuell auszuführen ist.
 
-## OIDC
+Sollte dies trotzdem der Fall sein, werden hier die Schritte erklärt und die Beweggründe dahinter.
 
-<https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html>
+----
 
-```bash
-mka@Tuxedo-Laptop:~$ cluster_name=eks-cluster
-mka@Tuxedo-Laptop:~$ oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
-mka@Tuxedo-Laptop:~$ echo $oidc_id
-7D84FF8A8DE6F56A20A9B69EA38F3709
-mka@Tuxedo-Laptop:~$ aws iam list-open-id-connect-providers | grep $oidc_id | cut -d "/" -f4
-mka@Tuxedo-Laptop:~$ eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
-2024-11-15 19:42:46 [ℹ]  will create IAM Open ID Connect provider for cluster "eks-cluster" in "eu-central-2"
-2024-11-15 19:42:46 [✔]  created IAM Open ID Connect provider for cluster "eks-cluster" in "eu-central-2"
-mka@Tuxedo-Laptop:~$ aws iam list-open-id-connect-providers | grep $oidc_id | cut -d "/" -f4
-7D84FF8A8DE6F56A20A9B69EA38F3709"
-mka@Tuxedo-Laptop:~$
-```
+Zuerst einmal muss eine neue IAM Rolle erstellt werde.
+Dies aus dem Grund, dass der Kubernetes Cluster bei einem Ingress Deployment, selbstständig neue Ressourcen generieren muss. Die benötigten Rechte bekommt man mit dem IAM Service Account.
 
 ## IAM User erstellen
 
-AWS bietet auch hier eine Vorlage, welche man 1 zu 1 kopieren kann. Sie erlaubt dem Cluster alle Ressourcen zu erstellen welche er braucht. Mehr Informationen findet man im Code Fenster.
+AWS bietet hier eine Vorlage, welche man 1 zu 1 kopieren kann. Sie erlaubt dem Cluster alle Ressourcen zu erstellen welche er braucht. Mehr Informationen findet man im Code Fenster.
 
 ```bash
 mka@Tuxedo-Laptop:~$ curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.7.2/docs/install/iam_policy.json
@@ -48,15 +35,8 @@ mka@Tuxedo-Laptop:~$ aws iam create-policy --policy-name AWSLoadBalancerControll
 {
     "Policy": {
         "PolicyName": "AWSLoadBalancerControllerIAMPolicy",
-        "PolicyId": "ANPATAVAAYNVJJN5AI4WP",
-        "Arn": "arn:aws:iam::**********:policy/AWSLoadBalancerControllerIAMPolicy",
-        "Path": "/",
-        "DefaultVersionId": "v1",
-        "AttachmentCount": 0,
-        "PermissionsBoundaryUsageCount": 0,
-        "IsAttachable": true,
-        "CreateDate": "2024-11-15T18:44:55+00:00",
-        "UpdateDate": "2024-11-15T18:44:55+00:00"
+        ......,
+        "CreateDate": "2024-11-15T18:44:55+00:00"
     }
 }
 mka@Tuxedo-Laptop:~$ cat iam_policy.json
@@ -96,16 +76,12 @@ Als nächstes müssen wir den Cluster dementsprechend konfigurieren.
 
 ## HELM Install on Cluster
 
-AWS bietet dazu ein HELM Chart an, was dies für uns erledigt.
+AWS bietet auch dazu einen einfachen Weg an, dies mit einem HELM Chart zu erledigen.
 
 ```bash
 mka@Tuxedo-Laptop:~$ helm repo add eks https://aws.github.io/eks-charts
-WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/mka/.kube/config
-WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/mka/.kube/config
 "eks" has been added to your repositories
 mka@Tuxedo-Laptop:~$ helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eks-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
-WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/mka/.kube/config
-WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/mka/.kube/config
 NAME: aws-load-balancer-controller
 LAST DEPLOYED: Fri Nov 15 19:50:55 2024
 NAMESPACE: kube-system
@@ -127,9 +103,7 @@ crds.yaml                                            100%[======================
 2024-11-25 21:01:26 (4.91 MB/s) - ‘crds.yaml’ saved [29410/29410]
 
 mka@Tuxedo-Laptop:~$ kubectl apply -f crds.yaml
-Warning: resource customresourcedefinitions/ingressclassparams.elbv2.k8s.aws is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
 customresourcedefinition.apiextensions.k8s.io/ingressclassparams.elbv2.k8s.aws configured
-Warning: resource customresourcedefinitions/targetgroupbindings.elbv2.k8s.aws is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
 customresourcedefinition.apiextensions.k8s.io/targetgroupbindings.elbv2.k8s.aws configured
 ```
 
@@ -223,5 +197,4 @@ spec:
               name: service-2048
               port:
                 number: 80
-
 ```

@@ -1,0 +1,63 @@
+namespace: pong-game
+
+room:
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/euthal02/pong-gameroom
+    tag: latest
+    pullPolicy: Always
+
+  service:
+    port: 5000
+    targetport: 5000
+    protocol: TCP
+    type: NodePort
+
+  ingress:
+    enabled: true
+    className: alb
+    annotations:
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/backend-protocol: HTTP
+      alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+      alb.ingress.kubernetes.io/healthcheck-path: /health
+      alb.ingress.kubernetes.io/load-balancer-attributes: 'idle_timeout.timeout_seconds=3600'
+    tls: 
+      enabled: false
+      secretName: ""
+
+lobby:
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/euthal02/pong-gamelobby
+    tag: latest
+    pullPolicy: Always
+
+  service:
+    port: 80
+    targetport: 80
+    protocol: TCP
+    type: NodePort
+
+  ingress:
+    enabled: true
+    className: alb
+    annotations:
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/backend-protocol: HTTP
+      alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+      alb.ingress.kubernetes.io/healthcheck-path: /health
+      alb.ingress.kubernetes.io/load-balancer-attributes: 'idle_timeout.timeout_seconds=3600'
+    tls: 
+      enabled: false
+      secretName: ""
+
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
