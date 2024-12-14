@@ -4,7 +4,8 @@ services:
     restart: no
     build:
       context: gameroom/.
-      dockerfile: Dockerfile.local
+      dockerfile: Dockerfile
+      #.local
     ports:
       - 5000:5000
     volumes:
@@ -15,7 +16,8 @@ services:
     restart: no
     build:
       context: gamelobby/.
-      dockerfile: Dockerfile.local
+      dockerfile: Dockerfile
+      #.local
     ports:
       - 80:80
     volumes:

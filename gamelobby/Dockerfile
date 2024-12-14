@@ -14,7 +14,7 @@ RUN pip install -r requirements.txt
 RUN pip install gunicorn==21.2
 
 # for flask web server
-EXPOSE 5000
+EXPOSE 80
 
 # This is the runtime command for the container
-CMD [ "gunicorn", "--worker-class", "eventlet", "--bind", "0.0.0.0:5000", "wsgi:app" ]
+CMD [ "gunicorn", "--worker-class", "eventlet", "--bind", "0.0.0.0:80", "wsgi:app" ]
