@@ -8,6 +8,7 @@ metadata:
     {{- range $key, $value := .Values.room.ingress.annotations }}
     {{ $key }}: "{{ $value }}"
     {{- end }}
+    external-dns.alpha.kubernetes.io/hostname: "room.semesterarbeit.com"
 spec:
   ingressClassName: {{ .Values.room.ingress.className }}
   rules:
@@ -38,6 +39,7 @@ metadata:
     {{- range $key, $value := .Values.lobby.ingress.annotations }}
     {{ $key }}: "{{ $value }}"
     {{- end }}
+    external-dns.alpha.kubernetes.io/hostname: "lobby.semesterarbeit.com"
 spec:
   ingressClassName: {{ .Values.lobby.ingress.className }}
   rules:

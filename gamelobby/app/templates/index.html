@@ -143,12 +143,14 @@
 
             function joinGame() {
                 // Prüfe die Spieleranzahl im Room
-                fetch("http://localhost:5000/player_count")
+                // fetch("http://localhost:5000/player_count")
+                fetch("http://room.semesterarbeit.com/player_count")
                     .then(response => response.json())
                     .then(data => {
                         if (data.player_count < 2) {
                             // Room hat Platz: Zeige das Spiel an
-                            gameFrame.src = "http://localhost:5000";
+                            // gameFrame.src = "http://localhost:5000";
+                            gameFrame.src = "http://room.semesterarbeit.com";
                             gameFrame.style.display = "";
                             errorMessage.style.display = "none";
                             gameroom_button.style.display = "none";
