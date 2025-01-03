@@ -10,23 +10,25 @@ eksctl create cluster --name=$CLUSTER_NAME --region=$REGION --node-ami-family=Am
 eksctl utils update-cluster-vpc-config --cluster=$CLUSTER_NAME --public-access-cidrs=45.94.88.37/32 --private-access=true --approve
 eksctl upgrade cluster --name=$CLUSTER_NAME --approve
 
-# get aws account id
-AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
-
 # remove remainders from old deployments
-ALB_POLICY_ARN=arn:aws:iam::"$AWS_ACCOUNT_ID":policy/AWSLoadBalancerControllerIAMPolicy
-DNS_POLICY_ARN=arn:aws:iam::"$AWS_ACCOUNT_ID":policy/AllowExternalDNSUpdatesPolicy
-# ALB_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text)
-# DNS_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AllowExternalDNSUpdatesPolicy`].Arn' --output text)
-aws iam delete-policy --policy-arn=$ALB_POLICY_ARN
-aws iam delete-policy --policy-arn=$DNS_POLICY_ARN
+ALB_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text)
+DNS_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AllowExternalDNSUpdatesPolicy`].Arn' --output text)
+GITHUB_ROLE_ARN=$(aws iam list-roles --query 'Roles[?RoleName==`GitHubActionsEKSRole`].Arn' --output text)
+if [ -n "$ALB_POLICY_ARN" ]; then
+  aws iam delete-policy --policy-arn=$ALB_POLICY_ARN
+fi
+if [ -n "$DNS_POLICY_ARN" ]; then
+  aws iam delete-policy --policy-arn=$DNS_POLICY_ARN
+fi
+if [ -n "$GITHUB_ROLE_ARN" ]; then
+  aws iam delete-role --role-arn=$GITHUB_ROLE_ARN
+fi
 
 # alb in k8s
-curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/refs/heads/main/docs/install/iam_policy.json
+wget https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/refs/heads/main/docs/install/iam_policy.json
 aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam_policy.json --no-cli-pager
+ALB_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text)
 eksctl create iamserviceaccount --cluster=$CLUSTER_NAME --namespace=kube-system --name=aws-load-balancer-controller --role-name AmazonEKSLoadBalancerControllerRole --attach-policy-arn=$ALB_POLICY_ARN --approve --override-existing-serviceaccounts
-
-# install helm for preconfigured aws loadbalancer
 helm repo add eks https://aws.github.io/eks-charts
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eks-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
 wget https://raw.githubusercontent.com/aws/eks-charts/master/stable/aws-load-balancer-controller/crds/crds.yaml
@@ -60,12 +62,35 @@ cat > external-dns-policy.conf << EOF
   ]
 }
 EOF
-aws iam create-policy --policy-name "AllowExternalDNSUpdatesPolicy" --policy-document file://external-dns-policy.conf
+aws iam create-policy --policy-name "AllowExternalDNSUpdatesPolicy" --policy-document file://external-dns-policy.conf --no-cli-pager
+DNS_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AllowExternalDNSUpdatesPolicy`].Arn' --output text)
 eksctl create iamserviceaccount --cluster=$CLUSTER_NAME --namespace=default --name=external-dns --role-name=AllowExternalDNSUpdatesRole --attach-policy-arn=$DNS_POLICY_ARN --approve --override-existing-serviceaccounts
 DNS_ROLE_ARN=$(aws iam get-role --role-name AllowExternalDNSUpdatesRole --query 'Role.[Arn]' --output text)
 helm install external-dns oci://registry-1.docker.io/bitnamicharts/external-dns --set provider=aws --set aws.region=eu-central-2 --set domainFilters[0]=$DNS_ZONE --set policy=sync --set aws.roleArn=$DNS_ROLE_ARN --set serviceAccount.create=false --set serviceAccount.name=external-dns
+
+# create iam role for github actions
+cat > trust-policy.json << EOF 
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "eks.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+aws iam create-role --role-name GitHubActionsEKSRole --assume-role-policy-document file://trust-policy.json --no-cli-pager
+aws iam attach-role-policy --role-name GitHubActionsEKSRole --policy-arn arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+aws iam attach-role-policy --role-name GitHubActionsEKSRole --policy-arn arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+GITHUB_ROLE_ARN=$(aws iam get-role --role-name GitHubActionsEKSRole --query 'Role.Arn' --output text)
+echo "GitHub role ARN: $GITHUB_ROLE_ARN"
 
 # remove downloaded files
 rm -f crds.yaml
 rm -f iam_policy.json
 rm -f external-dns-policy.conf
+rm -f trust-policy.json
