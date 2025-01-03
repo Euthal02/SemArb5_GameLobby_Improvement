@@ -103,20 +103,33 @@ jobs:
       #     export AWS_SECRET_ACCESS_KEY=$(cat assume-role-output.json | jq -r '.Credentials.SecretAccessKey')
       #     export AWS_SESSION_TOKEN=$(cat assume-role-output.json | jq -r '.Credentials.SessionToken')
 
-      - name: kubeconfig 
+      - name: Create Kubeconfig file 
         run: |
-            aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}  --kubeconfig ./kubeconfig
+            aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
+            echo 'KUBE_CONFIG<<EOF' >> $GITHUB_ENV
+            echo $(cat ~/.kube/config) >> $GITHUB_ENV
+            echo 'EOF' >> $GITHUB_ENV
             echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
-            echo $(cat ./kubeconfig | base64) >> $GITHUB_ENV
+            echo $(cat ~/.kube/config | base64) >> $GITHUB_ENV
             echo 'EOF' >> $GITHUB_ENV   
           
-      - name: helm deploy
-        uses: koslib/helm-eks-action@master
+      - name: Get Kubectl infos
+        uses: actions-hub/kubectl@master
         env:
-          KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
-          command: |
-                helm version
-                kubectl version
-                kubectl cluster-info
-                
+          args: get pods
+
+      - name: deploy to cluster
+        uses: wahyd4/kubectl-helm-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: kubectl get nodes
+
+      - name: deploy to cluster
+        uses: wahyd4/kubectl-helm-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: helm list
