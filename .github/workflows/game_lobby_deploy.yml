@@ -142,4 +142,4 @@ jobs:
             kubectl get pods
 
       - name: Print Response
-        run: echo "${{ steps.url.command_exec.response }}"
+        run: echo "${{ steps.command_exec.outputs.response }}"
