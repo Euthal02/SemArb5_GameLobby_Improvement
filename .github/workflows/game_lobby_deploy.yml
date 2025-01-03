@@ -117,16 +117,25 @@ jobs:
       #   with:
       #     args: get pods
 
-      - name: deploy to cluster
-        uses: wahyd4/kubectl-helm-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
-        with:
-          args: kubectl get nodes
+      # - name: deploy to cluster
+      #   uses: wahyd4/kubectl-helm-action@master
+      #   env:
+      #     KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
+      #   with:
+      #     args: kubectl get nodes
 
-      - name: deploy to cluster
-        uses: wahyd4/kubectl-helm-action@master
+      # - name: deploy to cluster
+      #   uses: wahyd4/kubectl-helm-action@master
+      #   env:
+      #     KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
+      #   with:
+      #     args: helm list
+
+      - name: helm deploy
+        uses: koslib/helm-eks-action@master
         env:
           KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
         with:
-          args: helm list
+          command: |
+            helm list
+            kubectl get pods
