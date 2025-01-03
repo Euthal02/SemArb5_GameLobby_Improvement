@@ -132,6 +132,7 @@ jobs:
       #     args: helm list
 
       - name: helm deploy
+        id: command_exec
         uses: koslib/helm-eks-action@master
         env:
           KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
@@ -139,3 +140,6 @@ jobs:
           command: |
             helm list
             kubectl get pods
+
+      - name: Print Response
+        run: echo "${{ steps.url.command_exec.response }}"
