@@ -7,7 +7,7 @@ DNS_ZONE=semesterarbeit.com
 
 # set up eks cluster
 eksctl create cluster --name=$CLUSTER_NAME --region=$REGION --node-ami-family=AmazonLinux2 --nodes=2 --nodes-min=1 --nodes-max=3 --ssh-access --ssh-public-key=semesterarbeit_admin_access --max-pods-per-node=20 --enable-ssm --with-oidc
-eksctl utils update-cluster-vpc-config --cluster=$CLUSTER_NAME --public-access-cidrs=45.94.88.37/32 --private-access=true --approve
+eksctl utils update-cluster-vpc-config --cluster=$CLUSTER_NAME --private-access=true --approve
 eksctl upgrade cluster --name=$CLUSTER_NAME --approve
 
 # remove remainders from old deployments
