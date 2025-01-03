@@ -106,9 +106,6 @@ jobs:
       - name: Create Kubeconfig file 
         run: |
             aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
-            echo 'KUBE_CONFIG<<EOF' >> $GITHUB_ENV
-            echo $(cat ~/.kube/config) >> $GITHUB_ENV
-            echo 'EOF' >> $GITHUB_ENV
             echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
             echo $(cat ~/.kube/config | base64) >> $GITHUB_ENV
             echo 'EOF' >> $GITHUB_ENV   
@@ -116,7 +113,7 @@ jobs:
       - name: Get Kubectl infos
         uses: actions-hub/kubectl@master
         env:
-          KUBE_CONFIG: ${{ env.KUBE_CONFIG }}
+          KUBE_CONFIG: ${{ env.KUBE_CONFIG_DATA }}
         with:
           args: get pods
 
