@@ -112,21 +112,25 @@ jobs:
           
       - name: Get Kubectl infos
         uses: actions-hub/kubectl@master
+        uses: aws-actions/configure-aws-credentials@main  
         env:
           KUBE_CONFIG: ${{ env.KUBE_CONFIG_DATA }}
         with:
           args: get pods
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
 
-      - name: deploy to cluster
-        uses: wahyd4/kubectl-helm-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
-        with:
-          args: kubectl get nodes
+      # - name: deploy to cluster
+      #   uses: wahyd4/kubectl-helm-action@master
+      #   env:
+      #     KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
+      #   with:
+      #     args: kubectl get nodes
 
-      - name: deploy to cluster
-        uses: wahyd4/kubectl-helm-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
-        with:
-          args: helm list
+      # - name: deploy to cluster
+      #   uses: wahyd4/kubectl-helm-action@master
+      #   env:
+      #     KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
+      #   with:
+      #     args: helm list
