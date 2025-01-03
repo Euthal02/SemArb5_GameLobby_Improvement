@@ -110,3 +110,5 @@ jobs:
       - name: Deploy to EKS
         run: |
           kubectl get nodes -v=10
+          cat /home/runner/.kube/config
+          
