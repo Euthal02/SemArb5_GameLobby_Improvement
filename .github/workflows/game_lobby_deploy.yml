@@ -83,7 +83,6 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
         push: true
 
-
   deploy-job:
     runs-on: ubuntu-latest
     environment: gamelobby
@@ -96,42 +95,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      # - name: Assume IAM role
-      #   run: |
-      #     aws sts assume-role --role-arn ${{ secrets.AWS_ROLE_ARN }} --role-session-name GitHubActionsSession > assume-role-output.json
-      #     export AWS_ACCESS_KEY_ID=$(cat assume-role-output.json | jq -r '.Credentials.AccessKeyId')
-      #     export AWS_SECRET_ACCESS_KEY=$(cat assume-role-output.json | jq -r '.Credentials.SecretAccessKey')
-      #     export AWS_SESSION_TOKEN=$(cat assume-role-output.json | jq -r '.Credentials.SessionToken')
-
       - name: Create Kubeconfig file 
         run: |
-            aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
+            aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
             echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
             echo $(cat ~/.kube/config | base64) >> $GITHUB_ENV
             echo 'EOF' >> $GITHUB_ENV   
-          
-      # - name: Get Kubectl infos
-      #   uses: actions-hub/kubectl@master
-      #   env:
-      #     KUBE_CONFIG: ${{ env.KUBE_CONFIG_DATA }}
-      #   with:
-      #     args: get pods
 
-      # - name: deploy to cluster
-      #   uses: wahyd4/kubectl-helm-action@master
-      #   env:
-      #     KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
-      #   with:
-      #     args: kubectl get nodes
-
-      # - name: deploy to cluster
-      #   uses: wahyd4/kubectl-helm-action@master
-      #   env:
-      #     KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
-      #   with:
-      #     args: helm list
-
-      - name: helm deploy
+      - name: Kubectl and Helm Deploy
         id: command_exec
         uses: koslib/helm-eks-action@master
         env:
@@ -141,5 +112,5 @@ jobs:
             helm list
             kubectl get pods
 
-      - name: Print Response
+      - name: Print Response from Kubectl and Helm
         run: echo "${{ steps.command_exec.outputs.response }}"
