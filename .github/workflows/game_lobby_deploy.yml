@@ -109,4 +109,4 @@ jobs:
 
       - name: Deploy to EKS
         run: |
-          kubectl get nodes
+          kubectl get nodes -v=10

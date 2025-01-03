@@ -76,7 +76,8 @@ cat > trust-policy.json << EOF
     {
       "Effect": "Allow",
       "Principal": {
-        "Service": "eks.amazonaws.com"
+        "Service": "eks.amazonaws.com",
+        "AWS": "arn:aws:iam::207567766378:user/GitHubUser"
       },
       "Action": "sts:AssumeRole"
     }
