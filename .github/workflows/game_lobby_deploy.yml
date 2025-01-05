@@ -115,4 +115,4 @@ jobs:
             helm upgrade pong-game-lobby ./gamelobby/helm/. -i
 
       - name: Print Response from Kubectl and Helm
-        run: echo "${{ steps.command_exec.outputs.result }}"
+        run: echo "${{ steps.command_exec.outputs.response }}"
