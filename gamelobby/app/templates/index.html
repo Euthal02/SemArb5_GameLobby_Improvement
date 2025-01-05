@@ -30,6 +30,7 @@
                 font-size: 16px;
                 cursor: pointer;
                 transition: right 0.5s ease;
+                margin-top: 10px;
             }
 
             #scoreboard {
@@ -68,6 +69,7 @@
 
             iframe {
                 margin-top: 20px;
+                margin-bottom: 20px;
                 width: 800px;
                 height: 650px;
                 border: none;
@@ -101,22 +103,70 @@
             </ul>
         </div>
         <hr id="divider" class="rounded">
-        <div style="text-align: center;">
-            <button id="gameroom_button" style="display: none;" onclick="joinGame()">Join Game</button>
-            <iframe id="game-frame" style="display: none;"></iframe>
-            <div id="error-message" style="display: none;">Room is full. Please try again later.</div>
+        <div id="gameroom_grid" style="display: none;">
+            <div style="border: 1px solid gray; text-align: center;">
+                <button class="gameroom_button" onclick="joinGame('http://room.semesterarbeit.com', this)">Join Gameroom 1</button>
+                <iframe class="game-frame" style="display: none;"></iframe>
+                <div class="error-message" style="display: none;">Room is full. Please try again later.</div>
+            </div>
+            <div style="border: 1px solid gray; text-align: center;">
+                <button class="gameroom_button" onclick="joinGame('http://room.semesterarbeit.com', this)">Join Gameroom 2</button>
+                <iframe class="game-frame" style="display: none;"></iframe>
+                <div class="error-message" style="display: none;">Room is full. Please try again later.</div>
+            </div>
+            <div style="border: 1px solid gray; text-align: center;">
+                <button class="gameroom_button" onclick="joinGame('http://room.semesterarbeit.com', this)">Join Gameroom 3</button>
+                <iframe class="game-frame" style="display: none;"></iframe>
+                <div class="error-message" style="display: none;">Room is full. Please try again later.</div>
+            </div>
+            <div style="border: 1px solid gray; text-align: center;">
+                <button class="gameroom_button" onclick="joinGame('http://room.semesterarbeit.com', this)">Join Gameroom 4</button>
+                <iframe class="game-frame" style="display: none;"></iframe>
+                <div class="error-message" style="display: none;">Room is full. Please try again later.</div>
+            </div>
+            <div style="border: 1px solid gray; text-align: center;">
+                <button class="gameroom_button" onclick="joinGame('http://room.semesterarbeit.com', this)">Join Gameroom 5</button>
+                <iframe class="game-frame" style="display: none;"></iframe>
+                <div class="error-message" style="display: none;">Room is full. Please try again later.</div>
+            </div>
+            <div style="border: 1px solid gray; text-align: center;">
+                <button class="gameroom_button" onclick="joinGame('http://room.semesterarbeit.com', this)">Join Gameroom 6</button>
+                <iframe class="game-frame" style="display: none;"></iframe>
+                <div class="error-message" style="display: none;">Room is full. Please try again later.</div>
+            </div>
+            <div style="border: 1px solid gray; text-align: center;">
+                <button class="gameroom_button" onclick="joinGame('http://room.semesterarbeit.com', this)">Join Gameroom 7</button>
+                <iframe class="game-frame" style="display: none;"></iframe>
+                <div class="error-message" style="display: none;">Room is full. Please try again later.</div>
+            </div>
+            <div style="border: 1px solid gray; text-align: center;">
+                <button class="gameroom_button" onclick="joinGame('http://room.semesterarbeit.com', this)">Join Gameroom 8</button>
+                <iframe class="game-frame" style="display: none;"></iframe>
+                <div class="error-message" style="display: none;">Room is full. Please try again later.</div>
+            </div>
+            <div style="border: 1px solid gray; text-align: center;">
+                <button class="gameroom_button" onclick="joinGame('http://room.semesterarbeit.com', this)">Join Gameroom 9</button>
+                <iframe class="game-frame" style="display: none;"></iframe>
+                <div class="error-message" style="display: none;">Room is full. Please try again later.</div>
+            </div>
+            <div style="border: 1px solid gray; text-align: center;">
+                <button class="gameroom_button" onclick="joinGame('http://room.semesterarbeit.com', this)">Join Gameroom 10</button>
+                <iframe class="game-frame" style="display: none;"></iframe>
+                <div class="error-message" style="display: none;">Room is full. Please try again later.</div>
+            </div>
         </div>
         
 
         <script>
             const socket = io();
             var playerName = ""
+            var gameFrame = document.createElement('div');
+
             const playerList = document.getElementById("player-list");
-            const gameFrame = document.getElementById("game-frame");
-            const errorMessage = document.getElementById("error-message");
             const scoreboard = document.getElementById("scoreboard");
-            const gameroom_button = document.getElementById("gameroom_button")
+
             const lobby_container = document.getElementById("lobby-container")
+            const gameroom_grid = document.getElementById("gameroom_grid")
             const divider = document.getElementById("divider")
         
             var input = document.getElementById("player-name");
@@ -129,9 +179,8 @@
             function joinLobby() {
                 playerName = document.getElementById("player-name").value.trim();
                 if (playerName) {
-                    gameroom_button.style.display = "";
-                    gameroom_button.style.marginTop = "10px";
                     lobby_container.style.display = "none";
+                    gameroom_grid.style = "text-align: center; margin-right: 340px; display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(2, 1fr); border: 1px solid black;"
                     divider.style.display = "none";
 
                     scoreboard.classList.add("visible");
@@ -141,16 +190,35 @@
                 }
             }
 
-            function joinGame() {
+            function joinGame(room_url, button_itself) {
+
+                // Parent-Div des Buttons
+                const currentDiv = button_itself.parentElement;
+                // Parent-Container, der alle Unter-DIVs enthält
+                const container = currentDiv.parentElement;
+
+                // Alle Unter-DIVs durchsuchen
+                Array.from(container.children).forEach(child_div => {
+                    if (child_div !== currentDiv) {
+                        child_div.style.display = "none"; // Sibling-DIVs verstecken
+                    }
+                });
+
+                gameFrame = currentDiv.querySelector(".game-frame");
+                errorMessage = currentDiv.querySelector(".error-message");
+                gameroom_button = currentDiv.querySelector(".gameroom_button");
+
                 // Prüfe die Spieleranzahl im Room
                 // fetch("http://localhost:5000/player_count")
-                fetch("http://room.semesterarbeit.com/player_count")
+                fetch(room_url+"/player_count")
                     .then(response => response.json())
                     .then(data => {
                         if (data.player_count < 2) {
+                            
+
                             // Room hat Platz: Zeige das Spiel an
                             // gameFrame.src = "http://localhost:5000";
-                            gameFrame.src = "http://room.semesterarbeit.com";
+                            gameFrame.src = room_url;
                             gameFrame.style.display = "";
                             errorMessage.style.display = "none";
                             gameroom_button.style.display = "none";
