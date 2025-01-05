@@ -88,6 +88,9 @@ jobs:
     environment: gamelobby
     needs: build-job
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@main
         with:
@@ -100,7 +103,7 @@ jobs:
             aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
             echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
             echo $(cat ~/.kube/config | base64) >> $GITHUB_ENV
-            echo 'EOF' >> $GITHUB_ENV   
+            echo 'EOF' >> $GITHUB_ENV
 
       - name: Kubectl and Helm Deploy
         id: command_exec
@@ -109,7 +112,7 @@ jobs:
           KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
         with:
           command: |
-            helm upgrade pong-game-lobby gamelobby/helm/. -i
+            helm upgrade pong-game-lobby ./gamelobby/helm/. -i
 
       - name: Print Response from Kubectl and Helm
         run: echo "${{ steps.command_exec.outputs.result }}"
