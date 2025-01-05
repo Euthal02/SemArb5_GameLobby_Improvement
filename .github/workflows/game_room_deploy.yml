@@ -83,46 +83,33 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
         push: true
 
+  deploy-job:
+    runs-on: ubuntu-latest
+    environment: gameroom
+    needs: build-job
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@main
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
 
-#   deploy-job:
-#     runs-on: ubuntu-latest
-#     environment: backend_env_vars
-#     needs: build-job
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
-      
-#       - name: Install SSH key
-#         run: |
-#           mkdir -p ~/.ssh
-#           echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-#           chmod 600 ~/.ssh/id_rsa
-#         shell: bash
-#         env:
-#           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Create Kubeconfig file 
+        run: |
+            aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
+            echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
+            echo $(cat ~/.kube/config | base64) >> $GITHUB_ENV
+            echo 'EOF' >> $GITHUB_ENV   
 
-#       - name: Create .env file
-#         run: |
-#           touch .env
-#           echo API_KEY="${{ secrets.API_KEY }}" >> .env
-#           echo ASSISTANT_ID="${{ secrets.ASSISTANT_ID }}" >> .env
-#           echo ORGANIZATION="${{ secrets.ORGANIZATION }}" >> .env
-#           echo PROJECT="${{ secrets.PROJECT }}" >> .env
-#           echo SECRET_KEY="${{ secrets.SECRET_KEY }}" >> .env
-#           echo MYSQL_ROOT_PASSWORD="${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
-#           echo MYSQL_DATABASE="${{ vars.MYSQL_DATABASE }}" >> .env
-#           echo DASHBOARD_ENABLED="${{ vars.DASHBOARD_ENABLED }}" >> .env
-#           echo DATABASE_URI="${{ vars.DATABASE_URI }}" >> .env
-#           echo WEATHER_API_KEY="${{ secrets.WEATHER_API_KEY }}" >> .env
+      - name: Kubectl and Helm Deploy
+        id: command_exec
+        uses: koslib/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
+        with:
+          command: |
+            helm upgrade pong-game-room gameroom/helm/. -i
 
-#       - name: Copy files to Server
-#         run: |
-#           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q backend/compose.prod.yaml ${{ vars.DEPLOY_USER }}@${{ vars.DEPLOY_HOST }}:/home/${{ vars.DEPLOY_USER }}/compose.yaml
-#           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q .env ${{ vars.DEPLOY_USER }}@${{ vars.DEPLOY_HOST }}:/home/${{ vars.DEPLOY_USER }}/.env
-
-#       - name: Deploy on server
-#         run: |
-#           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ vars.DEPLOY_USER }}@${{ vars.DEPLOY_HOST }} "cd /home/${{ vars.DEPLOY_USER }};
-#           docker-compose pull;
-#           docker-compose up -d;
-#           docker image prune -f"
+      - name: Print Response from Kubectl and Helm
+        run: echo "${{ steps.command_exec.outputs.result }}"

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: "{{ .Chart.Name }}"
+  labels:
+    app: "{{ .Chart.Name }}"
+spec:
+  replicas: {{ .Values.room.replicaCount }}
+  selector:
+    matchLabels:
+      app: "{{ .Chart.Name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Chart.Name }}"
+    spec:
+      containers:
+      - name: "{{ .Chart.Name }}"
+        image: "{{ .Values.room.image.repository }}:{{ .Values.room.image.tag }}"
+        imagePullPolicy: {{ .Values.room.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.room.service.port }}

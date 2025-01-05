@@ -109,8 +109,7 @@ jobs:
           KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
         with:
           command: |
-            helm list
-            kubectl get pods
+            helm upgrade pong-game-lobby gamelobby/helm/. -i
 
       - name: Print Response from Kubectl and Helm
-        run: echo "${{ steps.command_exec.outputs.response }}"
+        run: echo "${{ steps.command_exec.outputs.result }}"

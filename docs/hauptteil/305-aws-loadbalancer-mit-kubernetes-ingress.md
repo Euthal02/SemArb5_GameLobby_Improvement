@@ -2,7 +2,7 @@
 layout: default
 title: 3.5 AWS Loadbalancer mit Kubernetes Ingress
 parent: 3. Hauptteil
-nav_order: 304
+nav_order: 305
 ---
 
 # 3.5 AWS Loadbalancer mit Kubernetes Ingress

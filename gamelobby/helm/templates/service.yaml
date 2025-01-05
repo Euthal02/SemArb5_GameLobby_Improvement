@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: "{{ .Release.Name }}"
+  labels:
+    app: "{{ .Release.Name }}"
+spec:
+  type: {{ .Values.lobby.service.type }}
+  ports:
+  - port: {{ .Values.lobby.service.port }}
+    targetPort: {{ .Values.lobby.service.targetport }}
+    protocol: {{ .Values.lobby.service.protocol }}
+  selector:
+    app: "{{ .Release.Name }}"
