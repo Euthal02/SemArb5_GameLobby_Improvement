@@ -5,10 +5,10 @@
     apiVersion: networking.k8s.io/v1
     kind: Ingress
     metadata:
-      namespace: {{ .Values.namespace }}
+      namespace: "{{ .Values.namespace }}"
       name: "{{ .Release.Name }}"
       annotations:
-        {{- range $key, $value := .Values.room.ingress.annotations }}
+        {{- range $key, $value := $.Values.room.ingress.annotations }}
         {{ $key }}: "{{ $value }}"
         {{- end }}
         external-dns.alpha.kubernetes.io/hostname: room{{ add $i 1 }}.{{ $domain }}
