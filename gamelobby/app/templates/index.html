@@ -245,6 +245,7 @@
                 gameroom_button = currentDiv.querySelector(".gameroom_button");
                 return_button = currentDiv.querySelector(".return_button");
 
+                toggleStyle(return_button, "display: block;");
                 // Prüfe die Spieleranzahl im Room
                 // fetch("http://localhost:5000/player_count")
                 fetch(room_url+"/player_count")
@@ -254,13 +255,11 @@
                             // Room hat Platz: Zeige das Spiel an
                             gameFrame.src = room_url;
                             toggleStyle(gameFrame, "display: block;");
-                            toggleStyle(return_button, "display: block;");
                             toggleStyle(errorMessage, "display: none;");
                             toggleStyle(gameroom_button, "display: none;");
                         } else {
                             // Room ist voll: Zeige eine Fehlermeldung an
                             toggleStyle(gameFrame, "display: none;");
-                            toggleStyle(return_button, "display: block;");
                             toggleStyle(errorMessage, "display: block;");
                             toggleStyle(gameroom_button, "display: none;");
                         }
