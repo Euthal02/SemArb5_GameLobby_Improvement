@@ -25,7 +25,7 @@ def setup_game():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret!'
     CORS(app, send_wildcard=True)
-    socketio = SocketIO(app, async_mode="eventlet", cors_allowed_origins="*")
+    socketio = SocketIO(app, async_mode="eventlet")
 
     # this just returns the basic index.html
     @app.route("/")

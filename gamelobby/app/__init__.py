@@ -8,7 +8,7 @@ def create_lobby():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret!'
     CORS(app, send_wildcard=True)
-    socketio = SocketIO(app, async_mode="eventlet", cors_allowed_origins="*")
+    socketio = SocketIO(app, async_mode="eventlet")
 
     @app.route("/")
     def index():

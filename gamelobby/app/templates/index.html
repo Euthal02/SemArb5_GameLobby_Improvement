@@ -137,7 +137,7 @@
 
                     const numberOfGamerooms = 10;
                     const prefixURL = "http://room";
-                    const baseURL = "semesterarbeit.com";
+                    const baseURL = ".semesterarbeit.com";
 
                     toggleStyle(gameroom_grid, "text-align: center; margin-right: 340px; display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(2, 1fr); border: 1px solid black;");
 
@@ -152,7 +152,7 @@
                         var gameroom_button = document.createElement("button");
                         gameroom_button.className = "gameroom_button";
                         gameroom_button.textContent = `Join Gameroom ${i}`;
-                        gameroom_button.setAttribute("onclick", `joinGame('${prefixURL}${i}.${baseURL}', this)`);
+                        gameroom_button.setAttribute("onclick", `joinGame('${prefixURL}${i}${baseURL}', this)`);
 
                         // create the game frame
                         var gameFrame = document.createElement("iframe");
