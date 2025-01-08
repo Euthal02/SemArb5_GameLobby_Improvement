@@ -16,6 +16,7 @@ room:
 
   ingress:
     ingressCount: 10
+    
     domain: "semesterarbeit.com"
     enabled: true
     className: alb
