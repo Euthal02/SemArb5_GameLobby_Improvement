@@ -5,15 +5,15 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: {{ .Values.namespace }}
-  name: "{{ .Release.Name }}"
+  namespace: {{ $.Values.namespace }}
+  name: "{{ $.Release.Name }}"
   annotations:
     {{- range $key, $value := $.Values.room.ingress.annotations }}
     {{ $key }}: "{{ $value }}"
     {{- end }}
     external-dns.alpha.kubernetes.io/hostname: room{{ add $i 1 }}.{{ $domain }}
 spec:
-  ingressClassName: {{ .Values.room.ingress.className }}
+  ingressClassName: {{ $.Values.room.ingress.className }}
   rules:
     - http:
         paths:
@@ -23,12 +23,12 @@ spec:
             service:
               name: "{{ $.Release.Name }}{{ add $i 1 }}"
               port:
-                number: {{ .Values.room.service.port }}
-  {{- if .Values.room.ingress.tls.enabled }}
+                number: {{ $.Values.room.service.port }}
+  {{- if $.Values.room.ingress.tls.enabled }}
   tls:
   - hosts:
-    - {{ .Values.room.ingress.hostname }}
-    secretName: {{ .Values.room.ingress.tls.secretName }}
+    - {{ $.Values.room.ingress.hostname }}
+    secretName: {{ $.Values.room.ingress.tls.secretName }}
   {{- end }}
 {{- end }}
 {{- end }}
