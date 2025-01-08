@@ -30,6 +30,8 @@
                 font-size: 16px;
                 cursor: pointer;
                 transition: right 0.5s ease;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             #scoreboard {
@@ -67,7 +69,7 @@
             }
 
             iframe {
-                margin-top: 20px;
+                margin: 10px;
                 width: 800px;
                 height: 650px;
                 border: none;
@@ -101,22 +103,21 @@
             </ul>
         </div>
         <hr id="divider" class="rounded">
-        <div style="text-align: center;">
-            <button id="gameroom_button" style="display: none;" onclick="joinGame()">Join Game</button>
-            <iframe id="game-frame" style="display: none;"></iframe>
-            <div id="error-message" style="display: none;">Room is full. Please try again later.</div>
+        <div id="gameroom_grid" style="display: none;">
+            <!-- Gamerooms werden hier dynamisch eingefügt -->
         </div>
         
 
         <script>
             const socket = io();
             var playerName = ""
+            var gameFrame = document.createElement('div');
+
             const playerList = document.getElementById("player-list");
-            const gameFrame = document.getElementById("game-frame");
-            const errorMessage = document.getElementById("error-message");
             const scoreboard = document.getElementById("scoreboard");
-            const gameroom_button = document.getElementById("gameroom_button")
+
             const lobby_container = document.getElementById("lobby-container")
+            const gameroom_grid = document.getElementById("gameroom_grid")
             const divider = document.getElementById("divider")
         
             var input = document.getElementById("player-name");
@@ -126,13 +127,62 @@
                 }
             }); 
 
+            function toggleStyle(html_object, style_text) {
+                html_object.style = style_text
+            }
+
             function joinLobby() {
                 playerName = document.getElementById("player-name").value.trim();
                 if (playerName) {
-                    gameroom_button.style.display = "";
-                    gameroom_button.style.marginTop = "10px";
-                    lobby_container.style.display = "none";
-                    divider.style.display = "none";
+
+                    const numberOfGamerooms = 10;
+                    const gameroomURL = "http://localhost:5000";
+
+                    toggleStyle(gameroom_grid, "text-align: center; margin-right: 340px; display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(2, 1fr); border: 1px solid black;");
+
+                    // Schleife, um die Gamerooms zu generieren
+                    for (let i = 1; i <= numberOfGamerooms; i++) {
+                        var roomDiv = document.createElement("div");
+                        roomDiv.style.border = "1px solid gray";
+                        roomDiv.style.textAlign = "center";
+                        roomDiv.style.padding = "10px";
+
+                        // create the button
+                        var gameroom_button = document.createElement("button");
+                        gameroom_button.className = "gameroom_button";
+                        gameroom_button.textContent = `Join Gameroom ${i}`;
+                        gameroom_button.setAttribute("onclick", `joinGame('${gameroomURL}', this)`);
+
+                        // create the game frame
+                        var gameFrame = document.createElement("iframe");
+                        gameFrame.className = "game-frame";
+                        gameFrame.style.display = "none";
+
+                        // create the error message
+                        var errorMessage = document.createElement("div");
+                        errorMessage.className = "error-message";
+                        errorMessage.style.display = "none";
+                        errorMessage.textContent = "Room is full. Please try again later.";
+
+                        // create return button
+                        var return_button = document.createElement("button");
+                        return_button.className = "return_button";
+                        return_button.style.display = "none";
+                        return_button.textContent = "Return to Lobby";
+                        return_button.setAttribute("onclick", `returnToLobby(this)`);
+
+                        // Füge die Elemente in die Struktur ein
+                        roomDiv.appendChild(gameroom_button);
+                        roomDiv.appendChild(gameFrame);
+                        roomDiv.appendChild(errorMessage);
+                        roomDiv.appendChild(return_button);
+
+                        // Füge das Gameroom-DIV in das übergeordnete DIV ein
+                        gameroom_grid.appendChild(roomDiv);
+                    }
+
+                    toggleStyle(lobby_container, "display: none;");
+                    toggleStyle(divider, "display: none");
 
                     scoreboard.classList.add("visible");
                     socket.emit("join_lobby", { name: playerName })
@@ -141,24 +191,77 @@
                 }
             }
 
-            function joinGame() {
+            function returnToLobby(button_itself) {
+                // Parent-Div des Buttons
+                const currentDiv = button_itself.parentElement;
+                // Parent-Container, der alle Unter-DIVs enthält
+                const parentDiv = currentDiv.parentElement;
+
+                // Alle Unter-DIVs durchsuchen
+                Array.from(parentDiv.children).forEach(child_div => {
+                    gameFrame = currentDiv.querySelector(".game-frame");
+                    errorMessage = currentDiv.querySelector(".error-message");
+                    gameroom_button = currentDiv.querySelector(".gameroom_button");
+                    return_button = currentDiv.querySelector(".return_button");
+
+                    toggleStyle(gameFrame, "display: none;");
+                    toggleStyle(return_button, "display: none;");
+                    toggleStyle(errorMessage, "display: none;");
+                    toggleStyle(gameroom_button, "display: block;");
+
+                    if (child_div !== currentDiv) {
+                        toggleStyle(child_div, "display: block; border: 1px solid gray; textAlign: center; padding: 10px;"); // Sibling-DIVs anzeigen
+                    } else {
+                        // get the game frame from the current div
+                        gameFrame = currentDiv.querySelector(".game-frame");
+
+                        // disconnect the iframe connection
+                        if (gameFrame && gameFrame.contentWindow) {
+                            gameFrame.contentWindow.postMessage({ action: 'disconnect'}, "*");
+                        }
+
+                        // remove src from gameFrame
+                        gameFrame.src = "";
+                    }
+                });
+            }
+
+            function joinGame(room_url, button_itself) {
+                // Parent-Div des Buttons
+                const currentDiv = button_itself.parentElement;
+                // Parent-Container, der alle Unter-DIVs enthält
+                const parentDiv = currentDiv.parentElement;
+
+                // Alle Unter-DIVs durchsuchen
+                Array.from(parentDiv.children).forEach(child_div => {
+                    if (child_div !== currentDiv) {
+                        toggleStyle(child_div, "display: none;"); // Sibling-DIVs verstecken
+                    }
+                });
+
+                gameFrame = currentDiv.querySelector(".game-frame");
+                errorMessage = currentDiv.querySelector(".error-message");
+                gameroom_button = currentDiv.querySelector(".gameroom_button");
+                return_button = currentDiv.querySelector(".return_button");
+
                 // Prüfe die Spieleranzahl im Room
                 // fetch("http://localhost:5000/player_count")
-                fetch("http://room.semesterarbeit.com/player_count")
+                fetch(room_url+"/player_count")
                     .then(response => response.json())
                     .then(data => {
                         if (data.player_count < 2) {
                             // Room hat Platz: Zeige das Spiel an
-                            // gameFrame.src = "http://localhost:5000";
-                            gameFrame.src = "http://room.semesterarbeit.com";
-                            gameFrame.style.display = "";
-                            errorMessage.style.display = "none";
-                            gameroom_button.style.display = "none";
+                            gameFrame.src = room_url;
+                            toggleStyle(gameFrame, "display: block;");
+                            toggleStyle(return_button, "display: block;");
+                            toggleStyle(errorMessage, "display: none;");
+                            toggleStyle(gameroom_button, "display: none;");
                         } else {
                             // Room ist voll: Zeige eine Fehlermeldung an
-                            errorMessage.style.display = "";
-                            gameFrame.style.display = "none";
-                            gameroom_button.style.display = "none";
+                            toggleStyle(gameFrame, "display: none;");
+                            toggleStyle(return_button, "display: block;");
+                            toggleStyle(errorMessage, "display: block;");
+                            toggleStyle(gameroom_button, "display: none;");
                         }
                     });
             }
@@ -174,11 +277,15 @@
             });
 
             socket.on("fetch_scores", () => {
-                gameFrame.contentWindow.postMessage({ action: 'fetch_scores'}, "*");
+                if (gameFrame && gameFrame.contentWindow) {
+                    gameFrame.contentWindow.postMessage({ action: 'fetch_scores'}, "*");
+                }
             });
 
             socket.on("update_username", () => {
-                gameFrame.contentWindow.postMessage({ action: 'update_username', data: playerName }, "*");
+                if (gameFrame && gameFrame.contentWindow) {
+                    gameFrame.contentWindow.postMessage({ action: 'update_username', data: playerName }, "*");
+                }
             });
             
             window.addEventListener('message', (event) => {
