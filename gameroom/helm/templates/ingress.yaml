@@ -1,5 +1,5 @@
 {{- if .Values.room.ingress.enabled }}
-  {{- $ingressCount := (.Values.room.ingress.ingressCount | int) }}
+  {{- $ingressCount := (( .Values.room.ingress.ingressCount | int )) }}
   {{- $domain := .Values.domain }}
   {{- range $i := until $ingressCount }}
     apiVersion: networking.k8s.io/v1
