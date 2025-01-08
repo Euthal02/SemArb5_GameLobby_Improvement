@@ -2,4 +2,3 @@
 flask_session/*
 *.pyc
 __pycache__/
-config.ini

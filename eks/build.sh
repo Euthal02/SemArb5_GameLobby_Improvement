@@ -64,16 +64,6 @@ eksctl create iamserviceaccount --cluster="${CLUSTER_NAME}" --namespace=default 
 DNS_ROLE_ARN=$(aws iam get-role --role-name AllowExternalDNSUpdatesRole --query 'Role.[Arn]' --output text)
 helm install external-dns oci://registry-1.docker.io/bitnamicharts/external-dns --set provider=aws --set aws.region=eu-central-2 --set domainFilters[0]=$DNS_ZONE --set policy=sync --set aws.roleArn=$DNS_ROLE_ARN --set serviceAccount.create=false --set serviceAccount.name=external-dns
 
-
-NAMESPACE_CONTROLLER="arc-systems"
-INSTALLATION_NAME="arc-runner-set"
-NAMESPACE_RUNNERS="arc-runners"
-GITHUB_CONFIG_URL="https://github.com/Euthal02/SemArb4_GameLobby"
-GITHUB_PAT=$(awk -F "=" '/GITHUB_PAT/ {print $2}' config.ini)
-helm install arc --namespace "${NAMESPACE_CONTROLLER}" --create-namespace oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
-# get github pat from config.ini
-helm install "${INSTALLATION_NAME}" --namespace "${NAMESPACE_RUNNERS}" --create-namespace --set githubConfigUrl="${GITHUB_CONFIG_URL}" --set githubConfigSecret.github_token="${GITHUB_PAT}" oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set
-
 # remove downloaded files
 rm -f crds.yaml
 rm -f iam_policy.json

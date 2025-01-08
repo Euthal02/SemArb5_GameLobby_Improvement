@@ -46,7 +46,7 @@ jobs:
 #           WEATHER_API_KEY: "${{ secrets.WEATHER_API_KEY }}"
   
   build-job:
-    runs-on: arc-runner-set
+    runs-on: ubuntu-latest
     environment: gamelobby
     # needs: test-job
     permissions:
@@ -84,39 +84,35 @@ jobs:
         push: true
 
   deploy-job:
-    runs-on: arc-runner-set
+    runs-on: ubuntu-latest
     environment: gamelobby
     needs: build-job
     steps:
       - name: Checkout Repo
         uses: actions/checkout@main
 
-      - name: Deploy Helm Chart
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@main
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Create Kubeconfig file 
         run: |
-          helm upgrade pong-game-lobby ./gamelobby/helm/. -i
+            aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
+            echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
+            echo $(cat ~/.kube/config | base64) >> $GITHUB_ENV
+            echo 'EOF' >> $GITHUB_ENV
 
-      # - name: Configure AWS credentials
-      #   uses: aws-actions/configure-aws-credentials@main
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: ${{ vars.AWS_REGION }}
+      - name: Kubectl and Helm Deploy
+        id: command_exec
+        uses: koslib/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
+        with:
+          command: |
+            helm upgrade pong-game-lobby ./gamelobby/helm/. -i
 
-      # - name: Create Kubeconfig file 
-      #   run: |
-      #       aws eks update-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
-      #       echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
-      #       echo $(cat ~/.kube/config | base64) >> $GITHUB_ENV
-      #       echo 'EOF' >> $GITHUB_ENV
-
-      # - name: Kubectl and Helm Deploy
-      #   id: command_exec
-      #   uses: koslib/helm-eks-action@master
-      #   env:
-      #     KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
-      #   with:
-      #     command: |
-      #       helm upgrade pong-game-lobby ./gamelobby/helm/. -i
-
-      # - name: Print Response from Kubectl and Helm
-      #   run: echo "${{ steps.command_exec.outputs.response }}"
+      - name: Print Response from Kubectl and Helm
+        run: echo "${{ steps.command_exec.outputs.response }}"
