@@ -2,6 +2,7 @@ namespace: pong-game-room
 
 room:
   replicaCount: 1
+  ingressCount: 10
 
   image:
     repository: ghcr.io/euthal02/pong-gameroom
@@ -15,7 +16,6 @@ room:
     type: NodePort
 
   ingress:
-    ingressCount: 10
     domain: "semesterarbeit.com"
     enabled: true
     className: alb

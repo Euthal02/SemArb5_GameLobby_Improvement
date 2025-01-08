@@ -1,15 +1,19 @@
+{{- $ingressCount := .Values.room.ingressCount | int }}
+{{- range $i := until $ingressCount }}
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: {{ .Values.namespace }}
-  name: "{{ .Release.Name }}"
+  namespace: {{ $.Values.namespace }}
+  name: "{{ $.Release.Name }}{{ add $i 1 }}"
   labels:
-    app: "{{ .Release.Name }}"
+    app: "{{ $.Release.Name }}{{ add $i 1 }}"
 spec:
-  type: {{ .Values.room.service.type }}
+  type: {{ $.Values.room.service.type }}
   ports:
-  - port: {{ .Values.room.service.port }}
-    targetPort: {{ .Values.room.service.targetport }}
-    protocol: {{ .Values.room.service.protocol }}
+  - port: {{ $.Values.room.service.port }}
+    targetPort: {{ $.Values.room.service.targetport }}
+    protocol: {{ $.Values.room.service.protocol }}
   selector:
-    app: "{{ .Release.Name }}"
+    app: "{{ $.Release.Name }}{{ add $i 1 }}"
+---
+{{- end }}

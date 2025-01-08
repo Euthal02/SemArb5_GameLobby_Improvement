@@ -112,7 +112,7 @@ jobs:
           KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
         with:
           command: |
-            helm upgrade pong-game-lobby ./gamelobby/helm/. -i
+            helm upgrade pong-game-lobby ./gamelobby/helm/. -i --force
 
       - name: Print Response from Kubectl and Helm
         run: echo "${{ steps.command_exec.outputs.response }}"

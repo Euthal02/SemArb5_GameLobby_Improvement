@@ -42,36 +42,6 @@ room:
     tls: 
       enabled: false
       secretName: ""
-
-lobby:
-  replicaCount: 1
-  image:
-    repository: ghcr.io/euthal02/pong-gamelobby
-    tag: latest
-    pullPolicy: Always
-  service:
-    port: 80
-    targetport: 80
-    protocol: TCP
-    type: NodePort
-  ingress:
-    enabled: true
-    className: alb
-    annotations:
-      alb.ingress.kubernetes.io/scheme: internet-facing
-      alb.ingress.kubernetes.io/target-type: ip
-      alb.ingress.kubernetes.io/backend-protocol: HTTP
-      alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
-      alb.ingress.kubernetes.io/healthcheck-path: /health
-      alb.ingress.kubernetes.io/load-balancer-attributes: 'idle_timeout.timeout_seconds=3600'
-    tls: 
-      enabled: false
-      secretName: ""
-
-resources: {}
-nodeSelector: {}
-tolerations: []
-affinity: {}
 ```
 
 Für jedes Deployment in unserem Cluster möchten wir einen neuen Namespace erstellen. Dasselbe gilt auch für den GameRoom und die GameLobby. Wie man in diesem Value File sehen kann, nutzen wir den Namespace ``pong-game``.
@@ -124,3 +94,5 @@ spec:
   selector:
     app: "{{ .Release.Name }}lobby"
 ```
+
+Für den Gameroom wird jeder Service, Ingress und Pod 10-fach erstellt. Das eigentliche Ziel das ganze Variabel zu skalieren kann jedoch später noch eingebaut werden.

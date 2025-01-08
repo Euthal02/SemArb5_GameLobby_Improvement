@@ -33,7 +33,7 @@ Zuerst wird der Cluster erstellt. Die einzelnen Parameter basieren sich alle auf
 ```bash
 mka@Tuxedo-Laptop:~/repos/SemArb4_GameLobby$ eks/build.sh
 
-# eksctl create cluster --name=eks-cluster --region=eu-central-2 --node-ami-family=AmazonLinux2 --nodes=2 --nodes-min=1 --nodes-max=3 --ssh-access --ssh-public-key=semesterarbeit_admin_access --max-pods-per-node=20 --enable-ssm --with-oidc
+# eksctl create cluster --name=eks-cluster --version=1.31 --region=eu-central-2 --node-ami-family=AmazonLinux2 --nodes=2 --nodes-min=1 --nodes-max=3 --ssh-access --ssh-public-key=semesterarbeit_admin_access --max-pods-per-node=20 --enable-ssm --with-oidc
 
 2024-12-14 15:04:45 [!]  SSM is now enabled by default; `ssh.enableSSM` is deprecated and will be removed in a future release
 2024-12-14 15:04:46 [ℹ]  eksctl version 0.194.0
@@ -90,7 +90,7 @@ Standardmässig kann noch jeder die Kubernetes API erreichen. Aus Sicherheitsgr�
 
 ## Upgrade Kubectl
 
-Die Standard Kubernetes Version des Cluster ist bereits OutOfDate und kann mittels diesem Command geupgraded werden. EKSCTL nutzt als Standardversion eine ältere Version von Kubernetes, kann jedoch einfach upgraden. Dieser Upgradeschritt ist bereits im Build Script integriert.
+Die Standard Kubernetes Version des Cluster ist bereits UptoDate kann aber mittels diesem Command geupgraded werden. EKSCTL nutzt als Standardversion eine ältere Version von Kubernetes, kann jedoch einfach geupgradet werden. Dieser Upgradeschritt ist bereits im Build Script integriert.
 
 ```bash
 mka@Tuxedo-Laptop:~$ eksctl upgrade cluster --name=eks-cluster --approve

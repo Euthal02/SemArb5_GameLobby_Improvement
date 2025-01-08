@@ -1,23 +1,27 @@
+{{- $ingressCount := .Values.room.ingressCount | int }}
+{{- range $i := until $ingressCount }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: {{ .Values.namespace }}
-  name: "{{ .Chart.Name }}"
+  namespace: {{ $.Values.namespace }}
+  name: "{{ $.Release.Name }}{{ add $i 1 }}"
   labels:
-    app: "{{ .Chart.Name }}"
+    app: "{{ $.Release.Name }}{{ add $i 1 }}"
 spec:
-  replicas: {{ .Values.room.replicaCount }}
+  replicas: {{ $.Values.room.replicaCount }}
   selector:
     matchLabels:
-      app: "{{ .Chart.Name }}"
+      app: "{{ $.Release.Name }}{{ add $i 1 }}"
   template:
     metadata:
       labels:
-        app: "{{ .Chart.Name }}"
+        app: "{{ $.Release.Name }}{{ add $i 1 }}"
     spec:
       containers:
-      - name: "{{ .Chart.Name }}"
-        image: "{{ .Values.room.image.repository }}:{{ .Values.room.image.tag }}"
-        imagePullPolicy: {{ .Values.room.image.pullPolicy }}
+      - name: "{{ $.Release.Name }}{{ add $i 1 }}"
+        image: "{{ $.Values.room.image.repository }}:{{ $.Values.room.image.tag }}"
+        imagePullPolicy: {{ $.Values.room.image.pullPolicy }}
         ports:
-        - containerPort: {{ .Values.room.service.port }}
+        - containerPort: {{ $.Values.room.service.port }}
+---
+{{- end }}
