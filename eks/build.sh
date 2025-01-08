@@ -14,10 +14,10 @@ eksctl create cluster --name=$CLUSTER_NAME --region=$REGION --version=1.31 --nod
 ALB_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text)
 DNS_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AllowExternalDNSUpdatesPolicy`].Arn' --output text)
 if [ -n "$ALB_POLICY_ARN" ]; then
-  aws iam delete-policy --policy-arn=$ALB_POLICY_ARN
+  aws iam delete-policy --policy-arn="${ALB_POLICY_ARN}"
 fi
 if [ -n "$DNS_POLICY_ARN" ]; then
-  aws iam delete-policy --policy-arn=$DNS_POLICY_ARN
+  aws iam delete-policy --policy-arn="${DNS_POLICY_ARN}"
 fi
 
 # aws loadbalancer in k8s
@@ -60,9 +60,19 @@ cat > external-dns-policy.conf << EOF
 EOF
 aws iam create-policy --policy-name "AllowExternalDNSUpdatesPolicy" --policy-document file://external-dns-policy.conf --no-cli-pager
 DNS_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AllowExternalDNSUpdatesPolicy`].Arn' --output text)
-eksctl create iamserviceaccount --cluster=$CLUSTER_NAME --namespace=default --name=external-dns --role-name=AllowExternalDNSUpdatesRole --attach-policy-arn=$DNS_POLICY_ARN --approve --override-existing-serviceaccounts
+eksctl create iamserviceaccount --cluster="${CLUSTER_NAME}" --namespace=default --name=external-dns --role-name=AllowExternalDNSUpdatesRole --attach-policy-arn=$DNS_POLICY_ARN --approve --override-existing-serviceaccounts
 DNS_ROLE_ARN=$(aws iam get-role --role-name AllowExternalDNSUpdatesRole --query 'Role.[Arn]' --output text)
 helm install external-dns oci://registry-1.docker.io/bitnamicharts/external-dns --set provider=aws --set aws.region=eu-central-2 --set domainFilters[0]=$DNS_ZONE --set policy=sync --set aws.roleArn=$DNS_ROLE_ARN --set serviceAccount.create=false --set serviceAccount.name=external-dns
+
+
+NAMESPACE_CONTROLLER="arc-systems"
+INSTALLATION_NAME="arc-runner-set"
+NAMESPACE_RUNNERS="arc-runners"
+GITHUB_CONFIG_URL="https://github.com/Euthal02/SemArb4_GameLobby"
+GITHUB_PAT=$(awk -F "=" '/GITHUB_PAT/ {print $2}' config.ini)
+helm install arc --namespace "${NAMESPACE_CONTROLLER}" --create-namespace oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
+# get github pat from config.ini
+helm install "${INSTALLATION_NAME}" --namespace "${NAMESPACE_RUNNERS}" --create-namespace --set githubConfigUrl="${GITHUB_CONFIG_URL}" --set githubConfigSecret.github_token="${GITHUB_PAT}" oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set
 
 # remove downloaded files
 rm -f crds.yaml
