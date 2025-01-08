@@ -21,7 +21,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: "{{ .Release.Name }}{{ add $i 1 }}"
+              name: "{{ $.Release.Name }}{{ add $i 1 }}"
               port:
                 number: {{ .Values.room.service.port }}
   {{- if .Values.room.ingress.tls.enabled }}
