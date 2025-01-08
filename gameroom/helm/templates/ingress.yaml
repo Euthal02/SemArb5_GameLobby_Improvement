@@ -6,7 +6,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   namespace: {{ $.Values.namespace }}
-  name: "{{ $.Release.Name }}"
+  name: "{{ $.Release.Name }}{{ add $i 1 }}"
   annotations:
     {{- range $key, $value := $.Values.room.ingress.annotations }}
     {{ $key }}: "{{ $value }}"
@@ -30,5 +30,6 @@ spec:
     - {{ $.Values.room.ingress.hostname }}
     secretName: {{ $.Values.room.ingress.tls.secretName }}
   {{- end }}
+---
 {{- end }}
 {{- end }}
