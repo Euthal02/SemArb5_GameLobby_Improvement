@@ -5,7 +5,7 @@ lobby:
 
   image:
     repository: ghcr.io/euthal02/pong-gamelobby
-    tag: latest
+    #tag: :latest
     pullPolicy: Always
 
   service:

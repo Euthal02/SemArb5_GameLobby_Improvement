@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: "{{ .Chart.Name }}"
-        image: "{{ .Values.lobby.image.repository }}:{{ .Values.lobby.image.tag }}"
+        image: "{{ .Values.lobby.image.repository }}{{ .Values.lobby.image.tag }}"
         imagePullPolicy: {{ .Values.lobby.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.lobby.service.port }}
