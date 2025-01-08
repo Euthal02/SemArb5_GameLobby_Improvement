@@ -34,11 +34,11 @@ Ich möchte gerne weiterarbeiten so wie bisher.
 
 Ich konnte die folgenden Tasks erledigen. Mehr Infos zu den einzelnen Tasks finden sich in den angefügten Links:
 
-[Kubernetes Cluster mit GHCR verbinden](https://github.com/Euthal02/SemArb4_GameLobby/issues/10)
-[GameLobby selbst schreiben](https://github.com/Euthal02/SemArb4_GameLobby/issues/9)
-[Eigenes GameRoom Image erstellen](https://github.com/Euthal02/SemArb4_GameLobby/issues/7)
-[Image für die GameLobby in den Grundzügen erstellt](https://github.com/Euthal02/SemArb4_GameLobby/issues/23)
-[Image für den Game Room in den Grunzügen erstellt](https://github.com/Euthal02/SemArb4_GameLobby/issues/24)
+* [Kubernetes Cluster mit GHCR verbinden](https://github.com/Euthal02/SemArb4_GameLobby/issues/10)
+* [GameLobby selbst schreiben](https://github.com/Euthal02/SemArb4_GameLobby/issues/9)
+* [Eigenes GameRoom Image erstellen](https://github.com/Euthal02/SemArb4_GameLobby/issues/7)
+* [Image für die GameLobby in den Grundzügen erstellt](https://github.com/Euthal02/SemArb4_GameLobby/issues/23)
+* [Image für den Game Room in den Grunzügen erstellt](https://github.com/Euthal02/SemArb4_GameLobby/issues/24)
 
 ## Momentaufnahme Backlog / Projektstatus
 

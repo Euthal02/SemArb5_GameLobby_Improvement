@@ -31,11 +31,11 @@ Ich bin auf einem guten Weg, dass Produkt gut abzuliefern und möchte gerne weit
 
 ## Erledigte Tasks des letzten Sprints?
 
-[GameLobby kann selbstständig neue GameRooms erstellen](https://github.com/Euthal02/SemArb4_GameLobby/issues/18)
-[Deployment via GitHub Actions auf Kubernetes Cluster](https://github.com/Euthal02/SemArb4_GameLobby/issues/8)
-[Die Weihnachtspause](https://github.com/Euthal02/SemArb4_GameLobby/issues/26)
-[GameLobby leitet zu GameRooms weiter](https://github.com/Euthal02/SemArb4_GameLobby/issues/20)
-[Ingress auf Kubernetes leitet zu GameLobby](https://github.com/Euthal02/SemArb4_GameLobby/issues/19)
+* [GameLobby kann selbstständig neue GameRooms erstellen](https://github.com/Euthal02/SemArb4_GameLobby/issues/18)
+* [Deployment via GitHub Actions auf Kubernetes Cluster](https://github.com/Euthal02/SemArb4_GameLobby/issues/8)
+* [Die Weihnachtspause](https://github.com/Euthal02/SemArb4_GameLobby/issues/26)
+* [GameLobby leitet zu GameRooms weiter](https://github.com/Euthal02/SemArb4_GameLobby/issues/20)
+* [Ingress auf Kubernetes leitet zu GameLobby](https://github.com/Euthal02/SemArb4_GameLobby/issues/19)
 
 ## Zieleprozentsatz
 
