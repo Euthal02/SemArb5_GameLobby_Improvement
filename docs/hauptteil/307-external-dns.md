@@ -67,6 +67,8 @@ Damit wird dann automatisch dass Zonenfile auf dem Route53 Dienst angepasst.
 
 Die Installation ist sehr einfach und wird mit folgenden Befehlen bereits erreicht.
 
+Ausserdem ist es bereits im build SCript integriert, muss also nicht mehr manuell ausgeführt werden.
+
 Es wird eine neue Policy erstellt, welche es einem Kubernetes Serviceaccount erlaubt Changes im Route53 Dienst zu tätigen.
 Anschliessend wird ein einfaches Helm Chart angewendet, mit einigen veränderten Values.
 

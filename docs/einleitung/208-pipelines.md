@@ -31,3 +31,20 @@ on:
 [Die einzelnen Workflows finden sich hier.](https://github.com/Euthal02/SemArb4_GameLobby/tree/main/.github/workflows)
 
 Genauere Informationen was jede Pipeline genau macht, wird im Hauptteil zu den einzelnen Teilsystemen spezifiziert.
+
+## Vorkonfigurierte Aktionen
+
+In GitHub Actions hat man die Möglichkeit vordefinierte Aktionen zu verwenden, welche es vereinfachen Operation in Actions vorzunehmen. So zum Beispiel die folgende Aktion ``docker/login-action@master``, welche sich bei einer Docker Registry anmeldet. Als User muss man nur noch die entsprechenden Anmeldedaten angeben und der Rest wird von dieser Action definiert.
+
+```yaml
+    - name: Log in to GHCR
+      uses: docker/login-action@master
+      with:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ${{ vars.REGISTRY }}
+```
+
+Mehr zu vordefinierten Actions hier:
+
+[Link zur GitHub Dokuemntation](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-pre-written-building-blocks-in-your-workflow)

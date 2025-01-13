@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 3.2 AWS Infromationen
+title: 3.2 AWS Informationen
 parent: 3. Hauptteil
 nav_order: 302
 ---
