@@ -1,11 +1,12 @@
 ---
 layout: default
-title: 3.7 External DNS
-parent: 3. Hauptteil
+title: 3.5.2 External DNS
+parent: 3.5 K8S Plugins
+grandparent: 3. Hauptteil
 nav_order: 307
 ---
 
-# 3.7 External DNS
+# 3.5.2 External DNS
 
 Um jedem Ingress einen DNS Namen zuzuweisen, nutzen wir das Plugin external-dns auf dem Kubernetes Cluster, welcher direkt Acces auf den Dienst Route 53 von AWS hat. [Mehr zu diesem Plugin auf Ihrem GitHub Repo.](https://github.com/kubernetes-sigs/external-dns)
 

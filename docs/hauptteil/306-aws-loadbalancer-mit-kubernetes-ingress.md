@@ -1,11 +1,12 @@
 ---
 layout: default
-title: 3.5 AWS Loadbalancer mit Kubernetes Ingress
-parent: 3. Hauptteil
-nav_order: 305
+title: 3.5.1 AWS Loadbalancer mit Kubernetes Ingress
+parent: 3.5 K8S Plugins
+grandparent: 3. Hauptteil
+nav_order: 306
 ---
 
-# 3.5 AWS Loadbalancer mit Kubernetes Ingress
+# 3.5.1 AWS Loadbalancer mit Kubernetes Ingress
 
 Von Seite AWS wird vorgeschlagen, ihren Loadbalancer als Ingress für Kubernetes zu verwenden.
 Wir greifen gerne auf diese Möglichkeit zurück. Dazu gibt es eine sehr detailierte Anleitung.

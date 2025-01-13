@@ -101,7 +101,6 @@ mka@Tuxedo-Laptop:~$ eksctl upgrade cluster --name=eks-cluster --approve
 2024-11-15 19:27:48 [✔]  all resources in cluster stack "eksctl-eks-cluster-cluster" are up-to-date
 2024-11-15 19:27:48 [ℹ]  checking security group configuration for all nodegroups
 2024-11-15 19:27:48 [ℹ]  all nodegroups have up-to-date cloudformation templates
-mka@Tuxedo-Laptop:~$
 ```
 
 ## EKSCTL und die AWS CLI
