@@ -18,16 +18,19 @@ lobby:
     enabled: true
     className: alb
     annotations:
+      external-dns.alpha.kubernetes.io/hostname: "lobby.semesterarbeit.com"
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/backend-protocol: HTTP
       alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
       alb.ingress.kubernetes.io/healthcheck-path: /health
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
       alb.ingress.kubernetes.io/load-balancer-attributes: 'idle_timeout.timeout_seconds=3600'
-      external-dns.alpha.kubernetes.io/hostname: lobby.semesterarbeit.com
-    tls: 
-      enabled: false
-      secretName: ""
+    tls:
+      enabled: true
+      secretName: lobby-semesterarbeit-com
+      hostname: lobby.semesterarbeit.com
 
 
 resources: {}

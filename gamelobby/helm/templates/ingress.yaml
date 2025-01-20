@@ -6,13 +6,13 @@ metadata:
   name: "{{ .Release.Name }}"
   annotations:
     {{- range $key, $value := .Values.lobby.ingress.annotations }}
-    {{ $key }}: "{{ $value }}"
+    {{ $key }}: '{{ $value }}'
     {{- end }}
-    external-dns.alpha.kubernetes.io/hostname: "lobby.semesterarbeit.com"
 spec:
   ingressClassName: {{ .Values.lobby.ingress.className }}
   rules:
-    - http:
+    - host: {{ .Values.lobby.ingress.tls.hostname }}
+      http:
         paths:
         - path: /
           pathType: Prefix
@@ -23,8 +23,8 @@ spec:
                 number: {{ .Values.lobby.service.port }}
   {{- if .Values.lobby.ingress.tls.enabled }}
   tls:
-  - hosts:
-    - {{ .Values.lobby.ingress.hostname }}
-    secretName: {{ .Values.lobby.ingress.tls.secretName }}
+    - hosts:
+        - {{ .Values.lobby.ingress.tls.hostname }}
+      secretName: {{ .Values.lobby.ingress.tls.secretName }}
   {{- end }}
 {{- end }}

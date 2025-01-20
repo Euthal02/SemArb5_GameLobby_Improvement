@@ -3,7 +3,7 @@ layout: default
 title: 3.6.1 ...in GitHub Actions
 parent: 3.6 HELM Deployment
 grandparent: 3. Hauptteil
-nav_order: 307
+nav_order: 309
 ---
 
 # 3.6.1 ...in GitHub Actions
