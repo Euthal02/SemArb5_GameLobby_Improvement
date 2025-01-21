@@ -1,12 +1,12 @@
 ---
 layout: default
 title: 3.8.1 Genutzte Technologien
-parent: 3.8 Gamelobby
+parent: 3.8 GameLobby
 grandparent: 3. Hauptteil
 nav_order: 341
 ---
 
-# 3.7.1 Genutzte Technologien
+# 3.8.1 Genutzte Technologien
 
 Ähnlich wie für den GameRoom, werden dieselben Technologien verwendet.
 
