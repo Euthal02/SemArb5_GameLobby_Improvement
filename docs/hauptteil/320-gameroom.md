@@ -12,3 +12,7 @@ Der GameRoom ist als Container Image erstellt. In diesem Abschnitt beschreibe ic
 <https://github.com/Euthal02/SemArb4_GameLobby/pkgs/container/pong-gameroom>
 
 Github empfiehlt automatisch den Download mit dem neuesten SHA-Sum Value. Für einen einfachen Test wird aber empfohlen den `latest` Tag zu verwenden.
+
+## Umfang
+
+Wenn der GameRoom mit seinen Files betrachtet wird, erscheint dieser ziemlich klein. Da lediglich ein HTML File und zwei Python Scripts vorhanden sind. Der Gameroom wurde als MVP entwicklet, da der FOkus dieser Arbeit eigentlich auf dem Deployment auf Kubernetes liegt.

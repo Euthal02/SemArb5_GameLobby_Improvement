@@ -35,6 +35,10 @@ Die meisten Bilder sind selbst erstellt. Diehenigen, welche aus dem Internet kop
 
 <https://anja-deilmann.coach/leben-veraendern-smart-formel/>
 
+### 6.1.4 AWS Logo
+
+<https://mavink.com/explore/AWS-Logo-Black-Background>
+
 ## 6.2 Hilfsmittel
 
 Welche Hilfsmittel haben wir genutzt?

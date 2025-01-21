@@ -32,7 +32,7 @@ Das Frontend, welches mit dem Browser aufgerufen wird, nutzt HTML und CSS. Es gi
 * <http://gameroom9.semesterarbeit.com>
 * <http://gameroom10.semesterarbeit.com>
 
-{: .notice }
+{: .information }
 Nur solange der CLuster läuft und die Pods laufen.
 
 ## JavaScript

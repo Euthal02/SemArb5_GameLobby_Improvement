@@ -63,7 +63,7 @@ Dieser Schritt checkt lediglich das Repo aus. Anders gesagt, es holt eine lokale
 In diesen beiden Schritten, werden die AWS API Secrets genutzt, damit sich der Runner bei der AWS CLI anmelden kann und das Kubeconfig File erstellen kann. Die Secrets sind in GitHub hinterlegt und sind momentan mit dem Admin User verbunden. Das bedeutet, dass es theoretisch möglich ist, mit diesen Credentials weitere Ressourcen hinzuzufügen.
 
 {: .warning }
-Dies ist so sicherheitskritisch und muss korrigiert werden, bevor das Projekt Live geht.
+Dies ist so sicherheitskritisch und muss korrigiert werden, bevor das Projekt Live geht. Das Problem ist, dass hier der Default Admin User verwendet wird, statt einem spezifischen User für das Deployment.
 
 Die eigentliche Kubeconfig wird in die ``KUBE_CONFIG_DATA`` Variable abgefüllt, damit diese Daten im Actions Image ``koslib/helm-eks-action@master`` auch verfügbar ist. Da dies eine vorkonfigurierte Action ist und als ``DinD`` verwendet wird, wäre das erstellte Kkubeconfig File nicht verfügbar.
 

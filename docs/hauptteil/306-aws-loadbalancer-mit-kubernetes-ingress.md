@@ -199,3 +199,19 @@ spec:
               port:
                 number: 80
 ```
+
+## Angewendet auf das eigene Spiel
+
+Für unsere Apllikationen bedeutet dies lediglich das hinzufügen einiger Annotations im Helm Chart.
+
+```yaml
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/backend-protocol: HTTP
+      alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+      alb.ingress.kubernetes.io/healthcheck-path: /health
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+      alb.ingress.kubernetes.io/load-balancer-attributes: 'idle_timeout.timeout_seconds=3600'
+```
+
+Damit wird ein Standard Ingress erstellt, mit welchem der Service erreichbar ist.
