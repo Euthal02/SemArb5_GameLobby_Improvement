@@ -10,7 +10,7 @@ permalink: /
 Dies ist die Begleitsdokumentation für die vierte Semesterarbeit von Marco Kälin.
 Sie dient dazu, die einzelnen Aspekte der Arbeit zu beleuchten und den Sinn und Zweck der Arbeit als Ganzes zu ergründen.
 
-![Projektarbeit](ressources/icons/analytics.png){: style="width: 250px"" }
+![Projektarbeit](ressources/icons/analytics.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](anhang/600-quellen.html#64-icons)
 
@@ -25,7 +25,7 @@ Alles Files und weitere Informationen sind hier auf dem GitHub Repo zu finden.
 * [GitHub Projects, für das Zeitmanagement der Arbeit.](https://github.com/users/Euthal02/projects/5)
 * [docs/, die Dokumentation der Arbeit.](https://github.com/Euthal02/SemArb4_GameLobby/tree/main/docs)
 
-![Github](ressources/icons/github_logo.png){: style="width: 250px"" }
+![Github](ressources/icons/github_logo.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](anhang/600-quellen.html#64-icons)
 

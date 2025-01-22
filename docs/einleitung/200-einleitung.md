@@ -7,7 +7,7 @@ nav_order: 200
 
 # 2. Einleitung
 
-![Project Files](../ressources/icons/documentation.png){: style="width: 250px"" }
+![Project Files](../ressources/icons/documentation.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

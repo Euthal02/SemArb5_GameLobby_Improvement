@@ -8,7 +8,7 @@ nav_order: 310
 
 # 3.6.1 ...in GitHub Actions
 
-![Risks](../ressources/icons/risks.png){: style="width: 250px"" }
+![Risks](../ressources/icons/risks.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

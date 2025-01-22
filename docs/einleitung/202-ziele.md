@@ -7,13 +7,13 @@ nav_order: 202
 
 # 2.2 Ziele der Semesterarbeit
 
-![Goals](../ressources/icons/target.png){: style="width: 250px"" }
+![Goals](../ressources/icons/target.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
 Die Ziele dieser Arbeit sind möglichst nach dem SMART Prinzip erstellt.
 
-![Goals](../ressources/images/projektmanagement/smart_ziele.jpg){: style="width: 250px"" }
+![Goals](../ressources/images/projektmanagement/smart_ziele.jpg){: style="width: 250px" }
 
 [Quelle Bild - SMART Prinzip](../anhang/600-quellen.html#613-smart-prinzip)
 

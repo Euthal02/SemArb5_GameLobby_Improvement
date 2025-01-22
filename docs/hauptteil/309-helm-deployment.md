@@ -7,7 +7,7 @@ nav_order: 309
 
 # 3.6 HELM Deployment
 
-![Deployment](../ressources/icons/deploy.png){: style="width: 250px"" }
+![Deployment](../ressources/icons/deploy.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

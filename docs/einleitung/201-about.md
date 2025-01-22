@@ -7,7 +7,8 @@ nav_order: 201
 
 # 2.1 Um was geht es in dieser Semesterarbeit?
 
-![Question](../ressources/icons/question.png){: style="width: 250px"" }
+![Question](../ressources/icons/question.png){: style="width: 250px" }
+
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
 Die Aufgabe für die Semesterarbeiten ist, ein kleines Projekt von ungefähr 50 Stunden umzusetzen.

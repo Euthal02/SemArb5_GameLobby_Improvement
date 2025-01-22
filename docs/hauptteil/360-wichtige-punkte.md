@@ -7,7 +7,7 @@ nav_order: 360
 
 # 3.10 Wichtige Punkte
 
-![Wichtige Informationen](../ressources/icons/exchange.png){: style="width: 250px"" }
+![Wichtige Informationen](../ressources/icons/exchange.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

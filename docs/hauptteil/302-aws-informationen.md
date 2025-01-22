@@ -10,7 +10,7 @@ nav_order: 302
 Das Projekt / die Arbeit ist auf der AWS Cloud gehostet.
 Dies beinhaltet einige Eigenheiten dieser Cloud, welche hier augelistet und erklärt werden.
 
-![AWS Logo](../ressources/images/aws/aws_logo.png){: style="width: 250px"" }
+![AWS Logo](../ressources/images/aws/aws_logo.png){: style="width: 250px" }
 
 [Quelle Bild - AWS Logo](../anhang/600-quellen.html#614-aws-logo)
 

@@ -9,7 +9,7 @@ nav_order: 400
 
 In diesem Abschnitt werde ich die Sprints genauer anschauen und meine Erkenntnisse beschreiben.
 
-![Sprint](../ressources/icons/agile.png){: style="width: 250px"" }
+![Sprint](../ressources/icons/agile.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

@@ -7,7 +7,7 @@ nav_order: 208
 
 # 2.8 Pipelines
 
-![Pipeline Execution](../ressources/icons/upload.png){: style="width: 250px"" }
+![Pipeline Execution](../ressources/icons/upload.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

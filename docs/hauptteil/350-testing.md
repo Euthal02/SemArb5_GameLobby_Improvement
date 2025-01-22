@@ -7,7 +7,7 @@ nav_order: 350
 
 # 3.9 Testing
 
-![Testing](../ressources/icons/testing.png){: style="width: 250px"" }
+![Testing](../ressources/icons/testing.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
