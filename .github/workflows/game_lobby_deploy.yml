@@ -17,38 +17,46 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-#   test-job:
-#     environment: gameroom
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
-#      
-#       - name: Set up Python
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: 3.12.2
-#      
-#       - name: Install dependencies
-#         run: |
-#           pip install -r backend/requirements.txt
-#           pip install pytest
-#        
-#       - name: Run unit tests
-#         run: |
-#           echo "Running unit tests... This will take about 60 seconds."
-#           python -m pytest
-#         env:
-#           API_KEY: "${{ secrets.API_KEY }}"
-#           ASSISTANT_ID: "${{ secrets.ASSISTANT_ID }}"
-#           ORGANIZATION: "${{ secrets.ORGANIZATION }}"
-#           PROJECT: "${{ secrets.PROJECT }}"
-#           WEATHER_API_KEY: "${{ secrets.WEATHER_API_KEY }}"
+  health-check:
+    runs-on: ubuntu-latest
+    environment: gamelobby
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and run container
+        run: |
+          docker build -t pong-game-lobby .
+          docker run -d -p 80:80 --name pong-game-lobby-container pong-game-lobby
+
+      - name: Wait for container to be ready
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:80/health | grep 'OK'; then
+              echo "Container is healthy!";
+              exit 0;
+            else
+              echo "Waiting for container to be healthy...";
+              sleep 5;
+            fi
+          done
+          echo "Container health check failed.";
+          exit 1
+
+      - name: Stop and remove container
+        if: always()
+        run: |
+          docker stop pong-game-lobby-container
+          docker rm pong-game-lobby-container
+          docker image prune -af
   
   build-job:
     runs-on: ubuntu-latest
     environment: gamelobby
-    # needs: test-job
+    needs: health-check
     permissions:
       contents: read
       packages: write
