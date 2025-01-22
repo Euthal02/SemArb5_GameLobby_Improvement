@@ -1,11 +1,11 @@
 ---
 layout: default
-title: 3.9 Wichtige Punkte
+title: 3.10 Wichtige Punkte
 parent: 3. Hauptteil
-nav_order: 350
+nav_order: 360
 ---
 
-# 3.9 Wichtige Punkte
+# 3.10 Wichtige Punkte
 
 ![Wichtige Informationen](../ressources/icons/exchange.png){: width="250px" }
 

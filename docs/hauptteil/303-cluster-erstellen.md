@@ -26,7 +26,7 @@ Default region name [None]: eu-central-2
 Default output format [None]: json
 ```
 
-[Wie im Kapitel 3.1 erwähnt,](./301-kubernetes-cluster.md) nutzen wir das Tool `EKSCTL` um einen Cluster mittels wenigen Commands zu erstellen.
+[Wie im Kapitel 3.1 erwähnt,](./301-kubernetes-cluster.html) nutzen wir das Tool `EKSCTL` um einen Cluster mittels wenigen Commands zu erstellen.
 
 ## Create Cluster
 

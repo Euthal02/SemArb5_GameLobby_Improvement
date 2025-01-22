@@ -20,6 +20,6 @@ Zuerst war der Plan, dies nach dem folgendem Tutorial zu erstellen.
 <https://medium.com/@lubomir-tobek/eks-cluster-with-aws-cli-d72e4d77a11b>
 
 Ziemlich rasch wurde jedoch klar, dass das Tool `EKSCTL` das Ganze nochmals vereinfachen kann.
-[Mehr dazu im Kapitel 3.3](./303-cluster-erstellen.md)
+[Mehr dazu im Kapitel 3.3](./303-cluster-erstellen.html)
 
 Bevor jedoch diese Anleitung umgesetzt werden kann, muss überhaupt [ein AWS Account erstellt werden.](./302-aws-informationen.html)

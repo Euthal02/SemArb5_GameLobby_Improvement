@@ -14,7 +14,7 @@ Sie dient dazu, die einzelnen Aspekte der Arbeit zu beleuchten und den Sinn und 
 
 [Quelle Bild - Icons](anhang/600-quellen.html#64-icons)
 
-Sie ist in drei Teile gegliedert. Eine [Einleitung](./einleitung/200-einleitung.html), den [Hauptteil](./hauptteil/300-hauptteil.html) und den [Schlussteil](./schlussteil/500-schlussteil.md).
+Sie ist in drei Teile gegliedert. Eine [Einleitung](einleitung/200-einleitung.html), den [Hauptteil](hauptteil/300-hauptteil.html) und den [Schlussteil](schlussteil/500-schlussteil.html).
 
 Mehr zu den einzelnen Themen in den entsprechenden Unterthemen.
 
