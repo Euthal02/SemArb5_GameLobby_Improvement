@@ -2,6 +2,7 @@
 layout: default
 title: 2. Einleitung
 has_children: true
+has_toc: false
 nav_order: 200
 ---
 

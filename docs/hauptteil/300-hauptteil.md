@@ -2,6 +2,7 @@
 layout: default
 title: 3. Hauptteil
 has_children: true
+has_toc: false
 nav_order: 300
 ---
 
