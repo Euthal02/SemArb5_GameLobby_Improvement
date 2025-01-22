@@ -21,16 +21,16 @@ Für den GameRoom werden folgende Technologien verwendet.
 
 Das Frontend, welches mit dem Browser aufgerufen wird, nutzt HTML und CSS. Es gibt dazu ein Template in diesen beiden Sprachen, welches von Python-FLASK an den Benutzer gesendet wird. Erreichbar sind die einzelnen GameRooms unter diesen Domains:
 
-* <http://gameroom1.semesterarbeit.com>
-* <http://gameroom2.semesterarbeit.com>
-* <http://gameroom3.semesterarbeit.com>
-* <http://gameroom4.semesterarbeit.com>
-* <http://gameroom5.semesterarbeit.com>
-* <http://gameroom6.semesterarbeit.com>
-* <http://gameroom7.semesterarbeit.com>
-* <http://gameroom8.semesterarbeit.com>
-* <http://gameroom9.semesterarbeit.com>
-* <http://gameroom10.semesterarbeit.com>
+* <http://room1.semesterarbeit.com>
+* <http://room2.semesterarbeit.com>
+* <http://room3.semesterarbeit.com>
+* <http://room4.semesterarbeit.com>
+* <http://room5.semesterarbeit.com>
+* <http://room6.semesterarbeit.com>
+* <http://room7.semesterarbeit.com>
+* <http://room8.semesterarbeit.com>
+* <http://room9.semesterarbeit.com>
+* <http://room10.semesterarbeit.com>
 
 {: .information }
 Nur solange der CLuster läuft und die Pods laufen.
