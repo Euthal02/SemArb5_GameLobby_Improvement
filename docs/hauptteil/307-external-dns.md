@@ -12,11 +12,11 @@ Um jedem Ingress einen DNS Namen zuzuweisen, nutzen wir das Plugin external-dns 
 
 Konfiguriert werden einzig und allein die Ingresse, mit einer zusätzlichen Annotation.
 
-![Annotation eines Ingress](../ressources/images/external-dns/annotation.PNG)
+![Annotation eines Ingress](../ressources/images/external-dns/annotation.PNG){: style="width: 450px" }
 
 Das Plugin scannt immerwährend diese Attribute / Labels aller Ingresse ab und erstellt die gewollten DNS entries automatisch falls es Änderungen entdeckt.
 
-```log
+```cs
 time="2025-01-08T13:39:43Z" level=info msg="Applying provider record filter for domains: [semesterarbeit.com. .semesterarbeit.com.]"
 time="2025-01-08T13:39:43Z" level=info msg="All records are already up to date"
 time="2025-01-08T13:40:43Z" level=info msg="Applying provider record filter for domains: [semesterarbeit.com. .semesterarbeit.com.]"
@@ -56,8 +56,6 @@ time="2025-01-08T13:41:44Z" level=info msg="All records are already up to date"
 ```
 
 Damit wird dann automatisch dass Zonenfile auf dem Route53 Dienst angepasst.
-
-![Angepasste Routen](../ressources/images/external-dns/dns-entries.PNG)
 
 ## Installation
 
@@ -122,6 +120,8 @@ metadata:
 ```
 
 Somit wird automatisch eine CNAME im Route53 erstellt, welcher auf den Ingress zeigt.
+
+![Angepasste Routen](../ressources/images/external-dns/dns-entries.PNG){: style="width: 550px" }
 
 ```bash
 mka@Tuxedo-Laptop:~$ nslookup lobby.semesterarbeit.com

@@ -75,6 +75,8 @@ Die Variablen aus dem Value File werden anschliessend in den eigentlichen Konfig
 
 Zum Beispiel bei den Services. Hier wir zum Beispiel die GameLobby erstellt.
 
+{% raw %}
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -93,7 +95,11 @@ spec:
     app: "{{ .Release.Name }}"
 ```
 
+{% endraw %}
+
 Für die einzelnen Rooms funktioniert es genau gleich, wir verwenden jedoch einen Loop um die Massenerstellung zu erleichtern.
+
+{% raw %}
 
 ```yaml
 {{- $ingressCount := .Values.room.ingressCount | int }}
@@ -102,5 +108,7 @@ gleicheconfig: wie vorhin
 ---
 {{- end }}
 ```
+
+{% endraw %}
 
 Die Menge der Rooms wird über die Variable ``.Values.room.ingressCount`` gesteuert, welche auch über das Values File definiert wird. Momentan ist dies also das 10-fache.

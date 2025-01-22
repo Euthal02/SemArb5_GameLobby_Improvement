@@ -8,107 +8,49 @@ nav_order: 306
 
 # 3.5.1 AWS Loadbalancer mit Kubernetes Ingress
 
-Von Seite AWS wird vorgeschlagen, ihren Loadbalancer als Ingress für Kubernetes zu verwenden.
-Wir greifen gerne auf diese Möglichkeit zurück. Dazu gibt es eine sehr detailierte Anleitung.
+Von Seite AWS wird vorgeschlagen, ihren Loadbalancer als Ingress für Kubernetes zu verwenden. Dies ermöglicht es, den Ingress schnell und einfach öffentlich erreichbar zu machen.
+
+Dazu gibt es eine sehr detailierte Anleitung.
 
 Diese ist unter diesem Link zu finden:
+
 <https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html>
 
 Das ganze ist auch bereits in dem Build Script integriert, so dass dieser Schritt nicht mehr manuell auszuführen ist.
 
 Sollte dies trotzdem der Fall sein, werden hier die Schritte erklärt und die Beweggründe dahinter.
 
-----
+## Installation
 
-Zuerst einmal muss eine neue IAM Rolle erstellt werde.
+Zuerst  muss eine neue IAM Rolle erstellt werde.
+
 Dies aus dem Grund, dass der Kubernetes Cluster bei einem Ingress Deployment, selbstständig neue Ressourcen generieren muss. Die benötigten Rechte bekommt man mit dem IAM Service Account.
 
-## IAM User erstellen
+### IAM User erstellen
 
 AWS bietet hier eine Vorlage, welche man 1 zu 1 kopieren kann. Sie erlaubt dem Cluster alle Ressourcen zu erstellen welche er braucht. Mehr Informationen findet man im Code Fenster.
 
 ```bash
-mka@Tuxedo-Laptop:~$ curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.7.2/docs/install/iam_policy.json
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100  8446  100  8446    0     0  22907      0 --:--:-- --:--:-- --:--:-- 22951
-mka@Tuxedo-Laptop:~$ aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam_policy.json
-{
-    "Policy": {
-        "PolicyName": "AWSLoadBalancerControllerIAMPolicy",
-        ......,
-        "CreateDate": "2024-11-15T18:44:55+00:00"
-    }
-}
-mka@Tuxedo-Laptop:~$ cat iam_policy.json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "iam:CreateServiceLinkedRole"
-            ],
-            "Resource": "*",
-            "Condition": {
-                "StringEquals": {
-                    "iam:AWSServiceName": "elasticloadbalancing.amazonaws.com"
-                }
-            }
-        },
-        ......,
-}
-mka@Tuxedo-Laptop:~$ eksctl create iamserviceaccount --cluster=eks-cluster --namespace=kube-system --name=aws-load-balancer-controller --role-name AmazonEKSLoadBalancerControllerRole --attach-policy-arn=arn:aws:iam::*********:policy/AWSLoadBalancerControllerIAMPolicy --approve
-2024-11-25 20:58:34 [ℹ]  1 iamserviceaccount (kube-system/aws-load-balancer-controller) was included (based on the include/exclude rules)
-2024-11-25 20:58:34 [!]  serviceaccounts that exist in Kubernetes will be excluded, use --override-existing-serviceaccounts to override
-2024-11-25 20:58:34 [ℹ]  1 task: {
-    2 sequential sub-tasks: {
-        create IAM role for serviceaccount "kube-system/aws-load-balancer-controller",
-        create serviceaccount "kube-system/aws-load-balancer-controller",
-    } }2024-11-25 20:58:34 [ℹ]  building iamserviceaccount stack "eksctl-eks-cluster-addon-iamserviceaccount-kube-system-aws-load-balancer-controller"
-2024-11-25 20:58:34 [ℹ]  deploying stack "eksctl-eks-cluster-addon-iamserviceaccount-kube-system-aws-load-balancer-controller"
-2024-11-25 20:58:34 [ℹ]  waiting for CloudFormation stack "eksctl-eks-cluster-addon-iamserviceaccount-kube-system-aws-load-balancer-controller"
-2024-11-25 20:59:05 [ℹ]  waiting for CloudFormation stack "eksctl-eks-cluster-addon-iamserviceaccount-kube-system-aws-load-balancer-controller"
-2024-11-25 20:59:05 [ℹ]  created serviceaccount "kube-system/aws-load-balancer-controller"
+curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.7.2/docs/install/iam_policy.json
+aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam_policy.json
+eksctl create iamserviceaccount --cluster=eks-cluster --namespace=kube-system --name=aws-load-balancer-controller --role-name AmazonEKSLoadBalancerControllerRole --attach-policy-arn=arn:aws:iam::*********:policy/AWSLoadBalancerControllerIAMPolicy --approve
 ```
 
 Auf Seiten AWS ist nun also alles bereit, damit der Cluster die Ressourcen erstellen kann.
 Als nächstes müssen wir den Cluster dementsprechend konfigurieren.
 
-## HELM Install on Cluster
+### HELM Software Komponenten Install on Cluster
 
 AWS bietet auch dazu einen einfachen Weg an, dies mit einem HELM Chart zu erledigen.
 
 ```bash
-mka@Tuxedo-Laptop:~$ helm repo add eks https://aws.github.io/eks-charts
-"eks" has been added to your repositories
-mka@Tuxedo-Laptop:~$ helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eks-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
-NAME: aws-load-balancer-controller
-LAST DEPLOYED: Fri Nov 15 19:50:55 2024
-NAMESPACE: kube-system
-STATUS: deployed
-REVISION: 1
-TEST SUITE: None
-NOTES:
-AWS Load Balancer controller installed!
-mka@Tuxedo-Laptop:~$ wget https://raw.githubusercontent.com/aws/eks-charts/master/stable/aws-load-balancer-controller/crds/crds.yaml
---2024-11-25 21:01:26--  https://raw.githubusercontent.com/aws/eks-charts/master/stable/aws-load-balancer-controller/crds/crds.yaml
-Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133, 185.199.110.133, 185.199.108.133, ...
-Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 29410 (29K) [text/plain]
-Saving to: ‘crds.yaml’
-
-crds.yaml                                            100%[=====================================================================================================================>]  28.72K  --.-KB/s    in 0.006s
-
-2024-11-25 21:01:26 (4.91 MB/s) - ‘crds.yaml’ saved [29410/29410]
-
-mka@Tuxedo-Laptop:~$ kubectl apply -f crds.yaml
-customresourcedefinition.apiextensions.k8s.io/ingressclassparams.elbv2.k8s.aws configured
-customresourcedefinition.apiextensions.k8s.io/targetgroupbindings.elbv2.k8s.aws configured
+helm repo add eks https://aws.github.io/eks-charts
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eks-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+wget https://raw.githubusercontent.com/aws/eks-charts/master/stable/aws-load-balancer-controller/crds/crds.yaml
+kubectl apply -f crds.yaml
 ```
 
-## Test Applikation
+### Test Applikation
 
 Um zu testen ob dies auch wirklich funktioniert bietet sich eine kleine Testapplikation an.
 
@@ -127,11 +69,11 @@ Dies erstellt einen Loadbalancer, welcher den Traffic auf der URl weiterleitet a
 
 <http://k8s-game2048-ingress2-04c19700e8-608089310.eu-central-2.elb.amazonaws.com/>
 
-![Loadbalancer](../ressources/images/kubernetes/loadbalancer.PNG)
+![Loadbalancer](../ressources/images/kubernetes/loadbalancer.PNG){: style="width: 450px" }
 
 Wenn wir die URL des Loadbalancers in einem Browser aufrufen, ist der Service direkt verfügbar.
 
-![Spiel](../ressources/images/kubernetes/2048_spiel.PNG)
+![Spiel](../ressources/images/kubernetes/2048_spiel.PNG){: style="width: 250px" }
 
 Das Deployment dieses Spiel ist dabei sehr einfach.
 
@@ -200,18 +142,18 @@ spec:
                 number: 80
 ```
 
-## Angewendet auf das eigene Spiel
+## Konfiguration für das eigene Spiel
 
-Für unsere Apllikationen bedeutet dies lediglich das hinzufügen einiger Annotations im Helm Chart.
+Für unsere Apllikationen bedeutet dies lediglich das hinzufügen einiger Annotations im Helm Chart. Sobald der Ingress mit diesem Chart deployed wird, werden diese Annotations genutzt um den Ingress auf der AWS Seite zu konfigurieren.
 
 ```yaml
-      alb.ingress.kubernetes.io/scheme: internet-facing
-      alb.ingress.kubernetes.io/target-type: ip
-      alb.ingress.kubernetes.io/backend-protocol: HTTP
-      alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
-      alb.ingress.kubernetes.io/healthcheck-path: /health
-      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
-      alb.ingress.kubernetes.io/load-balancer-attributes: 'idle_timeout.timeout_seconds=3600'
+alb.ingress.kubernetes.io/scheme: internet-facing
+alb.ingress.kubernetes.io/target-type: ip
+alb.ingress.kubernetes.io/backend-protocol: HTTP
+alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+alb.ingress.kubernetes.io/healthcheck-path: /health
+alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+alb.ingress.kubernetes.io/load-balancer-attributes: 'idle_timeout.timeout_seconds=3600'
 ```
 
 Damit wird ein Standard Ingress erstellt, mit welchem der Service erreichbar ist.

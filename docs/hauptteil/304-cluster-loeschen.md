@@ -13,7 +13,19 @@ Ein AWS EKS Cluster laufen zu lassen kann sehr schnell mehrere hundert Franken i
 Einen Cluster zu erstellen kostet jedoch nichts. Daher MUSS nach jedem Testing / Betriebsfenster folgender Command ausgeführt werden, um den Cluster wieder zu löschen.
 
 ```bash
-eksctl delete cluster --name eks-cluster
+bash eks/delete.sh
 ```
 
-Alle Ressourcen welche irgendwie mit diesem Cluster verbunden sind, werden somit gelöscht.¨
+Alle Ressourcen welche irgendwie mit diesem Cluster verbunden sind, werden somit gelöscht.
+
+Dafür reicht es aus, den Cluster selbst zu löschen und alle selbst erstellten Policies:
+
+````bash
+eksctl delete cluster --name eks-cluster
+ALB_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text)
+DNS_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AllowExternalDNSUpdatesPolicy`].Arn' --output text)
+CERT_MANAGER_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`cert-manager-acme-dns01-route53`].Arn' --output text)
+aws iam delete-policy --policy-arn=$ALB_POLICY_ARN
+aws iam delete-policy --policy-arn=$DNS_POLICY_ARN
+aws iam delete-policy --policy-arn=$CERT_MANAGER_POLICY_ARN
+```

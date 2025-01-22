@@ -12,10 +12,10 @@ nav_order: 305
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
-Da der K8S Cluster auf AWS gehostet ist, kann man mittels Plugins, auf viele Ressourcen vpn AWS direkt zugreifen und diese bearbeiten.
+Da der K8S Cluster auf AWS gehostet ist, kann man mittels Plugins, auf viele Ressourcen von AWS direkt zugreifen und diese bearbeiten.
 Dies eröffnet uns neue Möglichkeiten, zb. eine öffentliche IP mit DNS Eintrag, welcher sich dynamisch ändert. Z.B. im Falle eines Upscaling / Downscaling eines Deployment.
 
-Momentan haben wir zwei Use-Cases, bei welchen es mehr Sinn macht, dass ganze via AWS Ressourcen zu erledigen.
+Momentan haben wir drei Use-Cases, bei welchen es mehr Sinn macht, das Ziel via AWS Ressourcen zu erreichen.
 
 * LoadBalancing wird mit dem AWS Load Balancer gemacht. Der Vorteil dabei ist, da die Nodes bei EKS auch dynamisch skalierbar sind, kann mittels diesem LoadBalancer ganz einfach auf die einzelnen Nodes verteilt werden. Die Nodes registrieren sich in einem Service Endpunkt und werden vom ALB angesprochen.
 * ExternalDNS wird genutzt um jedem Pod / Service einen Hostnamen zuzuweisen, mit öffentlicher IP, sodass der Code statsich auf den Domainnamen geschrieben werden kann, dann aber mittels dem AWS Tool dynamisch gewechselt werden kann.

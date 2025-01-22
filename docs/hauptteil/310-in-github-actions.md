@@ -16,6 +16,8 @@ Mit dem vorhin erklärten HELm Deployment, kann man nun also unser Spiel auf den
 
 Dafür wurde der Deploy Step bei beiden Pipelines so konfiguriert, dass dies mittels Secrets funktioniert.
 
+{% raw %}
+
 ```yaml
 deploy-job:
   runs-on: ubuntu-latest
@@ -51,6 +53,8 @@ deploy-job:
     - name: Print Response from Kubectl and Helm
     run: echo "${{ steps.command_exec.outputs.response }}"
 ```
+
+{% endraw %}
 
 Nachfolgend werden die einzelnen Schritte durchgegangen und erklärt.
 

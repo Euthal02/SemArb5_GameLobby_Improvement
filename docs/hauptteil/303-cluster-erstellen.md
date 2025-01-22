@@ -81,8 +81,7 @@ mka@Tuxedo-Laptop:~$
 Standardmässig kann noch jeder die Kubernetes API erreichen. Aus Sicherheitsgründen, wollen wir aber dass nur Marco Kälin von seiner festen Heimadresse dies kann. Zusätzlich muss man den API Access auf die privaten Interfaces erlauben, damit die Hosts untereinander kommunizieren können. Dieser SChritt wurde auch bereits in das build.sh Script integriert.
 
 ```bash
-
-# eksctl utils update-cluster-vpc-config --cluster=eks-cluster --public-access-cidrs=45.94.88.37/32 --private-access=true --approve
+mka@Tuxedo-Laptop:~$ eksctl utils update-cluster-vpc-config --cluster=eks-cluster --public-access-cidrs=45.94.88.37/32 --private-access=true --approve
 
 2024-12-14 20:32:19 [ℹ]  using region eu-central-2
 2024-12-14 20:32:19 [ℹ]  will update Kubernetes API endpoint access for cluster "eks-cluster" in "eu-central-2" to: privateAccess=true, publicAccess=true

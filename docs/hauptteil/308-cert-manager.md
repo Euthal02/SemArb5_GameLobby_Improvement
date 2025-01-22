@@ -8,7 +8,7 @@ nav_order: 307
 
 # 3.5.3 Cert Manager
 
-![Cert Manager](../ressources/images/kubernetes/cert-manager-logo.png)
+![Cert Manager](../ressources/images/kubernetes/cert-manager-logo.png){: style="width: 250px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#615-cert-manager-logo)
 
@@ -54,7 +54,7 @@ eksctl create iamserviceaccount --name cert-manager-acme-dns01-route53 --namespa
 
 Anschliessend werden die cert-manager Komponenten konfiguriert. So wird der Serviceaccount zugewiesen und die Verbindung zum Cert-Manager Server erstellt. Dieser Server ist von Lets Encrypt gehostet. Von diesen wird auch das CA bereit gestellt, mit welchem die Authentizät der Zertifikate gewährleistet wird.
 
-``` bash
+```bash
 cat > rbac.yaml << EOF
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role

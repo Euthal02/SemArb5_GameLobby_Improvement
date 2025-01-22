@@ -36,6 +36,8 @@ Genauere Informationen was jede Pipeline genau macht, wird im Hauptteil zu den e
 
 In GitHub Actions hat man die Möglichkeit vordefinierte Aktionen zu verwenden, welche es vereinfachen Operation in Actions vorzunehmen. So zum Beispiel die folgende Aktion ``docker/login-action@master``, welche sich bei einer Docker Registry anmeldet. Als User muss man nur noch die entsprechenden Anmeldedaten angeben und der Rest wird von dieser Action definiert.
 
+{% raw %}
+
 ```yaml
     - name: Log in to GHCR
       uses: docker/login-action@master
@@ -44,6 +46,8 @@ In GitHub Actions hat man die Möglichkeit vordefinierte Aktionen zu verwenden, 
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ${{ vars.REGISTRY }}
 ```
+
+{% endraw %}
 
 Mehr zu vordefinierten Actions hier:
 
