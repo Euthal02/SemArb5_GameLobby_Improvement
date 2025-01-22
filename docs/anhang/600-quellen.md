@@ -15,7 +15,7 @@ Alle Files und Bilder sind hier zu finden:
 
 ![Sources](../ressources/icons/sources.png){: width="250px" }
 
-[Quelle Bild - Icons](./600-quellen.html#64-icons)
+[Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
 ## 6.1 Bilder
 
@@ -38,6 +38,10 @@ Die meisten Bilder sind selbst erstellt. Diehenigen, welche aus dem Internet kop
 ### 6.1.4 AWS Logo
 
 <https://mavink.com/explore/AWS-Logo-Black-Background>
+
+### 6.1.5 Cert Manager Logo
+
+<https://ewhisper.cn/posts/1584/>
 
 ## 6.2 Hilfsmittel
 

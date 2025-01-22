@@ -9,7 +9,7 @@ nav_order: 303
 
 ![Cluster erstellen](../ressources/icons/improvement.png){: width="250px" }
 
-[Quelle Bild - Icons](./600-quellen.html#64-icons)
+[Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
 Um den Cluster zu erstellen wird ein Account innerhalb der vorhin erwähnten "admin" Gruppe genutzt und ein Access Key erstellt.
 

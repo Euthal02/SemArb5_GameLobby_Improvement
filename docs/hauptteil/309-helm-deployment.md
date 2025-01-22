@@ -2,14 +2,14 @@
 layout: default
 title: 3.6 HELM Deployment
 parent: 3. Hauptteil
-nav_order: 308
+nav_order: 309
 ---
 
 # 3.6 HELM Deployment
 
 ![Deployment](../ressources/icons/deploy.png){: width="250px" }
 
-[Quelle Bild - Icons](./600-quellen.html#64-icons)
+[Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
 Um nun den GameRoom und die GameLobby auf den Cluster zu bringen, wurden pro Image ein eigenes Helm Chart geschrieben:
 

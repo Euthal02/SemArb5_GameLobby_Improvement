@@ -9,7 +9,7 @@ nav_order: 208
 
 ![Pipeline Execution](../ressources/icons/upload.png){: width="250px" }
 
-[Quelle Bild - Icons](./600-quellen.html#64-icons)
+[Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
 Bei dieser Semesterarbeit wird die gleiche Methode für die Pipelines verfolgt, wie bei den letzten Arbeiten von Marco Kälin. Jedes Teilsystem der Arbeit sollte eine eigene Pipeline haben, welche nur auf dem Main Branch ausgeführt wird.
 

@@ -17,8 +17,6 @@ Konfiguriert werden einzig und allein die Ingresse, mit einer zusätzlichen Anno
 Das Plugin scannt immerwährend diese Attribute / Labels aller Ingresse ab und erstellt die gewollten DNS entries automatisch falls es Änderungen entdeckt.
 
 ```log
-time="2025-01-08T13:38:43Z" level=info msg="Applying provider record filter for domains: [semesterarbeit.com. .semesterarbeit.com.]"
-time="2025-01-08T13:38:43Z" level=info msg="All records are already up to date"
 time="2025-01-08T13:39:43Z" level=info msg="Applying provider record filter for domains: [semesterarbeit.com. .semesterarbeit.com.]"
 time="2025-01-08T13:39:43Z" level=info msg="All records are already up to date"
 time="2025-01-08T13:40:43Z" level=info msg="Applying provider record filter for domains: [semesterarbeit.com. .semesterarbeit.com.]"
@@ -55,8 +53,6 @@ time="2025-01-08T13:40:43Z" level=info msg="Desired change: CREATE room9.semeste
 time="2025-01-08T13:40:43Z" level=info msg="30 record(s) were successfully updated" profile=default zoneID=/hostedzone/Z00977171YZXSG129C51P zoneName=semesterarbeit.com.
 time="2025-01-08T13:41:44Z" level=info msg="Applying provider record filter for domains: [semesterarbeit.com. .semesterarbeit.com.]"
 time="2025-01-08T13:41:44Z" level=info msg="All records are already up to date"
-time="2025-01-08T13:42:45Z" level=info msg="Applying provider record filter for domains: [semesterarbeit.com. .semesterarbeit.com.]"
-time="2025-01-08T13:42:45Z" level=info msg="All records are already up to date"
 ```
 
 Damit wird dann automatisch dass Zonenfile auf dem Route53 Dienst angepasst.
@@ -113,4 +109,49 @@ DNS_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AllowExte
 eksctl create iamserviceaccount --cluster="${CLUSTER_NAME}" --namespace=default --name=external-dns --role-name=AllowExternalDNSUpdatesRole --attach-policy-arn=$DNS_POLICY_ARN --approve --override-existing-serviceaccounts
 DNS_ROLE_ARN=$(aws iam get-role --role-name AllowExternalDNSUpdatesRole --query 'Role.[Arn]' --output text)
 helm install external-dns oci://registry-1.docker.io/bitnamicharts/external-dns --set provider=aws --set aws.region=eu-central-2 --set domainFilters[0]=$DNS_ZONE --set policy=sync --set aws.roleArn=$DNS_ROLE_ARN --set serviceAccount.create=false --set serviceAccount.name=external-dns
+```
+
+## DNS Namen zuweisen
+
+Um nun einem Ingress (oder auch Service) einen DNS Namen zuzuweisen, benötigt es lediglich eine Annotation. Der external-dns Manager scannt immerzu nach solchen Annotationen und erstellt diese laufend.
+
+```yaml
+metadata:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "lobby.semesterarbeit.com"
+```
+
+Somit wird automatisch eine CNAME im Route53 erstellt, welcher auf den Ingress zeigt.
+
+```bash
+mka@Tuxedo-Laptop:~$ nslookup lobby.semesterarbeit.com
+;; Got recursion not available from 172.30.128.1
+Server:         172.30.128.1
+Address:        172.30.128.1#53
+
+Non-authoritative answer:
+Name:   lobby.semesterarbeit.com
+Address: 16.63.80.253
+Name:   lobby.semesterarbeit.com
+Address: 51.96.11.160
+Name:   lobby.semesterarbeit.com
+Address: 16.63.47.163
+Name:   ns-1446.awsdns-52.org
+Address: 205.251.197.166
+Name:   ns-1446.awsdns-52.org
+Address: 2600:9000:5305:a600::1
+Name:   ns-1910.awsdns-46.co.uk
+Address: 205.251.199.118
+Name:   ns-1910.awsdns-46.co.uk
+Address: 2600:9000:5307:7600::1
+Name:   ns-277.awsdns-34.com
+Address: 205.251.193.21
+Name:   ns-277.awsdns-34.com
+Address: 2600:9000:5301:1500::1
+Name:   ns-740.awsdns-28.net
+Address: 205.251.194.228
+Name:   ns-740.awsdns-28.net
+Address: 2600:9000:5302:e400::1
+
+mka@Tuxedo-Laptop:~$
 ```

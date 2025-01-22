@@ -3,14 +3,14 @@ layout: default
 title: 3.6.1 ...in GitHub Actions
 parent: 3.6 HELM Deployment
 grandparent: 3. Hauptteil
-nav_order: 309
+nav_order: 310
 ---
 
 # 3.6.1 ...in GitHub Actions
 
 ![Risks](../ressources/icons/risks.png){: width="250px" }
 
-[Quelle Bild - Icons](./600-quellen.html#64-icons)
+[Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
 Mit dem vorhin erklärten HELm Deployment, kann man nun also unser Spiel auf den Cluster bringen. Da dies aber kontinuierlich geschehen muss (CI/CD) wurde das Deployment in die [GitHub Actions Pipelines](../einleitung/208-pipelines.html) integriert.
 

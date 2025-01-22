@@ -32,8 +32,7 @@ def update_game(game_state_dict, socketio_object):
     socketio_object.emit("game_state", game_state_dict)
 
 def get_random_ball_speed():
-    # return rand_choice([-7, -6, -5, -4, 4, 5, 6, 7])
-    return rand_choice([-5, -4, -3, 3, 4, 5])
+    return rand_choice([-7, -6, -5, -4, 4, 5, 6, 7])
 
 def reset_ball(game_state_dict):
     game_state_dict["ball"] = {
