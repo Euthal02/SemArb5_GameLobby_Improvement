@@ -20,7 +20,7 @@ Da zu erwarten ist, dass dieses Projekt nach Abschluss des Semesters 24/25 nicht
 
 Zukünftige Entwickler müssen also diesen Account migrieren, sollte dies notwendig sein.
 
-![Email Alias](../ressources/images/aws/email_alias.PNG){: style="width: 350px"" }
+![Email Alias](../ressources/images/aws/email_alias.PNG){: style="width: 350px" }
 
 ## Billing Alerts
 
@@ -28,14 +28,14 @@ Um den AWS Account zu erstellen, wurde die Kreditkarte von Marco Kälin genutzt.
 
 In der Zwischenzeit, wurde als Kostenabsicherung ein Billing Alert eingerichtet, womit Marco Kälin immer einen Überblick über die laufenden Kosten hat. Der Alert triggert sich selbst, sollte ein Datapoint (zb. EC2 als Service) mehr als 5 USD über 6 Stunden kosten.
 
-![Billing Alert](../ressources/images/aws/billing_alert.PNG){: style="width: 500px"" }
+![Billing Alert](../ressources/images/aws/billing_alert.PNG){: style="width: 500px" }
 
 Zusätzlich wurde ein Free Tier Alert aktiviert, sollte das Projekt in einem anderen BEreich aus dem Free Tier Bereich kommen, währe Marco Kälin also informiert und könnte Gegenmassnahmen ergreifen.
 
-![Free Tier Alert](../ressources/images/aws/free_tier_alerts.PNG){: style="width: 500px"" }
+![Free Tier Alert](../ressources/images/aws/free_tier_alerts.PNG){: style="width: 500px" }
 
 ## IAM User
 
 Da Marco Kälin dieses Projekt initiert hat, ist er momentan der einzige mit einem Zugang auf den Root-Account. Für die Entwickler, welche später dazu stossen könnten, wurde die Admin Gruppe erstellt. Sie erlaubt alles in der AWS Konsole, somit kann jeder Entwickler, mit einem Account jegliche Changes unternehmen. Sollte dieses Projekt grösser werden und die Organisation der Entwicklung kann nicht mehr auf Vertrauen basieren, wird dies geändert.
 
-![Admin Gruppe](../ressources/images/aws/admin_gruppe.PNG){: style="width: 500px"" }
+![Admin Gruppe](../ressources/images/aws/admin_gruppe.PNG){: style="width: 500px" }

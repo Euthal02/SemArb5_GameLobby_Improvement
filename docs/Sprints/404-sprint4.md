@@ -9,10 +9,10 @@ nav_order: 403
 
 Hier sind die Erkenntnisse des viertem Sprints.
 
-![Star 1](../ressources/icons/star.png){: style="width: 220px"" }
-![Star 2](../ressources/icons/star.png){: style="width: 220px"" }
-![Star 3](../ressources/icons/star.png){: style="width: 220px"" }
-![Star 4](../ressources/icons/star.png){: style="width: 220px"" }
+![Star 1](../ressources/icons/star.png){: style="width: 220px" }
+![Star 2](../ressources/icons/star.png){: style="width: 220px" }
+![Star 3](../ressources/icons/star.png){: style="width: 220px" }
+![Star 4](../ressources/icons/star.png){: style="width: 220px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
