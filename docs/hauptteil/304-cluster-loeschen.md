@@ -20,7 +20,7 @@ Alle Ressourcen welche irgendwie mit diesem Cluster verbunden sind, werden somit
 
 Dafür reicht es aus, den Cluster selbst zu löschen und alle selbst erstellten Policies:
 
-````bash
+```bash
 eksctl delete cluster --name eks-cluster
 ALB_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text)
 DNS_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AllowExternalDNSUpdatesPolicy`].Arn' --output text)

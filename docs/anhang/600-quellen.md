@@ -43,6 +43,10 @@ Die meisten Bilder sind selbst erstellt. Diehenigen, welche aus dem Internet kop
 
 <https://ewhisper.cn/posts/1584/>
 
+### 6.1.6 AWS Loadbalancer
+
+<https://tse4.mm.bing.net/th?id=OIP.cgGgrVzP2R6F30CRvos-twHaFR&pid=Api>
+
 ## 6.2 Hilfsmittel
 
 Welche Hilfsmittel haben wir genutzt?

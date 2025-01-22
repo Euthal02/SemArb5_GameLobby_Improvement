@@ -10,9 +10,11 @@ nav_order: 306
 
 Von Seite AWS wird vorgeschlagen, ihren Loadbalancer als Ingress für Kubernetes zu verwenden. Dies ermöglicht es, den Ingress schnell und einfach öffentlich erreichbar zu machen.
 
-Dazu gibt es eine sehr detailierte Anleitung.
+![AWS Loadbalancer](../ressources/images/aws/loadbalancer.jpg)
 
-Diese ist unter diesem Link zu finden:
+[Quelle Bild - AWS Loadbalancer](../anhang/600-quellen.html#616-aws-loadbalancer)
+
+Unter diesem Link ist eine sehr detailierte ANleitung zu finden:
 
 <https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html>
 
