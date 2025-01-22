@@ -8,7 +8,7 @@ nav_order: 305
 
 # 3.5 K8S Plugins
 
-![Plugins](../ressources/icons/plugin.png){: width="250px" }
+![Plugins](../ressources/icons/plugin.png){: style="width: 250px"" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

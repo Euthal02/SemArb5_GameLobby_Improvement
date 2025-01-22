@@ -9,8 +9,8 @@ nav_order: 402
 
 Hier sind die Erkenntnisse des zweiten Sprints.
 
-![Star 1](../ressources/icons/star.png){: width="220px" }
-![Star 2](../ressources/icons/star.png){: width="220px" }
+![Star 1](../ressources/icons/star.png){: style="width: 220px"" }
+![Star 2](../ressources/icons/star.png){: style="width: 220px"" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

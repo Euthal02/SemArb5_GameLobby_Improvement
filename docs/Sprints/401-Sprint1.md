@@ -9,7 +9,7 @@ nav_order: 401
 
 Hier sind die Erkenntnisse des ersten Sprints.
 
-![Star](../ressources/icons/star.png){: width="220px" }
+![Star](../ressources/icons/star.png){: style="width: 220px"" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

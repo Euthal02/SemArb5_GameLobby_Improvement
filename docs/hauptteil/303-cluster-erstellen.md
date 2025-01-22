@@ -7,7 +7,7 @@ nav_order: 303
 
 # 3.3 Cluster erstellen
 
-![Cluster erstellen](../ressources/icons/improvement.png){: width="250px" }
+![Cluster erstellen](../ressources/icons/improvement.png){: style="width: 250px"" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

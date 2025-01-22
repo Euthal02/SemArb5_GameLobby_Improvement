@@ -7,7 +7,7 @@ nav_order: 204
 
 # 2.4 Zeitplan der Semesterarbeit
 
-![KanBan Board](../ressources/icons/kanban.png){: width="250px" }
+![KanBan Board](../ressources/icons/kanban.png){: style="width: 250px"" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

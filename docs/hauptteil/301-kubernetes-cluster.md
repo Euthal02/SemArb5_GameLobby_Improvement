@@ -10,7 +10,7 @@ nav_order: 301
 Wie bereits in der Einleitung erwähnt, ist es eine Basisanforderung an dieses Projekt, dass das ganze auf Kubernetes gehostet wird.
 Deshalb wird die technische Umsetzung damit starten, sobald dies erledigt ist, kann die Entwicklung des Services starten.
 
-![Kubernetes](../ressources/images/kubernetes/logo.png){: width="250px" }
+![Kubernetes](../ressources/images/kubernetes/logo.png){: style="width: 250px"" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 

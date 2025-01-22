@@ -13,6 +13,6 @@ Der in der Einleitung besprochene SOLL Zustand wird aktiv erarbeitet.
 
 Dies ist der eigentliche technische Teil der Arbeit.
 
-![Infrastructure](../ressources/icons/infrastructure.png){: width="250px" }
+![Infrastructure](../ressources/icons/infrastructure.png){: style="width: 250px"" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)

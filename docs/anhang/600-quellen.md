@@ -13,7 +13,7 @@ Alle Files und Bilder sind hier zu finden:
 
 [Link zu Github](https://github.com/Euthal02/SemArb4_GameLobby/tree/main/docs/ressources)
 
-![Sources](../ressources/icons/sources.png){: width="250px" }
+![Sources](../ressources/icons/sources.png){: style="width: 250px"" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
