@@ -29,6 +29,7 @@ jobs:
 
       - name: Build and run container
         run: |
+          cd gamelobby
           docker build -t pong-game-lobby .
           docker run -d -p 80:80 --name pong-game-lobby-container pong-game-lobby
 

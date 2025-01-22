@@ -29,6 +29,7 @@ jobs:
 
       - name: Build and run container
         run: |
+          cd gameroom
           docker build -t pong-game-room .
           docker run -d -p 5000:5000 --name pong-game-room-container pong-game-room
 
