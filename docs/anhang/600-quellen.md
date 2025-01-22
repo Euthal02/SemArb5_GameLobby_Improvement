@@ -2,7 +2,6 @@
 layout: default
 title: 6. Quellenverzeichnis
 nav_order: 600
-
 ---
 
 # 6. Quellenverzeichnis
@@ -49,9 +48,9 @@ Die meisten Bilder sind selbst erstellt. Diehenigen, welche aus dem Internet kop
 
 ## 6.2 Hilfsmittel
 
-Welche Hilfsmittel haben wir genutzt?
+Welche Hilfsmittel wurden genutzt?
 
-Das reicht von Tools, die wir nutzen können, bis zu Webseiten, bei welchen wir uns Wissen angeeignet haben.
+Das reicht von Tools, die genutzt wurden, bis zu Webseiten, bei welchen Wissen angeeignet wurde.
 
 ### 6.2.1 Chat-GPT
 
@@ -59,7 +58,7 @@ Das reicht von Tools, die wir nutzen können, bis zu Webseiten, bei welchen wir 
 
 ## 6.3 Vorarbeit
 
-TODO
+Vorarbeit gab es in diesem Sinne keine. Man könnte den Hinweis von Fabio Beti als Vorarbeit verstehen. [Mehr dazu hier.](../einleitung/201-about.html)
 
 ## 6.4 Icons
 

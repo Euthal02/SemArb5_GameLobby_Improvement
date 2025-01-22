@@ -1,13 +1,24 @@
 ---
 layout: default
-title: 5.2 Gemachte Erfahrungen
+title: 5.3 Gemachte Erfahrungen
 parent: 5. Schlussteil
-nav_order: 502
+nav_order: 503
 ---
 
-# 5.2 Gemachte Erfahrungen
+# 5.3 Gemachte Erfahrungen
+
+Was habe ich aus dieser Arbeit gelernt?
+
+Wie unterscheidet sich diese Arbeit zu vorherigen?
+
+![Gemachte Erfahrungen](../ressources/icons/learning.png)
+
+## Erfahrungen aus dieser Arbeit
+
+## Vergleich zu vorherigen Arbeiten
 
 ## muss noch überarbeitet werden
+
 Diese Semesterarbeit ist ein bischen eine Verzweiflungstat! Ich bin komplett planlos gestartet und hatte extremst Mühe ein ansprechendes, interessantes und gleichzeitig ambitioniertes Projekt zu finden.
 
 Thanam und Patrick erwähnten daraufhin, dass wir doch ein nicht vollendetes GitHub Projekt vollenden sollen. Die hat mich auf die Idee nach einem einfachen Pong Spiel gebracht.  Da mir bessere Ideen fehlten, kam es also zu diesem Projekt. Als Inspiration dienten vorallem die folgenden GitHub Projekte:

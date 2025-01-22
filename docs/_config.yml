@@ -44,7 +44,7 @@ remote_theme: just-the-docs/just-the-docs
 plugins:
   - jekyll-remote-theme
   - jekyll-feed
-back_to_top: true
+back_to_top: false
 back_to_top_text: "Back to top"
 color_scheme: dark
 callouts:
