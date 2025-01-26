@@ -25,6 +25,8 @@ Thanam und Patrick erwähnten daraufhin, dass wir doch ein nicht vollendetes Git
 
 Was ich auch diesmal bei dieser Arbeit bemerken musste, war, dass ich zu Beginn viel zu direkt auf konkrete Ziele und Lösungswege einschiesse. Dies versperrt mir mental die Flexibilität, welches für ein erfolgreiches Projektmanagement sehr wichtig ist. Nach einem klärenden Gespräch mit Philip, konnte ich einige dieser Blockaden lösen und konnte das Projekt besser aufgleisen.
 
+Technisch gesehen, habe ich während dieser Arbeit sicher am meisten gelernt und neu ausprobiert. Die Nutzung von Kubernetes hat mich sehr weitergebracht.
+
 ## Vergleich zu vorherigen Arbeiten
 
 Die vorherigen Arbeiten waren mehr oder weniger bereits vordefiniert und ich konnte auf bereits erstellte Ziele und Soll Zustände zurückgreifen. Bei dieser Arbeit, musste ich dies auch selbst machen und dies offenbarte mir die mentalen Barrieren, welche ich bereits in den vorherigen Arbeiten hatte und diesmal besser beiseite legen konnte.
