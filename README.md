@@ -1,6 +1,6 @@
 # SemArb4_GameLobby
 
-Hallo, dieses Repository wurde erstellt, um die Semesterarbeit von Marco Kälin für das 4te Semester zu begleiten.
+Hallo, dieses Repository wurde erstellt, um die Semesterarbeit von Marco Kälin für das 5te Semester zu begleiten.
 
 Im Lehrgang "Informatiker HF - Cloud Native Engineer" von der Technischen Berufsschule Zürich, wird jedes Semester von den Studenten eine Semesterarbeit verlangt. Dies ist eine dieser Semesterarbeiten.
 

@@ -19,9 +19,6 @@ Die Ziele dieser Arbeit sind möglichst nach dem SMART Prinzip erstellt.
 
 ## Bis am Ende der Arbeit, sollten folgende Ziele erreicht sein
 
-1. Die Game Lobby funktioniert Browser basiert.
-2. Die Game Lobby und der Game Room werden automatisiert von einer CI/CD Pipeline deployt.
-3. Neue Versionen werden automatisch getestet.
-4. Das ganze soll auf Kubernetes gehostet werden. (Grundanforderung der Semesterarbeit)
-5. Die Lobby skaliert automatisch anhand der Anzahl Spieler und erstellt neue "Rooms".
-6. Bereits vorhandene "Pong" Spiele für die Rooms einsetzen.
+1. Automatische Skalierung der einzelnen Rooms mittels Operator Pattern
+2. Kommunikation der einzelnen Services (Lobby und Rooms) über Message Broker
+3. Bereitstellung des Operator Patterns und Message Broker automatisiert über GitHub Actions Pipeline

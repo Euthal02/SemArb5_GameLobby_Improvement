@@ -13,7 +13,7 @@ nav_order: 201
 
 Die Aufgabe für die Semesterarbeiten ist, ein kleines Projekt von ungefähr 50 Stunden umzusetzen.
 
-Für die diesjährige Arbeit, wurde von Marco Kälin ein Projekt ausgewählt, welches es ermöglichen soll ein einfaches Pong Game mit mehreren "Rooms" zu versehen. Diese Rooms sind als in sich geschlossenes Spiel zu verstehen.
+Für die diesjährige Arbeit, wurde von Marco Kälin ein Projekt ausgewählt, welches auf der letztjährigen Arbeit basiert und seine GameLobby des Pong Spiels verbessern soll. Bei der letzen Arbeit konnten nicht alle Ziele erreicht werden. Diese sollten mit dieser nächsten Iteration erneut in Angriff genommen werden.
 
 Falls das Spiel "Pong" dem Leser nicht bekannt ist, folgt hier eine kleine Zusammenfassung:
 
@@ -42,14 +42,8 @@ Einfluss und Bedeutung:
 Dieses Spielprinzip ist relativ einfach, was es ideal für eine Umsetzung in Python und den Einsatz auf einem Webserver macht.
 ```
 
-Die Idee dieser Arbeit, ist es nun dieses Spiel mit einer Lobby zu versehen. Dass heisst, dass mehrere Spieler sich an einem zentralen Server / Webseite versammeln können. Von diesem zentralen Sammelpunkt, sollen sich die Spieler auf einzelne Räume aufteilen können. Dies sollte mittels einer internen Weiterleitung geschehen, damit möglichst kein Spieler dies mitbekommt.
+Bei der letztjärigen Arbeit wurde für dieses Spiel eine "Lobby" erstellt, diese Lobby hat eine Verbindung zu mehreren "Räumen" also einzelne Pong Spiel Instanzen. Die Lobby dient als Verteilmechanismus, wo sich User treffen können und in die Räume wehcseln können.
 
-Die Aufteilung übernimmt die Lobby selbst, die Spieler sollen aber auch effektiv mit einem anderen Wunschspieler spielen können. Das ganze soll als SaaS Service aufgebaut werden, mit einem Hosting auf Kubernetes (Anforderung an die Semesterarbeit.)
-
-Als Inspiration dienten vorallem die folgenden GitHub Projekte:
-
-* <https://github.com/malletgaetan/transcendence>
-* <https://github.com/rhuss/ping-pong/tree/1-java>
-* <https://codepen.io/bbbe/pen/MWzoJQr>
+Das ganze wurde sehr statisch programmiert, da die dynamische Anpassung nicht so funktionierte wie gewollt. Dies wird bei dieser Arbeit korrigiert und das ganze Messaging zwischen den Räumen und der Lobby wird auch vereinfacht.
 
 [Mehr zu dem Thema Ziele findet man im Kapitel 2.2](./202-ziele.html)

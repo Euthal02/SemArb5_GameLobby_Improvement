@@ -7,7 +7,7 @@ permalink: /
 
 # 1. Willkommen!
 
-Dies ist die Begleitsdokumentation für die vierte Semesterarbeit von Marco Kälin.
+Dies ist die Begleitsdokumentation für die fünfte Semesterarbeit von Marco Kälin.
 Sie dient dazu, die einzelnen Aspekte der Arbeit zu beleuchten und den Sinn und Zweck der Arbeit als Ganzes zu ergründen.
 
 ![Projektarbeit](ressources/icons/analytics.png){: style="width: 250px" }
