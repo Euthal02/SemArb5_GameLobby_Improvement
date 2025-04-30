@@ -1,4 +1,4 @@
-# SemArb4_GameLobby
+# SemArb5_GameLobby
 
 Hallo, dieses Repository wurde erstellt, um die Semesterarbeit von Marco Kälin für das 5te Semester zu begleiten.
 
