@@ -11,6 +11,8 @@ Um die Systemabgrenzungen zu visualisieren, wurden zwei SEUSAGs erstellt.
 
 Einmal mit dem technischen Ablauf des gewünschten SOLL Zustands und einmal mehr das ganze Organisatorische.
 
+Die SEUSAGS sind unverändert vom letztjährigen Projekt übernommen.
+
 ## Technisch
 
 ![Technisches SEUSAG](../ressources/diagrams/seusag_technisch.drawio.png)

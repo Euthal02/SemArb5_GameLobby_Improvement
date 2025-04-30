@@ -36,7 +36,8 @@ Während der Semesterarbeit wird mit den Projektmanagement-Methoden Kanban und S
 
 Mit Kanban kann sehr effizient der Fortschritt kontinuierlich verfolgt werden, und es ist klar ersichtlich welcher Developer an welchen "Issues" arbeitet. Dazu werden vier Status bereitgestellt:
 
-* Backlog, noch offene Arbeiten ohne zugewiesenen Entwickler.
+* Projekt Backlog, noch offene Arbeiten ohne zugewiesenen Sprint.
+* Sprint Backlog, diese Issues wurden einem Sprint zugewiesen, jedoch wurde die Arbeit noch nicht begonnen.
 * In Progress, offene Arbeiten, welche aber bereits von einem Entwickler zugewiesen worden sind. Der Verlauf der Arbeiten wird mit "Comments" dokumentiert.
 * In Testing, diese Tasks müssen noch manuell von einem zweiten Developer getestet / abgenommen werden.
 * Done, erledigte Arbeiten.
@@ -45,4 +46,4 @@ In GitHub-Projekten können verschiedene Ansichten für Kanban erstellt werden. 
 
 Hier findet man den Link zum Projektmanagement:
 
-[Projektplanung](https://github.com/users/Euthal02/projects/5)
+[Projektplanung](https://github.com/users/Euthal02/projects/6)

@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0" version="24.8.4">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0" version="26.2.14">
   <diagram name="Seite-1" id="57vSUFvoUFBMkL-geE9z">
-    <mxGraphModel dx="1050" dy="538" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="868" dy="453" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -103,14 +103,14 @@
         <mxCell id="hjHqGuJiPRqZqSn0VLlT-40" value="Überschreiten der GitHub Free Limiten" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;verticalAlign=top;fontSize=10;spacingTop=1;" parent="1" vertex="1">
           <mxGeometry x="320" y="270" width="10" height="10" as="geometry" />
         </mxCell>
-        <mxCell id="hjHqGuJiPRqZqSn0VLlT-43" value="Beispielprojekte nicht nutzbar" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;verticalAlign=top;fontSize=10;spacingTop=1;" parent="1" vertex="1">
-          <mxGeometry x="510" y="190" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="aYZoZnjxQph4e-E1Yh7e-1" value="&lt;div&gt;Komplexität des Kubernetes Clusters&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;verticalAlign=top;fontSize=10;spacingTop=1;" vertex="1" parent="1">
+        <mxCell id="aYZoZnjxQph4e-E1Yh7e-1" value="&lt;div&gt;Komplexität des Kubernetes Clusters&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;verticalAlign=top;fontSize=10;spacingTop=1;" parent="1" vertex="1">
           <mxGeometry x="450" y="250" width="10" height="10" as="geometry" />
         </mxCell>
-        <mxCell id="aYZoZnjxQph4e-E1Yh7e-3" value="&lt;div&gt;Getroffene Massnahmen werden&amp;nbsp;&lt;/div&gt;&lt;div&gt;in der Legende Erläutert.&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+        <mxCell id="aYZoZnjxQph4e-E1Yh7e-3" value="&lt;div&gt;Getroffene Massnahmen werden&amp;nbsp;&lt;/div&gt;&lt;div&gt;in der Legende Erläutert.&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="635" y="280" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ciiP7RPGCPfLOV6Fuovo-1" value="Kosten für &lt;br&gt;AWS Cluster&lt;br&gt;zu hoch" style="ellipse;html=1;aspect=fixed;fillColor=#000000;verticalAlign=top;fontSize=10;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="135" width="10" height="10" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

@@ -7,7 +7,7 @@ nav_order: 203
 
 # 2.3 Risiken
 
-Zu diesem Projekt wurde eine Risikomatrix erstellt. Die Risiken stellen Stolpersteine in der Erreichung der vorhin erstellten Ziele dar. Falls das Risiko wahrscheinlich und / oder einen hohen Schweregrad hat, werden Massnahmen dagegen ergriffen.
+Zu diesem Projekt wurde eine Risikomatrix erstellt. Die Risiken stellen Stolpersteine in der Erreichung der vorhin erstellten Ziele dar. Falls das Risiko wahrscheinlich und / oder einen hohen Schweregrad hat, werden Massnahmen dagegen ergriffen. Die meisten Ziele sind identisch zum letzten Projekt. Dies macht auch Sinn, da es im Grunde genommen dasselbe Projekt ist.
 
 ![Risikomatrix](../ressources/diagrams/risikoanalyse.drawio.png)
 
@@ -25,12 +25,10 @@ Für vier Risiken wurde ein Bedarf für vorbeugende Massnahmen erkannt. Die vorb
 
 * Komplexität des Kubernetes Clusters
 
-    Als Basisanforderung der Arbeit ist dies ein wichtiger Punkt. Eine Kubernetes Instanz / ein Cluster kann aber sehr schnell einem über den Kopf wachsen. Um auch hier wiederum, den besten Output mit dem kleinsten Aufwand zu erzielen, wird für dieses Projekt ein "AWS Elastic Kubernetes Service" genutzt. Dies minimiert den Aufwand für den Cluster und erlaubt es, die Ziele der Arbeit besser zu verfolgen.
+    Als Basisanforderung der Arbeit ist dies ein wichtiger Punkt. Eine Kubernetes Instanz / ein Cluster kann aber sehr schnell einem über den Kopf wachsen. Um auch hier wiederum, den besten Output mit dem kleinsten Aufwand zu erzielen, wird für dieses Projekt ein "AWS Elastic Kubernetes Service" genutzt. Dies minimiert den Aufwand für den Cluster und erlaubt es, die Ziele der Arbeit besser zu verfolgen. Diese Strategie wurde auch schon beim letzten Projekt genutzt. Die vieles jedoch nicht so umgesetzt werden konnte wie gewünscht, wurde die Komplexität des Cluster erheblich reduziert. Bei diesem zweiten Anlauf könnte dies wieder zum Problem werden.
 
-* Beispielprojekte nicht nutzbar
+* Kosten für AWS Cluster zu hoch
 
-    [Im Abschnitt 2.1](./201-about.html) wurden Projekte erwähnt, welche als Inspiration für diese Arbeit dienten. Es ist des weiteren ein Ziel dieser Arbeit, diese Projekte zu nutzen. Sollte sich herausstellen, dass diese Projekte nicht nutzbar sind, würde das den Zeitaufwand um ein massives Stück vergrössern.
-
-    Leider ist es nur beschränkt möglich sich auf dieses Risiko abzusichern. Die einzige Alternative wäre, das Pong Spiel selbst neu zu schreiben. Mit den bereits vorhin erwähnten Massnahmen für das Zeitmanagement und das Python Know How wurden bereits Massnahmen in diese Richtung ergriffen.
+    Wie erwähnt, wird dieses Projekt auf AWS umgesetzt. Dies bedeutet jedoch üblicherweise eine hohe Rechnung für diese Dienste. Mit den beiden Skripten `build.sh` und `destroy.sh` im [EKS Ordner](https://github.com/Euthal02/SemArb5_GameLobby_Improvement/tree/main/eks) wird das ganze aufsetzen und entfernen des Clusters automatisiert. Damit kann der Cluster immer entfernt werden und die Kosten damit gering gehalten werden.
 
 Mit diesen Massnahmen sollte das Projekt besser für diesen Risiken geschützt sein.

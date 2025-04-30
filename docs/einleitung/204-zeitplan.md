@@ -19,16 +19,16 @@ Der Zeitplan dieser Arbeit ist in GitHub Projects integriert. Dies ist eine leic
 * Das Setzen von Meilensteinen
 * Benachrichtigungen über Zeitevents
 
-[Um Einsicht in die Zeitplanung zu bekommen, muss man diesem Link folgen.](https://github.com/users/Euthal02/projects/5)
+[Um Einsicht in die Zeitplanung zu bekommen, muss man diesem Link folgen.](https://github.com/users/Euthal02/projects/6)
 
 Aus dem Eingabeformular besteht folgender Zeitplan:
 
 | Datum        | Aufgabe                                          | Wer     | An                              |
 |--------------|--------------------------------------------------|---------|---------------------------------|
-| 28.10.2024   | Start Semesterarbeit                             | Student | Fach- und Projekt-Experte/innen |
-| 08.11.2024   | Individuelle Einzelbesprechung mit Rückmeldung 1 | Student | Fach- und Projekt-Experte/innen |
-| 02.12.2024   | Individuelle Einzelbesprechung mit Rückmeldung 2 | Student | Fach- und Projekt-Experte/innen |
-| 06.01.2024   | Individuelle Einzelbesprechung mit Rückmeldung 3 | Student | Fach- und Projekt-Experte/innen |
-| 29.01.2025   | Abgabe und Schluss Semesterarbeit Sprint         | Student | Fach- und Projekt-Experte/innen |
+| 19.04.2025   | Start Semesterarbeit                             | Student | Fach- und Projekt-Experte/innen |
+| 16.04.2025   | Individuelle Einzelbesprechung mit Rückmeldung 1 | Student | Fach- und Projekt-Experte/innen |
+| 12.05.2025   | Individuelle Einzelbesprechung mit Rückmeldung 2 | Student | Fach- und Projekt-Experte/innen |
+| 16.06.2025   | Individuelle Einzelbesprechung mit Rückmeldung 3 | Student | Fach- und Projekt-Experte/innen |
+| 09.07.2025   | Abgabe und Schluss Semesterarbeit Sprint         | Student | Fach- und Projekt-Experte/innen |
 
 Dieser ist sehr grob und dient nur zur Planung der Besprechungen.
