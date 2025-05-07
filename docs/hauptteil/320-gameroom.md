@@ -9,7 +9,7 @@ nav_order: 320
 
 Der GameRoom ist als Container Image erstellt. In diesem Abschnitt beschreibe ich die genutzten Technologien und Konzepte. Das Image kann unter diesem Link gedownloaded werden.
 
-<https://github.com/Euthal02/SemArb4_GameLobby/pkgs/container/pong-gameroom>
+<https://github.com/Euthal02/SemArb5_GameLobby_Improvement/pkgs/container/pong-gameroom>
 
 Github empfiehlt automatisch den Download mit dem neuesten SHA-Sum Value. Für einen einfachen Test wird aber empfohlen den `latest` Tag zu verwenden.
 

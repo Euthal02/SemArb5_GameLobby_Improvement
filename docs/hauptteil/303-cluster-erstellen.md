@@ -11,9 +11,8 @@ nav_order: 303
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
-Um den Cluster zu erstellen wird ein Account innerhalb der vorhin erwähnten "admin" Gruppe genutzt und ein Access Key erstellt.
-
-Mit diesem Access Key kann anschliessend die lokale AWS CLI konfiguriert werden.
+Um den Cluster zu erstellen wird ein Account mit Admin Rechten gebraucht.
+Dieser Account muss anschliessend mit einem Access Key auf einer CLI eingerichtet werden.
 
 Als Standard Region wurde Zürich ausgewählt, dies aus Latenz Gründen.
 Bei einem Spiel ist die Latenz von enormer Wichtigkeit.
@@ -30,12 +29,12 @@ Default output format [None]: json
 
 ## Create Cluster
 
-Im Script [eks/build.sh](https://github.com/Euthal02/SemArb4_GameLobby/blob/main/eks/build.sh) wurden Commands um einen Cluster mittels EKSCTL aufzubauen integriert. Man muss nur noch das Script ausführen und ein neuer Cluster wird erstellt.
+Im Script [eks/build.sh](https://github.com/Euthal02/SemArb5_GameLobby_Improvement/blob/main/eks/build.sh) wurden Commands um einen Cluster mittels EKSCTL aufzubauen integriert. Man muss nur noch das Script ausführen und ein neuer Cluster wird erstellt.
 
 Zuerst wird der Cluster erstellt. Die einzelnen Parameter basieren sich alle auf die Eigenschaften der "Nodegroup". Das bedeutet zusammengefasst, dass für den Cluster 2 Nodes (skalierbar auf 1 - 3 Nodes) erstellt werden, mit einen AmazonLinux auf einem m5.large Server. Jeder Node kann Pods hosten und ist per SSH erreichbar.
 
 ```bash
-mka@Tuxedo-Laptop:~/repos/SemArb4_GameLobby$ eks/build.sh
+mka@Tuxedo-Laptop:~/repos/SemArb5_GameLobby$ eks/build.sh
 
 # eksctl create cluster --name=eks-cluster --version=1.31 --region=eu-central-2 --node-ami-family=AmazonLinux2 --nodes=2 --nodes-min=1 --nodes-max=3 --ssh-access --ssh-public-key=semesterarbeit_admin_access --max-pods-per-node=20 --enable-ssm --with-oidc
 
@@ -74,36 +73,6 @@ CoreDNS is running at https://A590CEBE99AAE359C647A4A790E529B9.sk1.eu-central-2.
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 mka@Tuxedo-Laptop:~$
-```
-
-## Kubectl Access
-
-Standardmässig kann noch jeder die Kubernetes API erreichen. Aus Sicherheitsgründen, wollen wir aber dass nur Marco Kälin von seiner festen Heimadresse dies kann. Zusätzlich muss man den API Access auf die privaten Interfaces erlauben, damit die Hosts untereinander kommunizieren können. Dieser SChritt wurde auch bereits in das build.sh Script integriert.
-
-```bash
-mka@Tuxedo-Laptop:~$ eksctl utils update-cluster-vpc-config --cluster=eks-cluster --public-access-cidrs=45.94.88.37/32 --private-access=true --approve
-
-2024-12-14 20:32:19 [ℹ]  using region eu-central-2
-2024-12-14 20:32:19 [ℹ]  will update Kubernetes API endpoint access for cluster "eks-cluster" in "eu-central-2" to: privateAccess=true, publicAccess=true
-2024-12-14 20:37:11 [✔]  Kubernetes API endpoint access for cluster "eks-cluster" in "eu-central-2" has been updated to: privateAccess=true, publicAccess=true
-2024-12-14 20:37:11 [ℹ]  current public access CIDRs: [0.0.0.0/0]
-2024-12-14 20:37:11 [ℹ]  will update public access CIDRs for cluster "eks-cluster" in "eu-central-2" to: [45.94.88.37/32]
-2024-12-14 20:38:35 [✔]  public access CIDRs for cluster "eks-cluster" in "eu-central-2" have been updated to: [45.94.88.37/32]
-```
-
-## Upgrade Kubectl
-
-Die Standard Kubernetes Version des Cluster ist bereits UptoDate kann aber mittels diesem Command geupgraded werden. EKSCTL nutzt als Standardversion eine ältere Version von Kubernetes, kann jedoch einfach geupgradet werden. Dieser Upgradeschritt ist bereits im Build Script integriert.
-
-```bash
-mka@Tuxedo-Laptop:~$ eksctl upgrade cluster --name=eks-cluster --approve
-2024-11-15 19:19:18 [ℹ]  will upgrade cluster "eks-cluster" control plane from current version "1.30" to "1.31"
-2024-11-15 19:27:47 [✔]  cluster "eks-cluster" control plane has been upgraded to version "1.31"
-2024-11-15 19:27:47 [ℹ]  you will need to follow the upgrade procedure for all of nodegroups and add-ons
-2024-11-15 19:27:48 [ℹ]  re-building cluster stack "eksctl-eks-cluster-cluster"
-2024-11-15 19:27:48 [✔]  all resources in cluster stack "eksctl-eks-cluster-cluster" are up-to-date
-2024-11-15 19:27:48 [ℹ]  checking security group configuration for all nodegroups
-2024-11-15 19:27:48 [ℹ]  all nodegroups have up-to-date cloudformation templates
 ```
 
 ## EKSCTL und die AWS CLI

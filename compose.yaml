@@ -1,6 +1,6 @@
 services:
-  semarb4_game_room_dev:
-    container_name: semarb4_game_room_dev
+  semarb5_game_room_dev:
+    container_name: semarb5_game_room_dev
     restart: no
     build:
       context: gameroom/.
@@ -10,8 +10,8 @@ services:
     volumes:
       - ./gameroom/:/app
 
-  semarb4_game_lobby_dev:
-    container_name: semarb4_game_lobby_dev
+  semarb5_game_lobby_dev:
+    container_name: semarb5_game_lobby_dev
     restart: no
     build:
       context: gamelobby/.

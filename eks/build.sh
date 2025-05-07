@@ -6,7 +6,7 @@ REGION=eu-central-2
 DNS_ZONE=semesterarbeit.com
 
 # set up eks cluster
-eksctl create cluster --name=$CLUSTER_NAME --region=$REGION --version=1.31 --node-ami-family=AmazonLinux2 --nodes=2 --nodes-min=1 --nodes-max=3 --ssh-access --ssh-public-key=semesterarbeit_admin_access --max-pods-per-node=20 --with-oidc
+eksctl create cluster --name=$CLUSTER_NAME --region=$REGION --node-ami-family=AmazonLinux2 --nodes=2 --nodes-min=1 --nodes-max=3 --ssh-access --ssh-public-key=semesterarbeit_admin_access --max-pods-per-node=20 --with-oidc
 
 # remove remainders from old deployments
 ALB_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`AWSLoadBalancerControllerIAMPolicy`].Arn' --output text)

@@ -23,7 +23,7 @@ Ausserdem findet sich hier ein Quellenverzechniss für alle externen Quellen, we
 Alles Files und weitere Informationen sind hier auf dem GitHub Repo zu finden.
 
 * [GitHub Projects, für das Zeitmanagement der Arbeit.](https://github.com/users/Euthal02/projects/5)
-* [docs/, die Dokumentation der Arbeit.](https://github.com/Euthal02/SemArb4_GameLobby/tree/main/docs)
+* [docs/, die Dokumentation der Arbeit.](https://github.com/Euthal02/SemArb5_GameLobby_Improvement/tree/main/docs)
 
 ![Github](ressources/icons/github_logo.png){: style="width: 250px" }
 

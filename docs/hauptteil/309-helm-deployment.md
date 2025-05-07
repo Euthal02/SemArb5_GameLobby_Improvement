@@ -13,8 +13,8 @@ nav_order: 309
 
 Um nun den GameRoom und die GameLobby auf den Cluster zu bringen, wurden pro Image ein eigenes Helm Chart geschrieben:
 
-* <https://github.com/Euthal02/SemArb4_GameLobby/tree/main/gamelobby/helm>
-* <https://github.com/Euthal02/SemArb4_GameLobby/tree/main/gameroom/helm>
+* <https://github.com/Euthal02/SemArb5_GameLobby_Improvement/tree/main/gamelobby/helm>
+* <https://github.com/Euthal02/SemArb5_GameLobby_Improvement/tree/main/gameroom/helm>
 
 Das values File beinhaltet all Variablen, welche wir im Chart verwenden. Sie ist natürlich für die Lobby und den Room unterschiedlich.
 

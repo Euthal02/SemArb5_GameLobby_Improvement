@@ -28,7 +28,7 @@ on:
       - main
 ```
 
-[Die einzelnen Workflows finden sich hier.](https://github.com/Euthal02/SemArb4_GameLobby/tree/main/.github/workflows)
+[Die einzelnen Workflows finden sich hier.](https://github.com/Euthal02/SemArb5_GameLobby_Improvement/tree/main/.github/workflows)
 
 Genauere Informationen was jede Pipeline genau macht, wird im Hauptteil zu den einzelnen Teilsystemen spezifiziert.
 

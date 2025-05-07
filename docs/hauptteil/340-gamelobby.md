@@ -9,7 +9,7 @@ nav_order: 340
 
 Auch die GameLobby ist als Docker Image aufgebaut. Sie ist verantwortlich, um die einzelnen GameRooms zu verbinden. Dazu verwendet sie iFrames, welche auf die einzelnen Rooms geht. Das Image kann hier herunter geladen werden. Auch hier wird wieder die SHA-Sum des neuesten Images gezeigt. Es wird wieder empfohlen den `latest` Tag zu verwenden.
 
-<https://github.com/Euthal02/SemArb4_GameLobby/pkgs/container/pong-gamelobby>
+<https://github.com/Euthal02/SemArb5_GameLobby_Improvement/pkgs/container/pong-gamelobby>
 
 ## Umfang
 

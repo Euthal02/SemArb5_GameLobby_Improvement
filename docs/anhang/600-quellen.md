@@ -10,7 +10,7 @@ In diesem Teil finden sich alle Referenzen zu externen Quellen, Bildern und sons
 
 Alle Files und Bilder sind hier zu finden:
 
-[Link zu Github](https://github.com/Euthal02/SemArb4_GameLobby/tree/main/docs/ressources)
+[Link zu Github](https://github.com/Euthal02/SemArb5_GameLobby_Improvement/tree/main/docs/ressources)
 
 ![Sources](../ressources/icons/sources.png){: style="width: 250px" }
 
