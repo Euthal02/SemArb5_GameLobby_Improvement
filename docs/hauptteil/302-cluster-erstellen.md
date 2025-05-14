@@ -1,11 +1,11 @@
 ---
 layout: default
-title: 3.3 Cluster erstellen
+title: 3.2 Cluster erstellen
 parent: 3. Hauptteil
 nav_order: 303
 ---
 
-# 3.3 Cluster erstellen
+# 3.2 Cluster erstellen
 
 ![Cluster erstellen](../ressources/icons/improvement.png){: style="width: 250px" }
 

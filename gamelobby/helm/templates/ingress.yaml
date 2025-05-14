@@ -11,6 +11,7 @@ metadata:
 spec:
   ingressClassName: {{ .Values.lobby.ingress.className }}
   rules:
+    # - host: {{ .Values.lobby.ingress.tls.hostname }}
     - http:
         paths:
         - path: /
