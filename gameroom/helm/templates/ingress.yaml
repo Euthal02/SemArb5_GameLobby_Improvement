@@ -2,8 +2,8 @@
 {{- $ingressCount := .Values.room.ingressCount | int }}
 {{- $domain := .Values.room.ingress.domain }}
 {{- range $i := until $ingressCount }}
-{{- current_release_name = printf "%s%d" $.Release.Name $i }}
-{{- current_hostname = printf "room%d.%s" (add $i 1) $domain }}
+{{- $current_release_name := printf "%s%d" $.Release.Name (add $i 1) }}
+{{- $current_hostname := printf "room%d.%s" (add $i 1) $domain }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

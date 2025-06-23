@@ -1,31 +1,19 @@
 ---
 layout: default
-title: 4.2 Sprint 2
+title: 4.2 Sprint 2 & 3
 parent: 4. Sprints
 nav_order: 402
 ---
 
-# 4.2 Sprint 2
+# 4.2 Sprint 2 & 3
 
-Hier sind die Erkenntnisse des zweiten Sprints.
+Hier sind die Erkenntnisse des zweiten und dritten Sprints.
 
 ![Star 1](../ressources/icons/star.png){: style="width: 220px" }
 ![Star 2](../ressources/icons/star.png){: style="width: 220px" }
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
-## Was ist gut gelaufen? Was konnte bereits erreicht werden?
+## Rückblick auf den zweiten und dritten Sprint
 
-## Was hat nicht funktioniert? Was war nicht gut? Welche Aspekte sollen entfallen?
-
-## Was soll aufgrund der gemachten Erfahrungen ausprobiert werden?
-
-## Erledigte Tasks des letzten Sprints?
-
-## Momentaufnahme Backlog / Projektstatus
-
-## Warum ist der kommende Sprint wichtig?
-
-## Was muss ich tun, um das Sprintziel zu erreichen?
-
-## Blick auf den 3. Sprint
+In diesen beiden Sprints lief sehr wenig an meiner Semesterarbeit. Ich hatte noch zwei Wochen Ferien und konnte mich nur begrenzt auf die Semesterarbeit fokussieren. Im dritten Sprint wird also noch der Abschluss des Projekts gemacht.

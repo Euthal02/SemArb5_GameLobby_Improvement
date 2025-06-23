@@ -13,18 +13,16 @@ Hier sind die Erkenntnisse des ersten Sprints.
 
 [Quelle Bild - Icons](../anhang/600-quellen.html#64-icons)
 
-## Was ist gut gelaufen? Was konnte bereits erreicht werden?
+## Zusammenfassung erster Sprint
 
-## Was hat nicht funktioniert? Was war nicht gut? Welche Aspekte sollen entfallen?
-
-## Was soll aufgrund der gemachten Erfahrungen ausprobiert werden?
-
-## Erledigte Tasks des letzten Sprints?
-
-## Momentaufnahme Backlog / Projektstatus
+Im ersten Sprint haben wir eigentlich nur die Projekteingabe gemacht. Anders gesagt wurde hier keine Arbeit erledigt, sondern nur entschieden welche Arbeit wir machen wollen. Somit kann erst ab dem zweiten Sprint Rückblickend geschaut werden.
 
 ## Warum ist der kommende Sprint wichtig?
 
-## Was muss ich tun, um das Sprintziel zu erreichen?
+Im kommenden Sprint werden die Grundlagen für das Projekt gelegt. Ich möchte ein Projekt Backlog erstellen und die Tasks planen und dann auch ausführen.
 
-## Blick auf den 2. Sprint
+Vorläufig sind alle Tasks lediglich Recherche Tasks. Ich mache mich schlau, was die beste Variante ist um meine Ziele zu erreichen. Dies beinhaltet:
+
+* Zertifikate für alle Ingress
+* Bessere Skalierung der Rooms
+* Besseres Messaging zwischen den Rooms und der Lobby
