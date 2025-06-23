@@ -2,33 +2,36 @@
 {{- $ingressCount := .Values.room.ingressCount | int }}
 {{- $domain := .Values.room.ingress.domain }}
 {{- range $i := until $ingressCount }}
+{{- current_release_name = printf "%s%d" $.Release.Name $i }}
+{{- current_hostname = printf "room%d.%s" (add $i 1) $domain }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   namespace: {{ $.Values.namespace }}
-  name: "{{ $.Release.Name }}{{ add $i 1 }}"
+  name: "{{ $current_release_name }}"
   annotations:
     {{- range $key, $value := $.Values.room.ingress.annotations }}
-    {{ $key }}: "{{ $value }}"
+    {{ $key }}: '{{ $value }}'
     {{- end }}
-    external-dns.alpha.kubernetes.io/hostname: room{{ add $i 1 }}.{{ $domain }}
+    external-dns.alpha.kubernetes.io/hostname: "{{ $current_hostname }}"
 spec:
   ingressClassName: {{ $.Values.room.ingress.className }}
   rules:
-    - http:
+    - host: "{{ $current_hostname }}"
+      http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: "{{ $.Release.Name }}{{ add $i 1 }}"
+              name: "{{ $current_release_name }}"
               port:
                 number: {{ $.Values.room.service.port }}
   {{- if $.Values.room.ingress.tls.enabled }}
   tls:
   - hosts:
-    - {{ $.Values.room.ingress.hostname }}
-    secretName: {{ $.Values.room.ingress.tls.secretName }}
+    - "{{ $current_hostname }}"
+    secretName: "{{ $current_hostname }}"
   {{- end }}
 ---
 {{- end }}
